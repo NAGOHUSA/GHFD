@@ -32,6 +32,10 @@
             font-size: 0.8em;
             padding: 0.2em 0.6em;
         }
+        .data-loading {
+            opacity: 0.7;
+            pointer-events: none;
+        }
     </style>
 </head>
 <body>
@@ -44,12 +48,20 @@
                     <p class="lead">Identifying $70k-$150k profit flips (30-365 day holds)</p>
                 </div>
                 <div class="col-md-4 text-end">
-                    <button class="btn btn-light me-2" onclick="runAnalysis()">
-                        <i class="bi bi-arrow-clockwise"></i> Refresh Data
-                    </button>
-                    <button class="btn btn-outline-light" onclick="exportSelected()">
-                        <i class="bi bi-download"></i> Export Selected
-                    </button>
+                    <div class="btn-group">
+                        <button class="btn btn-light me-2" onclick="loadLatestData()" id="refreshBtn">
+                            <i class="bi bi-arrow-clockwise"></i> Load Latest Data
+                        </button>
+                        <div class="dropdown">
+                            <button class="btn btn-outline-light dropdown-toggle" type="button" id="dataSourceDropdown" data-bs-toggle="dropdown">
+                                <i class="bi bi-database"></i> Data Source
+                            </button>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="#" onclick="loadFromLocalFiles()">Local Files (data/results/)</a></li>
+                                <li><a class="dropdown-item" href="#" onclick="useMockData()">Sample Mock Data</a></li>
+                            </ul>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -84,16 +96,31 @@
             </div>
         </div>
 
+        <!-- Status Alert -->
+        <div class="row mb-4">
+            <div class="col-12">
+                <div class="alert alert-info" id="statusAlert">
+                    <i class="bi bi-info-circle"></i> 
+                    <span id="statusMessage">Click "Load Latest Data" to begin</span>
+                    <span class="float-end">
+                        <span id="fileStatus"></span>
+                        <span class="spinner-border spinner-border-sm ms-2 d-none" id="loadingSpinner"></span>
+                    </span>
+                </div>
+            </div>
+        </div>
+
         <!-- Charts and Data -->
         <div class="row mb-4">
             <div class="col-md-8">
                 <div class="stat-card">
-                    <h5>Recent Property Flips</h5>
+                    <h5>Recent Property Flips <small class="text-muted" id="flipsCount">(0 flips)</small></h5>
                     <div class="investor-table">
                         <table class="table table-hover" id="flipsTable">
                             <thead>
                                 <tr>
                                     <th>Address</th>
+                                    <th>Buy Date</th>
                                     <th>Buy Price</th>
                                     <th>Sell Price</th>
                                     <th>Profit</th>
@@ -102,7 +129,15 @@
                                 </tr>
                             </thead>
                             <tbody id="flipsTableBody">
-                                <!-- Data will be populated here -->
+                                <tr id="noFlipsRow">
+                                    <td colspan="7" class="text-center text-muted py-4">
+                                        <i class="bi bi-house-x" style="font-size: 2rem;"></i>
+                                        <p class="mt-2">No flip data loaded yet</p>
+                                        <button class="btn btn-sm btn-outline-primary" onclick="loadLatestData()">
+                                            Load Data
+                                        </button>
+                                    </td>
+                                </tr>
                             </tbody>
                         </table>
                     </div>
@@ -113,6 +148,10 @@
                 <div class="stat-card">
                     <h5>Top Counties</h5>
                     <canvas id="countyChart"></canvas>
+                    <div id="noCountyData" class="text-center text-muted py-4">
+                        <i class="bi bi-pie-chart" style="font-size: 2rem;"></i>
+                        <p class="mt-2">No county data available</p>
+                    </div>
                 </div>
             </div>
         </div>
@@ -122,13 +161,16 @@
             <div class="col-12">
                 <div class="stat-card">
                     <div class="d-flex justify-content-between align-items-center mb-3">
-                        <h5>Top Investors for Outreach</h5>
+                        <h5>Top Investors for Outreach <small class="text-muted" id="investorsCount">(0 investors)</small></h5>
                         <div>
-                            <button class="btn btn-sm btn-outline-primary me-2" onclick="selectAll()">
+                            <button class="btn btn-sm btn-outline-primary me-2" onclick="selectAll()" id="selectAllBtn" disabled>
                                 Select All
                             </button>
-                            <button class="btn btn-sm btn-outline-secondary" onclick="deselectAll()">
+                            <button class="btn btn-sm btn-outline-secondary me-2" onclick="deselectAll()" id="deselectAllBtn" disabled>
                                 Clear All
+                            </button>
+                            <button class="btn btn-sm btn-success" onclick="exportSelected()" id="exportBtn" disabled>
+                                <i class="bi bi-download"></i> Export Selected
                             </button>
                         </div>
                     </div>
@@ -136,18 +178,22 @@
                         <table class="table table-hover" id="investorsTable">
                             <thead>
                                 <tr>
-                                    <th><input type="checkbox" id="selectAllCheckbox"></th>
+                                    <th><input type="checkbox" id="selectAllCheckbox" disabled></th>
                                     <th>Investor Name</th>
                                     <th>Total Flips</th>
                                     <th>Total Profit</th>
                                     <th>Avg ROI</th>
                                     <th>Avg Hold Days</th>
                                     <th>Priority</th>
-                                    <th>Actions</th>
                                 </tr>
                             </thead>
                             <tbody id="investorsTableBody">
-                                <!-- Data will be populated here -->
+                                <tr id="noInvestorsRow">
+                                    <td colspan="7" class="text-center text-muted py-4">
+                                        <i class="bi bi-people" style="font-size: 2rem;"></i>
+                                        <p class="mt-2">No investor data loaded yet</p>
+                                    </td>
+                                </tr>
                             </tbody>
                         </table>
                     </div>
@@ -158,8 +204,10 @@
         <!-- Footer -->
         <div class="row mt-4">
             <div class="col-12 text-center text-muted">
-                <p>Last Updated: <span id="lastUpdated">Never</span></p>
-                <p class="small">Data sourced from Georgia county public records</p>
+                <p>Last Updated: <span id="lastUpdated">Never</span> | Data Source: <span id="dataSource">None</span></p>
+                <p class="small">Data sourced from Georgia county public records | 
+                    <a href="https://github.com/NAGOHUSA/GHFD/tree/main" target="_blank">View GitHub Repository</a>
+                </p>
             </div>
         </div>
     </div>
@@ -168,62 +216,415 @@
     <script>
         let selectedInvestors = new Set();
         let chart = null;
+        let currentData = {
+            flips: [],
+            investors: [],
+            stats: {}
+        };
 
         // Load data on page load
         document.addEventListener('DOMContentLoaded', function() {
-            loadDashboardData();
-            setInterval(loadDashboardData, 300000); // Refresh every 5 minutes
+            updateStatus('Ready to load data', 'info');
+            // Auto-load data after 1 second
+            setTimeout(loadLatestData, 1000);
         });
 
-        async function loadDashboardData() {
+        function updateStatus(message, type = 'info') {
+            const alert = document.getElementById('statusAlert');
+            const messageSpan = document.getElementById('statusMessage');
+            
+            messageSpan.textContent = message;
+            
+            // Update alert class
+            alert.className = 'alert alert-' + type;
+        }
+
+        function showLoading(show) {
+            const spinner = document.getElementById('loadingSpinner');
+            const refreshBtn = document.getElementById('refreshBtn');
+            
+            if (show) {
+                spinner.classList.remove('d-none');
+                refreshBtn.classList.add('data-loading');
+                refreshBtn.innerHTML = '<i class="bi bi-arrow-clockwise"></i> Loading...';
+            } else {
+                spinner.classList.add('d-none');
+                refreshBtn.classList.remove('data-loading');
+                refreshBtn.innerHTML = '<i class="bi bi-arrow-clockwise"></i> Load Latest Data';
+            }
+        }
+
+        function updateFileStatus(filesFound) {
+            const fileStatus = document.getElementById('fileStatus');
+            if (filesFound > 0) {
+                fileStatus.textContent = `${filesFound} data file(s) found`;
+                fileStatus.className = 'badge bg-success';
+            } else {
+                fileStatus.textContent = 'No data files found';
+                fileStatus.className = 'badge bg-warning';
+            }
+        }
+
+        async function loadLatestData() {
+            showLoading(true);
+            updateStatus('Searching for data files...', 'info');
+            
             try {
-                // Load stats
-                const statsResponse = await fetch('/api/stats');
-                const stats = await statsResponse.json();
+                // Try to load from local files first
+                const dataLoaded = await loadFromLocalFiles();
                 
-                if (!stats.error) {
-                    document.getElementById('totalFlips').textContent = stats.total_flips_identified || 0;
-                    document.getElementById('totalInvestors').textContent = stats.total_investors || 0;
-                    document.getElementById('totalProfit').textContent = 
-                        '$' + (stats.total_profit || 0).toLocaleString();
-                    document.getElementById('avgHoldDays').textContent = 
-                        Math.round(stats.avg_hold_days || 0);
-                    document.getElementById('lastUpdated').textContent = 
-                        stats.last_updated || 'Never';
-                    
-                    // Update county chart
-                    updateCountyChart(stats.by_county || {});
+                if (!dataLoaded) {
+                    updateStatus('No local data files found. Using sample data.', 'warning');
+                    await useMockData();
                 }
-
-                // Load flips
-                const flipsResponse = await fetch('/api/flips');
-                const flips = await flipsResponse.json();
-                updateFlipsTable(flips);
-
-                // Load investors
-                const investorsResponse = await fetch('/api/investors');
-                const investors = await investorsResponse.json();
-                updateInvestorsTable(investors);
-
             } catch (error) {
                 console.error('Error loading data:', error);
+                updateStatus('Error loading data: ' + error.message, 'danger');
+                await useMockData(); // Fallback to mock data
+            } finally {
+                showLoading(false);
             }
+        }
+
+        async function loadFromLocalFiles() {
+            updateStatus('Loading from data/results/ directory...', 'info');
+            
+            try {
+                // First, try to find the latest data files
+                const files = await findLatestDataFiles();
+                updateFileStatus(files.count);
+                
+                if (files.count === 0) {
+                    return false;
+                }
+                
+                // Load the data
+                let flips = [];
+                let investors = [];
+                let stats = {};
+                
+                if (files.flips) {
+                    const response = await fetch(files.flips);
+                    if (response.ok) {
+                        const csvText = await response.text();
+                        flips = parseCSV(csvText);
+                        updateStatus(`Loaded ${flips.length} flips from ${files.flips}`, 'success');
+                    }
+                }
+                
+                if (files.investors) {
+                    const response = await fetch(files.investors);
+                    if (response.ok) {
+                        const csvText = await response.text();
+                        investors = parseCSV(csvText);
+                    }
+                }
+                
+                if (files.stats) {
+                    const response = await fetch(files.stats);
+                    if (response.ok) {
+                        stats = await response.json();
+                    }
+                }
+                
+                // If no stats file, generate from flips data
+                if (flips.length > 0 && Object.keys(stats).length === 0) {
+                    stats = generateStatsFromFlips(flips, investors);
+                }
+                
+                currentData = { flips, investors, stats };
+                updateDashboard(currentData);
+                document.getElementById('dataSource').textContent = 'Local Files';
+                
+                return true;
+            } catch (error) {
+                console.error('Error loading local files:', error);
+                return false;
+            }
+        }
+
+        async function findLatestDataFiles() {
+            const dataDir = 'data/results/';
+            const files = {
+                count: 0,
+                flips: null,
+                investors: null,
+                stats: null
+            };
+            
+            try {
+                // Try to get directory listing (this works on GitHub Pages with a pre-generated index)
+                const response = await fetch(dataDir);
+                if (!response.ok) {
+                    // If we can't list the directory, try specific patterns
+                    const timestamp = new Date().toISOString().slice(0, 10).replace(/-/g, '');
+                    
+                    // Try common patterns
+                    const patterns = [
+                        `${dataDir}flips_detailed_*.csv`,
+                        `${dataDir}investors_*.csv`,
+                        `${dataDir}stats_*.json`,
+                        `${dataDir}report_*.json`
+                    ];
+                    
+                    // For now, we'll use a simple approach - check for any files
+                    // In a real implementation, you'd need a server-side component
+                    // to list files, or pre-defined file names
+                    
+                    // Check for sample data
+                    const sampleFlips = await fetch('data/sample/sample_properties.csv');
+                    if (sampleFlips.ok) {
+                        files.flips = 'data/sample/sample_properties.csv';
+                        files.count = 1;
+                    }
+                    
+                    return files;
+                }
+                
+                // If we could list the directory, parse it for files
+                const html = await response.text();
+                const parser = new DOMParser();
+                const doc = parser.parseFromString(html, 'text/html');
+                const links = doc.querySelectorAll('a');
+                
+                let fileList = [];
+                links.forEach(link => {
+                    const href = link.getAttribute('href');
+                    if (href && !href.endsWith('/')) {
+                        fileList.push(href);
+                    }
+                });
+                
+                // Find the latest files by pattern
+                const flipFiles = fileList.filter(f => f.includes('flips_detailed_')).sort().reverse();
+                const investorFiles = fileList.filter(f => f.includes('investors_')).sort().reverse();
+                const statFiles = fileList.filter(f => f.includes('stats_') || f.includes('report_')).sort().reverse();
+                
+                if (flipFiles.length > 0) files.flips = dataDir + flipFiles[0];
+                if (investorFiles.length > 0) files.investors = dataDir + investorFiles[0];
+                if (statFiles.length > 0) files.stats = dataDir + statFiles[0];
+                
+                files.count = [flipFiles, investorFiles, statFiles].filter(arr => arr.length > 0).length;
+                
+            } catch (error) {
+                console.log('Could not list directory, using fallback:', error);
+            }
+            
+            return files;
+        }
+
+        function parseCSV(csvText) {
+            const lines = csvText.split('\n');
+            if (lines.length < 2) return [];
+            
+            const headers = lines[0].split(',').map(h => h.trim());
+            const data = [];
+            
+            for (let i = 1; i < lines.length; i++) {
+                if (!lines[i].trim()) continue;
+                
+                const values = lines[i].split(',').map(v => v.trim());
+                const row = {};
+                
+                headers.forEach((header, index) => {
+                    if (values[index]) {
+                        // Try to parse numbers
+                        const numValue = parseFloat(values[index]);
+                        row[header] = isNaN(numValue) ? values[index] : numValue;
+                    } else {
+                        row[header] = '';
+                    }
+                });
+                
+                data.push(row);
+            }
+            
+            return data;
+        }
+
+        function generateStatsFromFlips(flips, investors) {
+            if (flips.length === 0) {
+                return {
+                    total_flips_identified: 0,
+                    total_investors: 0,
+                    total_profit: 0,
+                    avg_hold_days: 0,
+                    avg_roi: 0,
+                    by_county: {}
+                };
+            }
+            
+            const totalProfit = flips.reduce((sum, flip) => sum + (flip.profit || 0), 0);
+            const avgHoldDays = flips.reduce((sum, flip) => sum + (flip.hold_days || 0), 0) / flips.length;
+            
+            // Calculate ROI if we have buy_price and profit
+            const flipsWithROI = flips.filter(f => f.buy_price && f.profit);
+            const avgROI = flipsWithROI.length > 0 
+                ? (flipsWithROI.reduce((sum, f) => sum + ((f.profit / f.buy_price) * 100), 0) / flipsWithROI.length)
+                : 0;
+            
+            // Count by county
+            const countyCount = {};
+            flips.forEach(flip => {
+                const county = flip.county || 'Unknown';
+                countyCount[county] = (countyCount[county] || 0) + 1;
+            });
+            
+            return {
+                total_flips_identified: flips.length,
+                total_investors: investors.length,
+                total_profit: totalProfit,
+                avg_hold_days: avgHoldDays,
+                avg_roi: avgROI,
+                by_county: countyCount,
+                last_updated: new Date().toLocaleString()
+            };
+        }
+
+        async function useMockData() {
+            updateStatus('Loading sample mock data...', 'info');
+            
+            // Sample mock data
+            const mockFlips = [
+                {
+                    property_id: 'PROP1001',
+                    address: '123 Main St, Atlanta, GA 30303',
+                    buy_date: '2024-01-15',
+                    buy_price: 250000,
+                    buyer: 'John Smith LLC',
+                    sell_date: '2024-06-15',
+                    sell_price: 350000,
+                    profit: 100000,
+                    hold_days: 151,
+                    roi: 40.0,
+                    county: 'Fulton County'
+                },
+                {
+                    property_id: 'PROP1002',
+                    address: '456 Oak Ave, Decatur, GA 30030',
+                    buy_date: '2024-02-01',
+                    buy_price: 180000,
+                    buyer: 'Flip Masters Inc',
+                    sell_date: '2024-05-01',
+                    sell_price: 280000,
+                    profit: 100000,
+                    hold_days: 90,
+                    roi: 55.6,
+                    county: 'DeKalb County'
+                },
+                {
+                    property_id: 'PROP1003',
+                    address: '789 Pine Rd, Marietta, GA 30060',
+                    buy_date: '2024-03-10',
+                    buy_price: 220000,
+                    buyer: 'Georgia Flippers LLC',
+                    sell_date: '2024-08-10',
+                    sell_price: 320000,
+                    profit: 100000,
+                    hold_days: 153,
+                    roi: 45.5,
+                    county: 'Cobb County'
+                }
+            ];
+            
+            const mockInvestors = [
+                {
+                    investor_name: 'John Smith LLC',
+                    total_flips: 1,
+                    total_profit: 100000,
+                    avg_profit_per_flip: 100000,
+                    avg_hold_days: 151,
+                    avg_roi: 40.0
+                },
+                {
+                    investor_name: 'Flip Masters Inc',
+                    total_flips: 1,
+                    total_profit: 100000,
+                    avg_profit_per_flip: 100000,
+                    avg_hold_days: 90,
+                    avg_roi: 55.6
+                },
+                {
+                    investor_name: 'Georgia Flippers LLC',
+                    total_flips: 1,
+                    total_profit: 100000,
+                    avg_profit_per_flip: 100000,
+                    avg_hold_days: 153,
+                    avg_roi: 45.5
+                }
+            ];
+            
+            const mockStats = generateStatsFromFlips(mockFlips, mockInvestors);
+            mockStats.last_updated = new Date().toLocaleString();
+            
+            currentData = {
+                flips: mockFlips,
+                investors: mockInvestors,
+                stats: mockStats
+            };
+            
+            updateDashboard(currentData);
+            document.getElementById('dataSource').textContent = 'Sample Data';
+            updateStatus('Loaded sample data. Run pipeline to get real data.', 'warning');
+        }
+
+        function updateDashboard(data) {
+            const { flips, investors, stats } = data;
+            
+            // Update stats cards
+            document.getElementById('totalFlips').textContent = stats.total_flips_identified || 0;
+            document.getElementById('totalInvestors').textContent = stats.total_investors || 0;
+            document.getElementById('totalProfit').textContent = '$' + (stats.total_profit || 0).toLocaleString();
+            document.getElementById('avgHoldDays').textContent = Math.round(stats.avg_hold_days || 0);
+            document.getElementById('lastUpdated').textContent = stats.last_updated || new Date().toLocaleString();
+            
+            // Update counters
+            document.getElementById('flipsCount').textContent = `(${flips.length} flips)`;
+            document.getElementById('investorsCount').textContent = `(${investors.length} investors)`;
+            
+            // Update tables
+            updateFlipsTable(flips);
+            updateInvestorsTable(investors);
+            updateCountyChart(stats.by_county || {});
+            
+            // Enable/disable buttons
+            const hasData = flips.length > 0;
+            document.getElementById('selectAllBtn').disabled = !hasData;
+            document.getElementById('deselectAllBtn').disabled = !hasData;
+            document.getElementById('exportBtn').disabled = !hasData;
+            document.getElementById('selectAllCheckbox').disabled = !hasData;
+            
+            updateStatus(`Dashboard updated with ${flips.length} flips and ${investors.length} investors`, 'success');
         }
 
         function updateFlipsTable(flips) {
             const tbody = document.getElementById('flipsTableBody');
+            const noFlipsRow = document.getElementById('noFlipsRow');
+            
+            if (flips.length === 0) {
+                noFlipsRow.style.display = '';
+                tbody.innerHTML = '';
+                tbody.appendChild(noFlipsRow);
+                return;
+            }
+            
+            noFlipsRow.style.display = 'none';
             tbody.innerHTML = '';
             
             flips.slice(0, 20).forEach(flip => {
                 const row = document.createElement('tr');
                 
+                // Format date
+                const buyDate = flip.buy_date ? new Date(flip.buy_date).toLocaleDateString() : 'N/A';
+                
                 // Truncate address if too long
                 const address = flip.address || 'N/A';
-                const shortAddress = address.length > 30 ? 
-                    address.substring(0, 30) + '...' : address;
+                const shortAddress = address.length > 25 ? 
+                    address.substring(0, 25) + '...' : address;
                 
                 row.innerHTML = `
                     <td title="${address}">${shortAddress}</td>
+                    <td>${buyDate}</td>
                     <td>$${(flip.buy_price || 0).toLocaleString()}</td>
                     <td>$${(flip.sell_price || 0).toLocaleString()}</td>
                     <td><span class="badge bg-success">$${(flip.profit || 0).toLocaleString()}</span></td>
@@ -237,6 +638,16 @@
 
         function updateInvestorsTable(investors) {
             const tbody = document.getElementById('investorsTableBody');
+            const noInvestorsRow = document.getElementById('noInvestorsRow');
+            
+            if (investors.length === 0) {
+                noInvestorsRow.style.display = '';
+                tbody.innerHTML = '';
+                tbody.appendChild(noInvestorsRow);
+                return;
+            }
+            
+            noInvestorsRow.style.display = 'none';
             tbody.innerHTML = '';
             
             investors.forEach(investor => {
@@ -247,13 +658,16 @@
                 const totalFlips = investor.total_flips || 0;
                 let priorityClass = 'priority-low';
                 let priorityText = 'Low';
+                let priorityBadge = 'bg-secondary';
                 
                 if (totalFlips > 10) {
                     priorityClass = 'priority-high';
                     priorityText = 'High';
+                    priorityBadge = 'bg-danger';
                 } else if (totalFlips > 5) {
                     priorityClass = 'priority-medium';
                     priorityText = 'Medium';
+                    priorityBadge = 'bg-warning';
                 }
                 
                 row.className = priorityClass;
@@ -268,12 +682,7 @@
                     <td>$${(investor.total_profit || 0).toLocaleString()}</td>
                     <td>${(investor.avg_roi || 0).toFixed(1)}%</td>
                     <td>${Math.round(investor.avg_hold_days || 0)}</td>
-                    <td><span class="badge ${priorityClass.replace('priority-', 'bg-')}">${priorityText}</span></td>
-                    <td>
-                        <button class="btn btn-sm btn-outline-primary" onclick="viewInvestor('${investorName}')">
-                            <i class="bi bi-eye"></i>
-                        </button>
-                    </td>
+                    <td><span class="badge ${priorityBadge}">${priorityText}</span></td>
                 `;
                 
                 tbody.appendChild(row);
@@ -305,7 +714,17 @@
         }
 
         function updateCountyChart(countyData) {
-            const ctx = document.getElementById('countyChart').getContext('2d');
+            const ctx = document.getElementById('countyChart');
+            const noCountyData = document.getElementById('noCountyData');
+            
+            if (!countyData || Object.keys(countyData).length === 0) {
+                ctx.style.display = 'none';
+                noCountyData.style.display = 'block';
+                return;
+            }
+            
+            ctx.style.display = 'block';
+            noCountyData.style.display = 'none';
             
             // Destroy existing chart
             if (chart) {
@@ -339,6 +758,8 @@
         }
 
         function selectAll() {
+            if (currentData.investors.length === 0) return;
+            
             selectedInvestors.clear();
             document.querySelectorAll('.investor-checkbox').forEach(cb => {
                 cb.checked = true;
@@ -355,55 +776,31 @@
             document.getElementById('selectAllCheckbox').checked = false;
         }
 
-        async function exportSelected() {
+        function exportSelected() {
             if (selectedInvestors.size === 0) {
                 alert('Please select at least one investor to export.');
                 return;
             }
             
-            try {
-                const response = await fetch('/api/export', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        investor_ids: Array.from(selectedInvestors)
-                    })
-                });
-                
-                const result = await response.json();
-                
-                if (result.success) {
-                    alert(`Exported ${result.count} investors successfully!`);
-                } else {
-                    alert('Error exporting data: ' + (result.error || 'Unknown error'));
+            // Create CSV content
+            let csvContent = "data:text/csv;charset=utf-8,Investor Name,Total Flips,Total Profit,Avg ROI,Avg Hold Days\n";
+            
+            currentData.investors.forEach(investor => {
+                if (selectedInvestors.has(investor.investor_name)) {
+                    csvContent += `"${investor.investor_name}",${investor.total_flips},${investor.total_profit},${investor.avg_roi},${investor.avg_hold_days}\n`;
                 }
-            } catch (error) {
-                alert('Error exporting data: ' + error.message);
-            }
-        }
-
-        async function runAnalysis() {
-            try {
-                const response = await fetch('/api/run-analysis', {
-                    method: 'POST'
-                });
-                
-                const result = await response.json();
-                
-                if (result.success) {
-                    alert('Analysis started! Data will refresh when complete.');
-                    // Reload data after a delay
-                    setTimeout(loadDashboardData, 10000);
-                }
-            } catch (error) {
-                alert('Error starting analysis: ' + error.message);
-            }
-        }
-
-        function viewInvestor(investorName) {
-            alert(`Viewing details for: ${investorName}\n\nThis would open a detailed view in a future version.`);
+            });
+            
+            // Create download link
+            const encodedUri = encodeURI(csvContent);
+            const link = document.createElement("a");
+            link.setAttribute("href", encodedUri);
+            link.setAttribute("download", `investors_export_${new Date().toISOString().slice(0,10)}.csv`);
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            
+            alert(`Exported ${selectedInvestors.size} investors to CSV file.`);
         }
     </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
