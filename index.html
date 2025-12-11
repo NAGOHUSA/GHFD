@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Georgia House Flip Detector</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        .dashboard-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 2rem 0;
+            margin-bottom: 2rem;
+        }
+        .stat-card {
+            background: white;
+            border-radius: 10px;
+            padding: 1.5rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-bottom: 1rem;
+        }
+        .investor-table {
+            max-height: 500px;
+            overflow-y: auto;
+        }
+        .priority-high { background-color: #ffebee; }
+        .priority-medium { background-color: #fff3e0; }
+        .priority-low { background-color: #e8f5e9; }
+        .flip-badge {
+            font-size: 0.8em;
+            padding: 0.2em 0.6em;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <div class="dashboard-header">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-8">
+                    <h1><i class="bi bi-house-heart"></i> Georgia House Flip Detector</h1>
+                    <p class="lead">Identifying $70k-$150k profit flips (30-365 day holds)</p>
+                </div>
+                <div class="col-md-4 text-end">
+                    <button class="btn btn-light me-2" onclick="runAnalysis()">
+                        <i class="bi bi-arrow-clockwise"></i> Refresh Data
+                    </button>
+                    <button class="btn btn-outline-light" onclick="exportSelected()">
+                        <i class="bi bi-download"></i> Export Selected
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Stats Dashboard -->
+    <div class="container">
+        <div class="row mb-4">
+            <div class="col-md-3">
+                <div class="stat-card text-center">
+                    <h3 id="totalFlips">0</h3>
+                    <p class="text-muted">Total Flips Identified</p>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="stat-card text-center">
+                    <h3 id="totalInvestors">0</h3>
+                    <p class="text-muted">Active Investors</p>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="stat-card text-center">
+                    <h3 id="totalProfit">$0</h3>
+                    <p class="text-muted">Total Profit Detected</p>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="stat-card text-center">
+                    <h3 id="avgHoldDays">0</h3>
+                    <p class="text-muted">Avg Hold (Days)</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Charts and Data -->
+        <div class="row mb-4">
+            <div class="col-md-8">
+                <div class="stat-card">
+                    <h5>Recent Property Flips</h5>
+                    <div class="investor-table">
+                        <table class="table table-hover" id="flipsTable">
+                            <thead>
+                                <tr>
+                                    <th>Address</th>
+                                    <th>Buy Price</th>
+                                    <th>Sell Price</th>
+                                    <th>Profit</th>
+                                    <th>Hold Days</th>
+                                    <th>Investor</th>
+                                </tr>
+                            </thead>
+                            <tbody id="flipsTableBody">
+                                <!-- Data will be populated here -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-4">
+                <div class="stat-card">
+                    <h5>Top Counties</h5>
+                    <canvas id="countyChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <!-- Investors Table -->
+        <div class="row">
+            <div class="col-12">
+                <div class="stat-card">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <h5>Top Investors for Outreach</h5>
+                        <div>
+                            <button class="btn btn-sm btn-outline-primary me-2" onclick="selectAll()">
+                                Select All
+                            </button>
+                            <button class="btn btn-sm btn-outline-secondary" onclick="deselectAll()">
+                                Clear All
+                            </button>
+                        </div>
+                    </div>
+                    <div class="investor-table">
+                        <table class="table table-hover" id="investorsTable">
+                            <thead>
+                                <tr>
+                                    <th><input type="checkbox" id="selectAllCheckbox"></th>
+                                    <th>Investor Name</th>
+                                    <th>Total Flips</th>
+                                    <th>Total Profit</th>
+                                    <th>Avg ROI</th>
+                                    <th>Avg Hold Days</th>
+                                    <th>Priority</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="investorsTableBody">
+                                <!-- Data will be populated here -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="row mt-4">
+            <div class="col-12 text-center text-muted">
+                <p>Last Updated: <span id="lastUpdated">Never</span></p>
+                <p class="small">Data sourced from Georgia county public records</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript -->
+    <script>
+        let selectedInvestors = new Set();
+        let chart = null;
+
+        // Load data on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            loadDashboardData();
+            setInterval(loadDashboardData, 300000); // Refresh every 5 minutes
+        });
+
+        async function loadDashboardData() {
+            try {
+                // Load stats
+                const statsResponse = await fetch('/api/stats');
+                const stats = await statsResponse.json();
+                
+                if (!stats.error) {
+                    document.getElementById('totalFlips').textContent = stats.total_flips_identified || 0;
+                    document.getElementById('totalInvestors').textContent = stats.total_investors || 0;
+                    document.getElementById('totalProfit').textContent = 
+                        '$' + (stats.total_profit || 0).toLocaleString();
+                    document.getElementById('avgHoldDays').textContent = 
+                        Math.round(stats.avg_hold_days || 0);
+                    document.getElementById('lastUpdated').textContent = 
+                        stats.last_updated || 'Never';
+                    
+                    // Update county chart
+                    updateCountyChart(stats.by_county || {});
+                }
+
+                // Load flips
+                const flipsResponse = await fetch('/api/flips');
+                const flips = await flipsResponse.json();
+                updateFlipsTable(flips);
+
+                // Load investors
+                const investorsResponse = await fetch('/api/investors');
+                const investors = await investorsResponse.json();
+                updateInvestorsTable(investors);
+
+            } catch (error) {
+                console.error('Error loading data:', error);
+            }
+        }
+
+        function updateFlipsTable(flips) {
+            const tbody = document.getElementById('flipsTableBody');
+            tbody.innerHTML = '';
+            
+            flips.slice(0, 20).forEach(flip => {
+                const row = document.createElement('tr');
+                
+                // Truncate address if too long
+                const address = flip.address || 'N/A';
+                const shortAddress = address.length > 30 ? 
+                    address.substring(0, 30) + '...' : address;
+                
+                row.innerHTML = `
+                    <td title="${address}">${shortAddress}</td>
+                    <td>$${(flip.buy_price || 0).toLocaleString()}</td>
+                    <td>$${(flip.sell_price || 0).toLocaleString()}</td>
+                    <td><span class="badge bg-success">$${(flip.profit || 0).toLocaleString()}</span></td>
+                    <td>${flip.hold_days || 0}</td>
+                    <td>${flip.buyer || 'Unknown'}</td>
+                `;
+                
+                tbody.appendChild(row);
+            });
+        }
+
+        function updateInvestorsTable(investors) {
+            const tbody = document.getElementById('investorsTableBody');
+            tbody.innerHTML = '';
+            
+            investors.forEach(investor => {
+                const row = document.createElement('tr');
+                const investorName = investor.investor_name || 'Unknown';
+                
+                // Determine priority
+                const totalFlips = investor.total_flips || 0;
+                let priorityClass = 'priority-low';
+                let priorityText = 'Low';
+                
+                if (totalFlips > 10) {
+                    priorityClass = 'priority-high';
+                    priorityText = 'High';
+                } else if (totalFlips > 5) {
+                    priorityClass = 'priority-medium';
+                    priorityText = 'Medium';
+                }
+                
+                row.className = priorityClass;
+                row.innerHTML = `
+                    <td>
+                        <input type="checkbox" class="investor-checkbox" 
+                               value="${investorName}"
+                               ${selectedInvestors.has(investorName) ? 'checked' : ''}>
+                    </td>
+                    <td>${investorName}</td>
+                    <td><span class="badge bg-primary">${totalFlips}</span></td>
+                    <td>$${(investor.total_profit || 0).toLocaleString()}</td>
+                    <td>${(investor.avg_roi || 0).toFixed(1)}%</td>
+                    <td>${Math.round(investor.avg_hold_days || 0)}</td>
+                    <td><span class="badge ${priorityClass.replace('priority-', 'bg-')}">${priorityText}</span></td>
+                    <td>
+                        <button class="btn btn-sm btn-outline-primary" onclick="viewInvestor('${investorName}')">
+                            <i class="bi bi-eye"></i>
+                        </button>
+                    </td>
+                `;
+                
+                tbody.appendChild(row);
+            });
+            
+            // Add checkbox listeners
+            document.querySelectorAll('.investor-checkbox').forEach(checkbox => {
+                checkbox.addEventListener('change', function() {
+                    if (this.checked) {
+                        selectedInvestors.add(this.value);
+                    } else {
+                        selectedInvestors.delete(this.value);
+                    }
+                });
+            });
+            
+            // Update select all checkbox
+            document.getElementById('selectAllCheckbox').addEventListener('change', function() {
+                const checkboxes = document.querySelectorAll('.investor-checkbox');
+                checkboxes.forEach(cb => {
+                    cb.checked = this.checked;
+                    if (this.checked) {
+                        selectedInvestors.add(cb.value);
+                    } else {
+                        selectedInvestors.delete(cb.value);
+                    }
+                });
+            });
+        }
+
+        function updateCountyChart(countyData) {
+            const ctx = document.getElementById('countyChart').getContext('2d');
+            
+            // Destroy existing chart
+            if (chart) {
+                chart.destroy();
+            }
+            
+            const labels = Object.keys(countyData);
+            const data = Object.values(countyData);
+            
+            chart = new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        data: data,
+                        backgroundColor: [
+                            '#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0',
+                            '#9966FF', '#FF9F40', '#8AC926', '#1982C4'
+                        ]
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            position: 'bottom'
+                        }
+                    }
+                }
+            });
+        }
+
+        function selectAll() {
+            selectedInvestors.clear();
+            document.querySelectorAll('.investor-checkbox').forEach(cb => {
+                cb.checked = true;
+                selectedInvestors.add(cb.value);
+            });
+            document.getElementById('selectAllCheckbox').checked = true;
+        }
+
+        function deselectAll() {
+            selectedInvestors.clear();
+            document.querySelectorAll('.investor-checkbox').forEach(cb => {
+                cb.checked = false;
+            });
+            document.getElementById('selectAllCheckbox').checked = false;
+        }
+
+        async function exportSelected() {
+            if (selectedInvestors.size === 0) {
+                alert('Please select at least one investor to export.');
+                return;
+            }
+            
+            try {
+                const response = await fetch('/api/export', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        investor_ids: Array.from(selectedInvestors)
+                    })
+                });
+                
+                const result = await response.json();
+                
+                if (result.success) {
+                    alert(`Exported ${result.count} investors successfully!`);
+                } else {
+                    alert('Error exporting data: ' + (result.error || 'Unknown error'));
+                }
+            } catch (error) {
+                alert('Error exporting data: ' + error.message);
+            }
+        }
+
+        async function runAnalysis() {
+            try {
+                const response = await fetch('/api/run-analysis', {
+                    method: 'POST'
+                });
+                
+                const result = await response.json();
+                
+                if (result.success) {
+                    alert('Analysis started! Data will refresh when complete.');
+                    // Reload data after a delay
+                    setTimeout(loadDashboardData, 10000);
+                }
+            } catch (error) {
+                alert('Error starting analysis: ' + error.message);
+            }
+        }
+
+        function viewInvestor(investorName) {
+            alert(`Viewing details for: ${investorName}\n\nThis would open a detailed view in a future version.`);
+        }
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
