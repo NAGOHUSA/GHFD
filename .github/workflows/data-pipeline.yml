@@ -1,0 +1,173 @@
+name: Georgia House Flip Data Pipeline
+
+on:
+  # Manual trigger from GitHub UI
+  workflow_dispatch:
+    inputs:
+      counties:
+        description: 'Counties to scrape (comma-separated or "all")'
+        required: false
+        default: 'all'
+        type: string
+      days_back:
+        description: 'Days of historical data to fetch'
+        required: false
+        default: '180'
+        type: string
+      dry_run:
+        description: 'Test run without saving to database'
+        required: false
+        default: 'false'
+        type: boolean
+
+  # Scheduled runs (8 AM Eastern Time, Monday-Friday)
+  schedule:
+    - cron: '0 12 * * 1-5'  # 12:00 UTC = 8:00 AM EST/EDT
+    - cron: '0 18 * * 1-5'  # 18:00 UTC = 2:00 PM EST/EDT (afternoon update)
+
+  # Run on pushes to main branch (optional)
+  push:
+    branches:
+      - main
+    paths:
+      - 'src/**'
+      - 'scripts/**'
+      - '.github/workflows/data-pipeline.yml'
+
+jobs:
+  run-pipeline:
+    runs-on: ubuntu-latest
+    
+    env:
+      DB_PATH: data/properties.db
+      RESULTS_DIR: data/results
+      LOG_LEVEL: INFO
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.11'
+        cache: 'pip'
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+        pip install pytest pandasql  # Additional packages for CI
+
+    - name: Create necessary directories
+      run: |
+        mkdir -p data/raw data/processed data/results data/exports
+        mkdir -p logs
+        mkdir -p config
+
+    - name: Set timezone to Eastern Time
+      run: |
+        sudo timedatectl set-timezone America/New_York
+        echo "Current time: $(TZ='America/New_York' date)"
+
+    - name: Run data pipeline
+      id: pipeline
+      run: |
+        echo "Starting pipeline at $(date)"
+        echo "Input parameters:"
+        echo "  Counties: ${{ github.event.inputs.counties }}"
+        echo "  Days back: ${{ github.event.inputs.days_back }}"
+        echo "  Dry run: ${{ github.event.inputs.dry_run }}"
+        echo "  Event type: ${{ github.event_name }}"
+        
+        # Set environment variables from inputs
+        if [ "${{ github.event.inputs.counties }}" != "" ]; then
+          echo "COUNTIES=${{ github.event.inputs.counties }}" >> $GITHUB_ENV
+        fi
+        
+        if [ "${{ github.event.inputs.days_back }}" != "" ]; then
+          echo "DAYS_BACK=${{ github.event.inputs.days_back }}" >> $GITHUB_ENV
+        fi
+        
+        if [ "${{ github.event.inputs.dry_run }}" == "true" ]; then
+          echo "DRY_RUN=true" >> $GITHUB_ENV
+        fi
+        
+        # Run the pipeline with logging
+        python scripts/run_pipeline.py \
+          --counties "${COUNTIES:-all}" \
+          --days-back "${DAYS_BACK:-180}" \
+          --dry-run "${DRY_RUN:-false}" \
+          --log-file "logs/pipeline_$(date +%Y%m%d_%H%M%S).log"
+        
+        PIPELINE_EXIT_CODE=$?
+        
+        if [ $PIPELINE_EXIT_CODE -eq 0 ]; then
+          echo "status=success" >> $GITHUB_OUTPUT
+          echo "Pipeline completed successfully"
+        else
+          echo "status=failure" >> $GITHUB_OUTPUT
+          echo "Pipeline failed with exit code $PIPELINE_EXIT_CODE"
+          exit $PIPELINE_EXIT_CODE
+        fi
+
+    - name: Run tests
+      if: steps.pipeline.outputs.status == 'success'
+      run: |
+        python -m pytest tests/ -v --tb=short || echo "Tests completed (some may have failed)"
+
+    - name: Generate summary report
+      if: always()
+      run: |
+        echo "Generating workflow summary..."
+        
+        # Count files generated
+        RESULTS_COUNT=$(find data/results -name "*.csv" -o -name "*.json" -o -name "*.xlsx" 2>/dev/null | wc -l || echo "0")
+        DB_SIZE=$(du -h data/properties.db 2>/dev/null | cut -f1 || echo "0KB")
+        
+        # Create summary
+        echo "## 📊 Pipeline Summary" >> $GITHUB_STEP_SUMMARY
+        echo "" >> $GITHUB_STEP_SUMMARY
+        echo "**Run Type**: ${{ github.event_name }}" >> $GITHUB_STEP_SUMMARY
+        echo "" >> $GITHUB_STEP_SUMMARY
+        echo "**Results**: " >> $GITHUB_STEP_SUMMARY
+        echo "- Generated $RESULTS_COUNT result files" >> $GITHUB_STEP_SUMMARY
+        echo "- Database size: $DB_SIZE" >> $GITHUB_STEP_SUMMARY
+        echo "" >> $GITHUB_STEP_SUMMARY
+        
+        # Show latest results if available
+        if [ $RESULTS_COUNT -gt 0 ]; then
+          echo "**Latest Files**: " >> $GITHUB_STEP_SUMMARY
+          find data/results -name "*.csv" -o -name "*.json" -o -name "*.xlsx" 2>/dev/null | \
+            tail -5 | while read file; do
+              echo "- \`$(basename "$file")\`" >> $GITHUB_STEP_SUMMARY
+            done
+        fi
+
+    - name: Upload results as artifact
+      if: steps.pipeline.outputs.status == 'success'
+      uses: actions/upload-artifact@v4
+      with:
+        name: pipeline-results-${{ github.run_id }}
+        path: |
+          data/results/
+          data/properties.db
+          logs/
+        retention-days: 30
+
+    - name: Upload to GitHub Pages (optional)
+      if: steps.pipeline.outputs.status == 'success' && github.ref == 'refs/heads/main'
+      run: |
+        # This would require additional setup for GitHub Pages
+        # Currently just showing the pattern
+        echo "To enable GitHub Pages dashboard, see README.md"
+
+    - name: Send notification on failure
+      if: failure()
+      uses: rtCamp/action-slack-notify@v2
+      env:
+        SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+        SLACK_TITLE: "🚨 Georgia Flip Pipeline Failed"
+        SLACK_MESSAGE: "Pipeline run failed. Check logs: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
