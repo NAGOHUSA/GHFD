@@ -8,8 +8,12 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
+        :root {
+            --primary-color: #667eea;
+            --secondary-color: #764ba2;
+        }
         .dashboard-header {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
             color: white;
             padding: 2rem 0;
             margin-bottom: 2rem;
@@ -18,23 +22,34 @@
             background: white;
             border-radius: 10px;
             padding: 1.5rem;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            box-shadow: 0 2px 15px rgba(0,0,0,0.1);
             margin-bottom: 1rem;
+            transition: transform 0.3s ease;
+        }
+        .stat-card:hover {
+            transform: translateY(-5px);
         }
         .investor-table {
             max-height: 500px;
             overflow-y: auto;
         }
-        .priority-high { background-color: #ffebee; }
-        .priority-medium { background-color: #fff3e0; }
-        .priority-low { background-color: #e8f5e9; }
+        .priority-high { background-color: rgba(255, 235, 238, 0.5); }
+        .priority-medium { background-color: rgba(255, 243, 224, 0.5); }
+        .priority-low { background-color: rgba(232, 245, 233, 0.5); }
         .flip-badge {
             font-size: 0.8em;
             padding: 0.2em 0.6em;
         }
-        .data-loading {
-            opacity: 0.7;
-            pointer-events: none;
+        .data-refresh {
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+        .data-refresh:hover {
+            transform: rotate(180deg);
+        }
+        .county-badge {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            color: white;
         }
     </style>
 </head>
@@ -45,22 +60,17 @@
             <div class="row align-items-center">
                 <div class="col-md-8">
                     <h1><i class="bi bi-house-heart"></i> Georgia House Flip Detector</h1>
-                    <p class="lead">Identifying $70k-$150k profit flips (30-365 day holds)</p>
+                    <p class="lead mb-0">Identifying $70k-$150k profit flips (30-365 day holds)</p>
+                    <small class="opacity-75">Data sourced from Georgia county public records</small>
                 </div>
                 <div class="col-md-4 text-end">
-                    <div class="btn-group">
-                        <button class="btn btn-light me-2" onclick="loadLatestData()" id="refreshBtn">
-                            <i class="bi bi-arrow-clockwise"></i> Load Latest Data
+                    <div class="d-flex justify-content-end gap-2">
+                        <button class="btn btn-light" onclick="loadDashboardData()" id="refreshBtn">
+                            <i class="bi bi-arrow-clockwise"></i> Refresh
                         </button>
-                        <div class="dropdown">
-                            <button class="btn btn-outline-light dropdown-toggle" type="button" id="dataSourceDropdown" data-bs-toggle="dropdown">
-                                <i class="bi bi-database"></i> Data Source
-                            </button>
-                            <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="#" onclick="loadFromLocalFiles()">Local Files (data/results/)</a></li>
-                                <li><a class="dropdown-item" href="#" onclick="useMockData()">Sample Mock Data</a></li>
-                            </ul>
-                        </div>
+                        <a href="https://github.com/NAGOHUSA/GHFD/actions" target="_blank" class="btn btn-outline-light">
+                            <i class="bi bi-github"></i> View Pipeline
+                        </a>
                     </div>
                 </div>
             </div>
@@ -69,43 +79,51 @@
 
     <!-- Stats Dashboard -->
     <div class="container">
+        <!-- Status Alert -->
         <div class="row mb-4">
-            <div class="col-md-3">
-                <div class="stat-card text-center">
-                    <h3 id="totalFlips">0</h3>
-                    <p class="text-muted">Total Flips Identified</p>
-                </div>
-            </div>
-            <div class="col-md-3">
-                <div class="stat-card text-center">
-                    <h3 id="totalInvestors">0</h3>
-                    <p class="text-muted">Active Investors</p>
-                </div>
-            </div>
-            <div class="col-md-3">
-                <div class="stat-card text-center">
-                    <h3 id="totalProfit">$0</h3>
-                    <p class="text-muted">Total Profit Detected</p>
-                </div>
-            </div>
-            <div class="col-md-3">
-                <div class="stat-card text-center">
-                    <h3 id="avgHoldDays">0</h3>
-                    <p class="text-muted">Avg Hold (Days)</p>
+            <div class="col-12">
+                <div class="alert alert-info d-flex justify-content-between align-items-center" id="statusAlert">
+                    <div>
+                        <i class="bi bi-info-circle me-2"></i>
+                        <span id="statusMessage">Loading dashboard data...</span>
+                    </div>
+                    <div class="d-flex align-items-center">
+                        <span class="badge county-badge me-2" id="countyCount">0 counties</span>
+                        <span class="badge bg-success" id="dataAge">Just now</span>
+                        <div class="spinner-border spinner-border-sm ms-2" id="loadingSpinner"></div>
+                    </div>
                 </div>
             </div>
         </div>
 
-        <!-- Status Alert -->
+        <!-- Main Stats -->
         <div class="row mb-4">
-            <div class="col-12">
-                <div class="alert alert-info" id="statusAlert">
-                    <i class="bi bi-info-circle"></i> 
-                    <span id="statusMessage">Click "Load Latest Data" to begin</span>
-                    <span class="float-end">
-                        <span id="fileStatus"></span>
-                        <span class="spinner-border spinner-border-sm ms-2 d-none" id="loadingSpinner"></span>
-                    </span>
+            <div class="col-md-3">
+                <div class="stat-card text-center">
+                    <h2 id="totalFlips" class="display-6">0</h2>
+                    <p class="text-muted mb-0">Total Flips</p>
+                    <small class="text-muted">30-365 day holds</small>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="stat-card text-center">
+                    <h2 id="totalInvestors" class="display-6">0</h2>
+                    <p class="text-muted mb-0">Active Investors</p>
+                    <small class="text-muted">For outreach</small>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="stat-card text-center">
+                    <h2 id="totalProfit" class="display-6">$0</h2>
+                    <p class="text-muted mb-0">Total Profit</p>
+                    <small class="text-muted">$70k-$150k range</small>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="stat-card text-center">
+                    <h2 id="avgROI" class="display-6">0%</h2>
+                    <p class="text-muted mb-0">Average ROI</p>
+                    <small class="text-muted">Return on investment</small>
                 </div>
             </div>
         </div>
@@ -114,30 +132,36 @@
         <div class="row mb-4">
             <div class="col-md-8">
                 <div class="stat-card">
-                    <h5>Recent Property Flips <small class="text-muted" id="flipsCount">(0 flips)</small></h5>
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <h5 class="mb-0">
+                            <i class="bi bi-house-door me-2"></i>Recent Property Flips
+                            <span class="badge bg-primary ms-2" id="flipsCount">0</span>
+                        </h5>
+                        <div class="dropdown">
+                            <button class="btn btn-sm btn-outline-primary dropdown-toggle" type="button" data-bs-toggle="dropdown">
+                                <i class="bi bi-filter"></i> Filter
+                            </button>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="#" onclick="sortFlips('profit', 'desc')">Highest Profit</a></li>
+                                <li><a class="dropdown-item" href="#" onclick="sortFlips('hold_days', 'asc')">Quickest Flips</a></li>
+                                <li><a class="dropdown-item" href="#" onclick="sortFlips('roi', 'desc')">Best ROI</a></li>
+                            </ul>
+                        </div>
+                    </div>
                     <div class="investor-table">
                         <table class="table table-hover" id="flipsTable">
                             <thead>
                                 <tr>
                                     <th>Address</th>
-                                    <th>Buy Date</th>
-                                    <th>Buy Price</th>
-                                    <th>Sell Price</th>
                                     <th>Profit</th>
+                                    <th>ROI</th>
                                     <th>Hold Days</th>
                                     <th>Investor</th>
+                                    <th>County</th>
                                 </tr>
                             </thead>
                             <tbody id="flipsTableBody">
-                                <tr id="noFlipsRow">
-                                    <td colspan="7" class="text-center text-muted py-4">
-                                        <i class="bi bi-house-x" style="font-size: 2rem;"></i>
-                                        <p class="mt-2">No flip data loaded yet</p>
-                                        <button class="btn btn-sm btn-outline-primary" onclick="loadLatestData()">
-                                            Load Data
-                                        </button>
-                                    </td>
-                                </tr>
+                                <!-- Data will be populated here -->
                             </tbody>
                         </table>
                     </div>
@@ -146,11 +170,10 @@
             
             <div class="col-md-4">
                 <div class="stat-card">
-                    <h5>Top Counties</h5>
-                    <canvas id="countyChart"></canvas>
-                    <div id="noCountyData" class="text-center text-muted py-4">
-                        <i class="bi bi-pie-chart" style="font-size: 2rem;"></i>
-                        <p class="mt-2">No county data available</p>
+                    <h5 class="mb-3"><i class="bi bi-pie-chart me-2"></i>Top Counties</h5>
+                    <canvas id="countyChart" height="250"></canvas>
+                    <div class="mt-3" id="countyList">
+                        <!-- County list will be populated here -->
                     </div>
                 </div>
             </div>
@@ -161,16 +184,19 @@
             <div class="col-12">
                 <div class="stat-card">
                     <div class="d-flex justify-content-between align-items-center mb-3">
-                        <h5>Top Investors for Outreach <small class="text-muted" id="investorsCount">(0 investors)</small></h5>
+                        <h5 class="mb-0">
+                            <i class="bi bi-people me-2"></i>Top Investors for Outreach
+                            <span class="badge bg-primary ms-2" id="investorsCount">0</span>
+                        </h5>
                         <div>
-                            <button class="btn btn-sm btn-outline-primary me-2" onclick="selectAll()" id="selectAllBtn" disabled>
+                            <button class="btn btn-sm btn-outline-primary me-2" onclick="selectAllInvestors()">
                                 Select All
                             </button>
-                            <button class="btn btn-sm btn-outline-secondary me-2" onclick="deselectAll()" id="deselectAllBtn" disabled>
+                            <button class="btn btn-sm btn-outline-secondary me-2" onclick="deselectAllInvestors()">
                                 Clear All
                             </button>
-                            <button class="btn btn-sm btn-success" onclick="exportSelected()" id="exportBtn" disabled>
-                                <i class="bi bi-download"></i> Export Selected
+                            <button class="btn btn-sm btn-success" onclick="exportSelectedInvestors()">
+                                <i class="bi bi-download"></i> Export
                             </button>
                         </div>
                     </div>
@@ -178,22 +204,17 @@
                         <table class="table table-hover" id="investorsTable">
                             <thead>
                                 <tr>
-                                    <th><input type="checkbox" id="selectAllCheckbox" disabled></th>
-                                    <th>Investor Name</th>
-                                    <th>Total Flips</th>
+                                    <th width="50"><input type="checkbox" id="selectAllCheckbox"></th>
+                                    <th>Investor</th>
+                                    <th>Flips</th>
                                     <th>Total Profit</th>
                                     <th>Avg ROI</th>
-                                    <th>Avg Hold Days</th>
+                                    <th>Avg Hold</th>
                                     <th>Priority</th>
                                 </tr>
                             </thead>
                             <tbody id="investorsTableBody">
-                                <tr id="noInvestorsRow">
-                                    <td colspan="7" class="text-center text-muted py-4">
-                                        <i class="bi bi-people" style="font-size: 2rem;"></i>
-                                        <p class="mt-2">No investor data loaded yet</p>
-                                    </td>
-                                </tr>
+                                <!-- Data will be populated here -->
                             </tbody>
                         </table>
                     </div>
@@ -202,11 +223,21 @@
         </div>
 
         <!-- Footer -->
-        <div class="row mt-4">
+        <div class="row mt-4 mb-4">
             <div class="col-12 text-center text-muted">
-                <p>Last Updated: <span id="lastUpdated">Never</span> | Data Source: <span id="dataSource">None</span></p>
-                <p class="small">Data sourced from Georgia county public records | 
-                    <a href="https://github.com/NAGOHUSA/GHFD/tree/main" target="_blank">View GitHub Repository</a>
+                <p class="mb-1">
+                    <i class="bi bi-clock-history me-1"></i>
+                    Last Updated: <span id="lastUpdated">Never</span> | 
+                    <i class="bi bi-database me-1 ms-2"></i>
+                    Data Source: <span id="dataSource">Georgia Public Records</span>
+                </p>
+                <p class="small">
+                    <a href="https://github.com/NAGOHUSA/GHFD" target="_blank" class="text-muted">
+                        <i class="bi bi-github"></i> View Source Code
+                    </a> | 
+                    <a href="https://github.com/NAGOHUSA/GHFD/actions" target="_blank" class="text-muted">
+                        <i class="bi bi-gear"></i> Pipeline Status
+                    </a>
                 </p>
             </div>
         </div>
@@ -214,235 +245,441 @@
 
     <!-- JavaScript -->
     <script>
-        let selectedInvestors = new Set();
-        let chart = null;
+        // Global variables
         let currentData = {
             flips: [],
             investors: [],
-            stats: {}
+            stats: {},
+            metadata: {}
         };
+        let chart = null;
+        let selectedInvestors = new Set();
+        let flipSortKey = 'profit';
+        let flipSortOrder = 'desc';
 
-        // Load data on page load
+        // Initialize on page load
         document.addEventListener('DOMContentLoaded', function() {
-            updateStatus('Ready to load data', 'info');
-            // Auto-load data after 1 second
-            setTimeout(loadLatestData, 1000);
+            loadDashboardData();
+            
+            // Auto-refresh every 5 minutes
+            setInterval(loadDashboardData, 5 * 60 * 1000);
         });
 
-        function updateStatus(message, type = 'info') {
-            const alert = document.getElementById('statusAlert');
-            const messageSpan = document.getElementById('statusMessage');
-            
-            messageSpan.textContent = message;
-            
-            // Update alert class
-            alert.className = 'alert alert-' + type;
-        }
-
-        function showLoading(show) {
-            const spinner = document.getElementById('loadingSpinner');
-            const refreshBtn = document.getElementById('refreshBtn');
-            
-            if (show) {
-                spinner.classList.remove('d-none');
-                refreshBtn.classList.add('data-loading');
-                refreshBtn.innerHTML = '<i class="bi bi-arrow-clockwise"></i> Loading...';
-            } else {
-                spinner.classList.add('d-none');
-                refreshBtn.classList.remove('data-loading');
-                refreshBtn.innerHTML = '<i class="bi bi-arrow-clockwise"></i> Load Latest Data';
-            }
-        }
-
-        function updateFileStatus(filesFound) {
-            const fileStatus = document.getElementById('fileStatus');
-            if (filesFound > 0) {
-                fileStatus.textContent = `${filesFound} data file(s) found`;
-                fileStatus.className = 'badge bg-success';
-            } else {
-                fileStatus.textContent = 'No data files found';
-                fileStatus.className = 'badge bg-warning';
-            }
-        }
-
-        async function loadLatestData() {
+        // Load dashboard data from GitHub
+        async function loadDashboardData() {
             showLoading(true);
-            updateStatus('Searching for data files...', 'info');
+            updateStatus('Loading data from GitHub...', 'info');
             
             try {
-                // Try to load from local files first
-                const dataLoaded = await loadFromLocalFiles();
+                // Try multiple data sources
+                const dataSources = [
+                    'data/dashboard_data.json',  // Main data file
+                    'https://raw.githubusercontent.com/NAGOHUSA/GHFD/main/data/dashboard_data.json',  // Raw GitHub URL
+                    'data/flips.json',  // Fallback individual files
+                    'data/investors.json'
+                ];
                 
-                if (!dataLoaded) {
-                    updateStatus('No local data files found. Using sample data.', 'warning');
-                    await useMockData();
+                let dataLoaded = false;
+                
+                for (const source of dataSources) {
+                    try {
+                        const response = await fetch(source + '?t=' + Date.now());
+                        if (response.ok) {
+                            if (source.includes('dashboard_data.json')) {
+                                const fullData = await response.json();
+                                currentData = {
+                                    flips: fullData.recent_flips || [],
+                                    investors: fullData.top_investors || [],
+                                    stats: fullData.stats || {},
+                                    metadata: fullData.metadata || {}
+                                };
+                                dataLoaded = true;
+                                break;
+                            } else if (source.includes('flips.json')) {
+                                currentData.flips = await response.json();
+                            } else if (source.includes('investors.json')) {
+                                currentData.investors = await response.json();
+                            }
+                        }
+                    } catch (e) {
+                        console.log(`Failed to load from ${source}:`, e);
+                    }
                 }
+                
+                if (!dataLoaded && (currentData.flips.length > 0 || currentData.investors.length > 0)) {
+                    // Generate stats from individual files
+                    currentData.stats = generateStats(currentData.flips, currentData.investors);
+                    dataLoaded = true;
+                }
+                
+                if (dataLoaded) {
+                    updateDashboard();
+                    updateStatus('Data loaded successfully', 'success');
+                    
+                    // Calculate data age
+                    const generatedAt = currentData.metadata.generated_at || currentData.stats.last_updated;
+                    if (generatedAt) {
+                        const dataDate = new Date(generatedAt);
+                        const now = new Date();
+                        const diffHours = Math.floor((now - dataDate) / (1000 * 60 * 60));
+                        
+                        if (diffHours === 0) {
+                            document.getElementById('dataAge').textContent = 'Just now';
+                        } else if (diffHours < 24) {
+                            document.getElementById('dataAge').textContent = `${diffHours}h ago`;
+                        } else {
+                            const diffDays = Math.floor(diffHours / 24);
+                            document.getElementById('dataAge').textContent = `${diffDays}d ago`;
+                        }
+                    }
+                } else {
+                    throw new Error('No data files found');
+                }
+                
             } catch (error) {
                 console.error('Error loading data:', error);
-                updateStatus('Error loading data: ' + error.message, 'danger');
-                await useMockData(); // Fallback to mock data
+                updateStatus('Error loading data. Running pipeline may be needed.', 'danger');
+                showSampleData();
             } finally {
                 showLoading(false);
             }
         }
 
-        async function loadFromLocalFiles() {
-            updateStatus('Loading from data/results/ directory...', 'info');
+        // Update the dashboard with current data
+        function updateDashboard() {
+            const { flips, investors, stats } = currentData;
             
-            try {
-                // First, try to find the latest data files
-                const files = await findLatestDataFiles();
-                updateFileStatus(files.count);
+            // Update stats cards
+            document.getElementById('totalFlips').textContent = stats.total_flips_identified?.toLocaleString() || '0';
+            document.getElementById('totalInvestors').textContent = stats.total_investors?.toLocaleString() || '0';
+            document.getElementById('totalProfit').textContent = '$' + (stats.total_profit?.toLocaleString() || '0');
+            document.getElementById('avgROI').textContent = stats.avg_roi ? stats.avg_roi.toFixed(1) + '%' : '0%';
+            document.getElementById('lastUpdated').textContent = stats.last_updated || 'Never';
+            
+            // Update counts
+            document.getElementById('flipsCount').textContent = flips.length;
+            document.getElementById('investorsCount').textContent = investors.length;
+            
+            // Count unique counties
+            const counties = new Set(flips.map(flip => flip.county).filter(Boolean));
+            document.getElementById('countyCount').textContent = `${counties.size} counties`;
+            
+            // Update tables
+            updateFlipsTable();
+            updateInvestorsTable();
+            updateCountyChart();
+            
+            // Enable/disable buttons
+            const hasData = flips.length > 0;
+            document.getElementById('selectAllCheckbox').disabled = !hasData;
+        }
+
+        // Update flips table
+        function updateFlipsTable() {
+            const tbody = document.getElementById('flipsTableBody');
+            const flips = [...currentData.flips];
+            
+            // Sort flips
+            flips.sort((a, b) => {
+                if (flipSortOrder === 'desc') {
+                    return (b[flipSortKey] || 0) - (a[flipSortKey] || 0);
+                } else {
+                    return (a[flipSortKey] || 0) - (b[flipSortKey] || 0);
+                }
+            });
+            
+            tbody.innerHTML = '';
+            
+            flips.slice(0, 25).forEach(flip => {
+                const row = document.createElement('tr');
                 
-                if (files.count === 0) {
-                    return false;
+                // Format address
+                const address = flip.address || 'Unknown Address';
+                const shortAddress = address.length > 25 ? 
+                    address.substring(0, 25) + '...' : address;
+                
+                // Format profit with color
+                const profit = flip.profit || 0;
+                const profitClass = profit >= 100000 ? 'text-success fw-bold' : 'text-success';
+                
+                // Calculate ROI if not present
+                const roi = flip.roi || (flip.buy_price ? (profit / flip.buy_price * 100).toFixed(1) : '0.0');
+                
+                row.innerHTML = `
+                    <td title="${address}">
+                        <i class="bi bi-house me-1"></i>${shortAddress}
+                    </td>
+                    <td class="${profitClass}">$${profit.toLocaleString()}</td>
+                    <td>${roi}%</td>
+                    <td>${flip.hold_days || 0} days</td>
+                    <td>
+                        <span class="badge bg-info bg-opacity-10 text-info">
+                            ${flip.buyer || 'Unknown'}
+                        </span>
+                    </td>
+                    <td>
+                        <span class="badge bg-secondary bg-opacity-10 text-secondary">
+                            ${flip.county || 'Unknown'}
+                        </span>
+                    </td>
+                `;
+                
+                tbody.appendChild(row);
+            });
+        }
+
+        // Sort flips by specific key
+        function sortFlips(key, order) {
+            flipSortKey = key;
+            flipSortOrder = order;
+            updateFlipsTable();
+        }
+
+        // Update investors table
+        function updateInvestorsTable() {
+            const tbody = document.getElementById('investorsTableBody');
+            const investors = [...currentData.investors];
+            
+            // Sort by total profit (descending)
+            investors.sort((a, b) => (b.total_profit || 0) - (a.total_profit || 0));
+            
+            tbody.innerHTML = '';
+            selectedInvestors.clear();
+            
+            investors.slice(0, 50).forEach(investor => {
+                const row = document.createElement('tr');
+                const investorName = investor.investor_name || 'Unknown Investor';
+                
+                // Determine priority
+                const totalFlips = investor.total_flips || 0;
+                let priorityClass = '';
+                let priorityText = '';
+                let priorityBadge = 'bg-secondary';
+                
+                if (totalFlips >= 10) {
+                    priorityClass = 'priority-high';
+                    priorityText = 'High';
+                    priorityBadge = 'bg-danger';
+                } else if (totalFlips >= 5) {
+                    priorityClass = 'priority-medium';
+                    priorityText = 'Medium';
+                    priorityBadge = 'bg-warning';
+                } else {
+                    priorityClass = 'priority-low';
+                    priorityText = 'Low';
+                    priorityBadge = 'bg-success';
                 }
                 
-                // Load the data
-                let flips = [];
-                let investors = [];
-                let stats = {};
+                row.className = priorityClass;
+                row.innerHTML = `
+                    <td>
+                        <input type="checkbox" class="investor-checkbox" 
+                               value="${investorName}"
+                               onchange="toggleInvestorSelection('${investorName}', this.checked)">
+                    </td>
+                    <td>
+                        <i class="bi bi-person-circle me-1"></i>
+                        ${investorName}
+                    </td>
+                    <td>
+                        <span class="badge bg-primary">${totalFlips}</span>
+                    </td>
+                    <td class="fw-bold">$${(investor.total_profit || 0).toLocaleString()}</td>
+                    <td>${(investor.avg_roi || 0).toFixed(1)}%</td>
+                    <td>${Math.round(investor.avg_hold_days || 0)} days</td>
+                    <td>
+                        <span class="badge ${priorityBadge}">${priorityText}</span>
+                    </td>
+                `;
                 
-                if (files.flips) {
-                    const response = await fetch(files.flips);
-                    if (response.ok) {
-                        const csvText = await response.text();
-                        flips = parseCSV(csvText);
-                        updateStatus(`Loaded ${flips.length} flips from ${files.flips}`, 'success');
+                tbody.appendChild(row);
+            });
+        }
+
+        // Update county chart
+        function updateCountyChart() {
+            const ctx = document.getElementById('countyChart');
+            const countyList = document.getElementById('countyList');
+            const countyData = currentData.stats.by_county || {};
+            
+            // Destroy existing chart
+            if (chart) {
+                chart.destroy();
+            }
+            
+            if (Object.keys(countyData).length === 0) {
+                ctx.style.display = 'none';
+                countyList.innerHTML = '<p class="text-muted text-center">No county data available</p>';
+                return;
+            }
+            
+            ctx.style.display = 'block';
+            
+            // Prepare chart data
+            const labels = Object.keys(countyData);
+            const data = Object.values(countyData);
+            const colors = [
+                '#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0',
+                '#9966FF', '#FF9F40', '#8AC926', '#1982C4',
+                '#6A0572', '#AB83A1'
+            ];
+            
+            // Create chart
+            chart = new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        data: data,
+                        backgroundColor: colors.slice(0, labels.length),
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                            labels: {
+                                padding: 20,
+                                usePointStyle: true
+                            }
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    return `${context.label}: ${context.raw} flips`;
+                                }
+                            }
+                        }
                     }
                 }
-                
-                if (files.investors) {
-                    const response = await fetch(files.investors);
-                    if (response.ok) {
-                        const csvText = await response.text();
-                        investors = parseCSV(csvText);
-                    }
-                }
-                
-                if (files.stats) {
-                    const response = await fetch(files.stats);
-                    if (response.ok) {
-                        stats = await response.json();
-                    }
-                }
-                
-                // If no stats file, generate from flips data
-                if (flips.length > 0 && Object.keys(stats).length === 0) {
-                    stats = generateStatsFromFlips(flips, investors);
-                }
-                
-                currentData = { flips, investors, stats };
-                updateDashboard(currentData);
-                document.getElementById('dataSource').textContent = 'Local Files';
-                
-                return true;
-            } catch (error) {
-                console.error('Error loading local files:', error);
-                return false;
+            });
+            
+            // Update county list
+            let countyListHTML = '<div class="row g-2">';
+            labels.forEach((county, index) => {
+                const count = countyData[county];
+                countyListHTML += `
+                    <div class="col-6">
+                        <div class="d-flex justify-content-between align-items-center p-2 border rounded">
+                            <span class="text-truncate" title="${county}">${county}</span>
+                            <span class="badge" style="background-color: ${colors[index]}">${count}</span>
+                        </div>
+                    </div>
+                `;
+            });
+            countyListHTML += '</div>';
+            countyList.innerHTML = countyListHTML;
+        }
+
+        // Investor selection functions
+        function toggleInvestorSelection(name, selected) {
+            if (selected) {
+                selectedInvestors.add(name);
+            } else {
+                selectedInvestors.delete(name);
+                document.getElementById('selectAllCheckbox').checked = false;
             }
         }
 
-        async function findLatestDataFiles() {
-            const dataDir = 'data/results/';
-            const files = {
-                count: 0,
-                flips: null,
-                investors: null,
-                stats: null
+        function selectAllInvestors() {
+            selectedInvestors.clear();
+            document.querySelectorAll('.investor-checkbox').forEach(checkbox => {
+                checkbox.checked = true;
+                selectedInvestors.add(checkbox.value);
+            });
+            document.getElementById('selectAllCheckbox').checked = true;
+        }
+
+        function deselectAllInvestors() {
+            selectedInvestors.clear();
+            document.querySelectorAll('.investor-checkbox').forEach(checkbox => {
+                checkbox.checked = false;
+            });
+            document.getElementById('selectAllCheckbox').checked = false;
+        }
+
+        function exportSelectedInvestors() {
+            if (selectedInvestors.size === 0) {
+                alert('Please select at least one investor to export.');
+                return;
+            }
+            
+            const selectedData = currentData.investors.filter(inv => 
+                selectedInvestors.has(inv.investor_name)
+            );
+            
+            // Create CSV content
+            let csv = 'Investor Name,Total Flips,Total Profit,Avg ROI,Avg Hold Days\n';
+            selectedData.forEach(inv => {
+                csv += `"${inv.investor_name}",${inv.total_flips},${inv.total_profit},${inv.avg_roi},${inv.avg_hold_days}\n`;
+            });
+            
+            // Create download link
+            const blob = new Blob([csv], { type: 'text/csv' });
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `georgia_investors_${new Date().toISOString().split('T')[0]}.csv`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            window.URL.revokeObjectURL(url);
+            
+            alert(`Exported ${selectedInvestors.size} investors to CSV file.`);
+        }
+
+        // Show sample data when real data is unavailable
+        function showSampleData() {
+            currentData = {
+                flips: [
+                    {
+                        address: "123 Main St, Atlanta, GA 30303",
+                        profit: 100000,
+                        roi: 40.0,
+                        hold_days: 151,
+                        buyer: "Sample Investor LLC",
+                        county: "Fulton County"
+                    },
+                    {
+                        address: "456 Oak Ave, Decatur, GA 30030",
+                        profit: 95000,
+                        roi: 52.8,
+                        hold_days: 90,
+                        buyer: "Test Investments",
+                        county: "DeKalb County"
+                    }
+                ],
+                investors: [
+                    {
+                        investor_name: "Sample Investor LLC",
+                        total_flips: 5,
+                        total_profit: 450000,
+                        avg_roi: 42.5,
+                        avg_hold_days: 120
+                    }
+                ],
+                stats: {
+                    total_flips_identified: 2,
+                    total_investors: 1,
+                    total_profit: 195000,
+                    avg_hold_days: 120.5,
+                    avg_roi: 46.4,
+                    by_county: {
+                        "Fulton County": 1,
+                        "DeKalb County": 1
+                    },
+                    last_updated: new Date().toLocaleString()
+                }
             };
             
-            try {
-                // Try to get directory listing (this works on GitHub Pages with a pre-generated index)
-                const response = await fetch(dataDir);
-                if (!response.ok) {
-                    // If we can't list the directory, try specific patterns
-                    const timestamp = new Date().toISOString().slice(0, 10).replace(/-/g, '');
-                    
-                    // Try common patterns
-                    const patterns = [
-                        `${dataDir}flips_detailed_*.csv`,
-                        `${dataDir}investors_*.csv`,
-                        `${dataDir}stats_*.json`,
-                        `${dataDir}report_*.json`
-                    ];
-                    
-                    // For now, we'll use a simple approach - check for any files
-                    // In a real implementation, you'd need a server-side component
-                    // to list files, or pre-defined file names
-                    
-                    // Check for sample data
-                    const sampleFlips = await fetch('data/sample/sample_properties.csv');
-                    if (sampleFlips.ok) {
-                        files.flips = 'data/sample/sample_properties.csv';
-                        files.count = 1;
-                    }
-                    
-                    return files;
-                }
-                
-                // If we could list the directory, parse it for files
-                const html = await response.text();
-                const parser = new DOMParser();
-                const doc = parser.parseFromString(html, 'text/html');
-                const links = doc.querySelectorAll('a');
-                
-                let fileList = [];
-                links.forEach(link => {
-                    const href = link.getAttribute('href');
-                    if (href && !href.endsWith('/')) {
-                        fileList.push(href);
-                    }
-                });
-                
-                // Find the latest files by pattern
-                const flipFiles = fileList.filter(f => f.includes('flips_detailed_')).sort().reverse();
-                const investorFiles = fileList.filter(f => f.includes('investors_')).sort().reverse();
-                const statFiles = fileList.filter(f => f.includes('stats_') || f.includes('report_')).sort().reverse();
-                
-                if (flipFiles.length > 0) files.flips = dataDir + flipFiles[0];
-                if (investorFiles.length > 0) files.investors = dataDir + investorFiles[0];
-                if (statFiles.length > 0) files.stats = dataDir + statFiles[0];
-                
-                files.count = [flipFiles, investorFiles, statFiles].filter(arr => arr.length > 0).length;
-                
-            } catch (error) {
-                console.log('Could not list directory, using fallback:', error);
-            }
-            
-            return files;
+            updateDashboard();
+            updateStatus('Showing sample data. Run pipeline for real data.', 'warning');
         }
 
-        function parseCSV(csvText) {
-            const lines = csvText.split('\n');
-            if (lines.length < 2) return [];
-            
-            const headers = lines[0].split(',').map(h => h.trim());
-            const data = [];
-            
-            for (let i = 1; i < lines.length; i++) {
-                if (!lines[i].trim()) continue;
-                
-                const values = lines[i].split(',').map(v => v.trim());
-                const row = {};
-                
-                headers.forEach((header, index) => {
-                    if (values[index]) {
-                        // Try to parse numbers
-                        const numValue = parseFloat(values[index]);
-                        row[header] = isNaN(numValue) ? values[index] : numValue;
-                    } else {
-                        row[header] = '';
-                    }
-                });
-                
-                data.push(row);
-            }
-            
-            return data;
-        }
-
-        function generateStatsFromFlips(flips, investors) {
+        // Generate stats from flips and investors
+        function generateStats(flips, investors) {
             if (flips.length === 0) {
                 return {
                     total_flips_identified: 0,
@@ -450,24 +687,20 @@
                     total_profit: 0,
                     avg_hold_days: 0,
                     avg_roi: 0,
-                    by_county: {}
+                    by_county: {},
+                    last_updated: new Date().toLocaleString()
                 };
             }
             
             const totalProfit = flips.reduce((sum, flip) => sum + (flip.profit || 0), 0);
             const avgHoldDays = flips.reduce((sum, flip) => sum + (flip.hold_days || 0), 0) / flips.length;
+            const avgROI = flips.reduce((sum, flip) => sum + (flip.roi || 0), 0) / flips.length;
             
-            // Calculate ROI if we have buy_price and profit
-            const flipsWithROI = flips.filter(f => f.buy_price && f.profit);
-            const avgROI = flipsWithROI.length > 0 
-                ? (flipsWithROI.reduce((sum, f) => sum + ((f.profit / f.buy_price) * 100), 0) / flipsWithROI.length)
-                : 0;
-            
-            // Count by county
             const countyCount = {};
             flips.forEach(flip => {
-                const county = flip.county || 'Unknown';
-                countyCount[county] = (countyCount[county] || 0) + 1;
+                if (flip.county) {
+                    countyCount[flip.county] = (countyCount[flip.county] || 0) + 1;
+                }
             });
             
             return {
@@ -481,327 +714,38 @@
             };
         }
 
-        async function useMockData() {
-            updateStatus('Loading sample mock data...', 'info');
+        // Utility functions
+        function updateStatus(message, type) {
+            const alert = document.getElementById('statusAlert');
+            const messageSpan = document.getElementById('statusMessage');
             
-            // Sample mock data
-            const mockFlips = [
-                {
-                    property_id: 'PROP1001',
-                    address: '123 Main St, Atlanta, GA 30303',
-                    buy_date: '2024-01-15',
-                    buy_price: 250000,
-                    buyer: 'John Smith LLC',
-                    sell_date: '2024-06-15',
-                    sell_price: 350000,
-                    profit: 100000,
-                    hold_days: 151,
-                    roi: 40.0,
-                    county: 'Fulton County'
-                },
-                {
-                    property_id: 'PROP1002',
-                    address: '456 Oak Ave, Decatur, GA 30030',
-                    buy_date: '2024-02-01',
-                    buy_price: 180000,
-                    buyer: 'Flip Masters Inc',
-                    sell_date: '2024-05-01',
-                    sell_price: 280000,
-                    profit: 100000,
-                    hold_days: 90,
-                    roi: 55.6,
-                    county: 'DeKalb County'
-                },
-                {
-                    property_id: 'PROP1003',
-                    address: '789 Pine Rd, Marietta, GA 30060',
-                    buy_date: '2024-03-10',
-                    buy_price: 220000,
-                    buyer: 'Georgia Flippers LLC',
-                    sell_date: '2024-08-10',
-                    sell_price: 320000,
-                    profit: 100000,
-                    hold_days: 153,
-                    roi: 45.5,
-                    county: 'Cobb County'
-                }
-            ];
-            
-            const mockInvestors = [
-                {
-                    investor_name: 'John Smith LLC',
-                    total_flips: 1,
-                    total_profit: 100000,
-                    avg_profit_per_flip: 100000,
-                    avg_hold_days: 151,
-                    avg_roi: 40.0
-                },
-                {
-                    investor_name: 'Flip Masters Inc',
-                    total_flips: 1,
-                    total_profit: 100000,
-                    avg_profit_per_flip: 100000,
-                    avg_hold_days: 90,
-                    avg_roi: 55.6
-                },
-                {
-                    investor_name: 'Georgia Flippers LLC',
-                    total_flips: 1,
-                    total_profit: 100000,
-                    avg_profit_per_flip: 100000,
-                    avg_hold_days: 153,
-                    avg_roi: 45.5
-                }
-            ];
-            
-            const mockStats = generateStatsFromFlips(mockFlips, mockInvestors);
-            mockStats.last_updated = new Date().toLocaleString();
-            
-            currentData = {
-                flips: mockFlips,
-                investors: mockInvestors,
-                stats: mockStats
-            };
-            
-            updateDashboard(currentData);
-            document.getElementById('dataSource').textContent = 'Sample Data';
-            updateStatus('Loaded sample data. Run pipeline to get real data.', 'warning');
+            messageSpan.textContent = message;
+            alert.className = `alert alert-${type} d-flex justify-content-between align-items-center`;
         }
 
-        function updateDashboard(data) {
-            const { flips, investors, stats } = data;
+        function showLoading(show) {
+            const spinner = document.getElementById('loadingSpinner');
+            const refreshBtn = document.getElementById('refreshBtn');
             
-            // Update stats cards
-            document.getElementById('totalFlips').textContent = stats.total_flips_identified || 0;
-            document.getElementById('totalInvestors').textContent = stats.total_investors || 0;
-            document.getElementById('totalProfit').textContent = '$' + (stats.total_profit || 0).toLocaleString();
-            document.getElementById('avgHoldDays').textContent = Math.round(stats.avg_hold_days || 0);
-            document.getElementById('lastUpdated').textContent = stats.last_updated || new Date().toLocaleString();
-            
-            // Update counters
-            document.getElementById('flipsCount').textContent = `(${flips.length} flips)`;
-            document.getElementById('investorsCount').textContent = `(${investors.length} investors)`;
-            
-            // Update tables
-            updateFlipsTable(flips);
-            updateInvestorsTable(investors);
-            updateCountyChart(stats.by_county || {});
-            
-            // Enable/disable buttons
-            const hasData = flips.length > 0;
-            document.getElementById('selectAllBtn').disabled = !hasData;
-            document.getElementById('deselectAllBtn').disabled = !hasData;
-            document.getElementById('exportBtn').disabled = !hasData;
-            document.getElementById('selectAllCheckbox').disabled = !hasData;
-            
-            updateStatus(`Dashboard updated with ${flips.length} flips and ${investors.length} investors`, 'success');
-        }
-
-        function updateFlipsTable(flips) {
-            const tbody = document.getElementById('flipsTableBody');
-            const noFlipsRow = document.getElementById('noFlipsRow');
-            
-            if (flips.length === 0) {
-                noFlipsRow.style.display = '';
-                tbody.innerHTML = '';
-                tbody.appendChild(noFlipsRow);
-                return;
+            if (show) {
+                spinner.style.display = 'inline-block';
+                refreshBtn.disabled = true;
+                refreshBtn.innerHTML = '<i class="bi bi-arrow-clockwise"></i> Loading...';
+            } else {
+                spinner.style.display = 'none';
+                refreshBtn.disabled = false;
+                refreshBtn.innerHTML = '<i class="bi bi-arrow-clockwise"></i> Refresh';
             }
-            
-            noFlipsRow.style.display = 'none';
-            tbody.innerHTML = '';
-            
-            flips.slice(0, 20).forEach(flip => {
-                const row = document.createElement('tr');
-                
-                // Format date
-                const buyDate = flip.buy_date ? new Date(flip.buy_date).toLocaleDateString() : 'N/A';
-                
-                // Truncate address if too long
-                const address = flip.address || 'N/A';
-                const shortAddress = address.length > 25 ? 
-                    address.substring(0, 25) + '...' : address;
-                
-                row.innerHTML = `
-                    <td title="${address}">${shortAddress}</td>
-                    <td>${buyDate}</td>
-                    <td>$${(flip.buy_price || 0).toLocaleString()}</td>
-                    <td>$${(flip.sell_price || 0).toLocaleString()}</td>
-                    <td><span class="badge bg-success">$${(flip.profit || 0).toLocaleString()}</span></td>
-                    <td>${flip.hold_days || 0}</td>
-                    <td>${flip.buyer || 'Unknown'}</td>
-                `;
-                
-                tbody.appendChild(row);
-            });
         }
 
-        function updateInvestorsTable(investors) {
-            const tbody = document.getElementById('investorsTableBody');
-            const noInvestorsRow = document.getElementById('noInvestorsRow');
-            
-            if (investors.length === 0) {
-                noInvestorsRow.style.display = '';
-                tbody.innerHTML = '';
-                tbody.appendChild(noInvestorsRow);
-                return;
+        // Event listener for select all checkbox
+        document.getElementById('selectAllCheckbox').addEventListener('change', function() {
+            if (this.checked) {
+                selectAllInvestors();
+            } else {
+                deselectAllInvestors();
             }
-            
-            noInvestorsRow.style.display = 'none';
-            tbody.innerHTML = '';
-            
-            investors.forEach(investor => {
-                const row = document.createElement('tr');
-                const investorName = investor.investor_name || 'Unknown';
-                
-                // Determine priority
-                const totalFlips = investor.total_flips || 0;
-                let priorityClass = 'priority-low';
-                let priorityText = 'Low';
-                let priorityBadge = 'bg-secondary';
-                
-                if (totalFlips > 10) {
-                    priorityClass = 'priority-high';
-                    priorityText = 'High';
-                    priorityBadge = 'bg-danger';
-                } else if (totalFlips > 5) {
-                    priorityClass = 'priority-medium';
-                    priorityText = 'Medium';
-                    priorityBadge = 'bg-warning';
-                }
-                
-                row.className = priorityClass;
-                row.innerHTML = `
-                    <td>
-                        <input type="checkbox" class="investor-checkbox" 
-                               value="${investorName}"
-                               ${selectedInvestors.has(investorName) ? 'checked' : ''}>
-                    </td>
-                    <td>${investorName}</td>
-                    <td><span class="badge bg-primary">${totalFlips}</span></td>
-                    <td>$${(investor.total_profit || 0).toLocaleString()}</td>
-                    <td>${(investor.avg_roi || 0).toFixed(1)}%</td>
-                    <td>${Math.round(investor.avg_hold_days || 0)}</td>
-                    <td><span class="badge ${priorityBadge}">${priorityText}</span></td>
-                `;
-                
-                tbody.appendChild(row);
-            });
-            
-            // Add checkbox listeners
-            document.querySelectorAll('.investor-checkbox').forEach(checkbox => {
-                checkbox.addEventListener('change', function() {
-                    if (this.checked) {
-                        selectedInvestors.add(this.value);
-                    } else {
-                        selectedInvestors.delete(this.value);
-                    }
-                });
-            });
-            
-            // Update select all checkbox
-            document.getElementById('selectAllCheckbox').addEventListener('change', function() {
-                const checkboxes = document.querySelectorAll('.investor-checkbox');
-                checkboxes.forEach(cb => {
-                    cb.checked = this.checked;
-                    if (this.checked) {
-                        selectedInvestors.add(cb.value);
-                    } else {
-                        selectedInvestors.delete(cb.value);
-                    }
-                });
-            });
-        }
-
-        function updateCountyChart(countyData) {
-            const ctx = document.getElementById('countyChart');
-            const noCountyData = document.getElementById('noCountyData');
-            
-            if (!countyData || Object.keys(countyData).length === 0) {
-                ctx.style.display = 'none';
-                noCountyData.style.display = 'block';
-                return;
-            }
-            
-            ctx.style.display = 'block';
-            noCountyData.style.display = 'none';
-            
-            // Destroy existing chart
-            if (chart) {
-                chart.destroy();
-            }
-            
-            const labels = Object.keys(countyData);
-            const data = Object.values(countyData);
-            
-            chart = new Chart(ctx, {
-                type: 'doughnut',
-                data: {
-                    labels: labels,
-                    datasets: [{
-                        data: data,
-                        backgroundColor: [
-                            '#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0',
-                            '#9966FF', '#FF9F40', '#8AC926', '#1982C4'
-                        ]
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    plugins: {
-                        legend: {
-                            position: 'bottom'
-                        }
-                    }
-                }
-            });
-        }
-
-        function selectAll() {
-            if (currentData.investors.length === 0) return;
-            
-            selectedInvestors.clear();
-            document.querySelectorAll('.investor-checkbox').forEach(cb => {
-                cb.checked = true;
-                selectedInvestors.add(cb.value);
-            });
-            document.getElementById('selectAllCheckbox').checked = true;
-        }
-
-        function deselectAll() {
-            selectedInvestors.clear();
-            document.querySelectorAll('.investor-checkbox').forEach(cb => {
-                cb.checked = false;
-            });
-            document.getElementById('selectAllCheckbox').checked = false;
-        }
-
-        function exportSelected() {
-            if (selectedInvestors.size === 0) {
-                alert('Please select at least one investor to export.');
-                return;
-            }
-            
-            // Create CSV content
-            let csvContent = "data:text/csv;charset=utf-8,Investor Name,Total Flips,Total Profit,Avg ROI,Avg Hold Days\n";
-            
-            currentData.investors.forEach(investor => {
-                if (selectedInvestors.has(investor.investor_name)) {
-                    csvContent += `"${investor.investor_name}",${investor.total_flips},${investor.total_profit},${investor.avg_roi},${investor.avg_hold_days}\n`;
-                }
-            });
-            
-            // Create download link
-            const encodedUri = encodeURI(csvContent);
-            const link = document.createElement("a");
-            link.setAttribute("href", encodedUri);
-            link.setAttribute("download", `investors_export_${new Date().toISOString().slice(0,10)}.csv`);
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-            
-            alert(`Exported ${selectedInvestors.size} investors to CSV file.`);
-        }
+        });
     </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
