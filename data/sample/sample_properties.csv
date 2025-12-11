@@ -1,0 +1,11 @@
+property_id,address,sale_date,sale_price,buyer,seller,county,recording_date
+PROP1001,"123 Main St, Atlanta, GA 30303","2024-01-15",250000,"John Smith LLC","Previous Owner","Fulton County","2024-01-20"
+PROP1001,"123 Main St, Atlanta, GA 30303","2024-06-15",350000,"New Buyer","John Smith LLC","Fulton County","2024-06-20"
+PROP1002,"456 Oak Ave, Decatur, GA 30030","2024-02-01",180000,"Flip Masters Inc","Previous Owner","DeKalb County","2024-02-05"
+PROP1002,"456 Oak Ave, Decatur, GA 30030","2024-05-01",280000,"New Buyer","Flip Masters Inc","DeKalb County","2024-05-05"
+PROP1003,"789 Pine Rd, Marietta, GA 30060","2024-03-10",220000,"Georgia Flippers LLC","Previous Owner","Cobb County","2024-03-15"
+PROP1003,"789 Pine Rd, Marietta, GA 30060","2024-08-10",320000,"New Buyer","Georgia Flippers LLC","Cobb County","2024-08-15"
+PROP1004,"101 Maple Dr, Alpharetta, GA 30004","2024-01-20",300000,"Investor Group","Previous Owner","Fulton County","2024-01-25"
+PROP1004,"101 Maple Dr, Alpharetta, GA 30004","2024-04-20",420000,"New Buyer","Investor Group","Fulton County","2024-04-25"
+PROP1005,"202 Cedar Ln, Roswell, GA 30075","2024-02-15",275000,"Quick Flip LLC","Previous Owner","Fulton County","2024-02-20"
+PROP1005,"202 Cedar Ln, Roswell, GA 30075","2024-07-15",400000,"New Buyer","Quick Flip LLC","Fulton County","2024-07-20"
