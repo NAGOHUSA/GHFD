@@ -4,29 +4,60 @@
             "name": "Fulton County",
             "url": "https://qpublic.schneidercorp.com/Application.aspx?AppID=922&LayerID=18332&PageTypeID=4&PageID=8120",
             "search_url": "https://qpublic.schneidercorp.com/Application.aspx/UpdateSearchGrid",
+            "api_endpoint": "https://qpublic.schneidercorp.com/application/922/18332/ajaxlayer.aspx?layerid=18332",
             "timezone": "America/New_York",
-            "enabled": true
+            "enabled": true,
+            "daily_limit": 1000
         },
         "gwinnett": {
             "name": "Gwinnett County",
             "url": "https://qpublic.schneidercorp.com/Application.aspx?AppID=926&LayerID=18358&PageTypeID=4&PageID=8154",
             "search_url": "https://qpublic.schneidercorp.com/Application.aspx/UpdateSearchGrid",
+            "api_endpoint": "https://qpublic.schneidercorp.com/application/926/18358/ajaxlayer.aspx?layerid=18358",
             "timezone": "America/New_York",
-            "enabled": true
+            "enabled": true,
+            "daily_limit": 1000
         },
         "cobb": {
             "name": "Cobb County",
             "url": "https://qpublic.schneidercorp.com/Application.aspx?AppID=915&LayerID=18279&PageTypeID=4&PageID=8068",
             "search_url": "https://qpublic.schneidercorp.com/Application.aspx/UpdateSearchGrid",
+            "api_endpoint": "https://qpublic.schneidercorp.com/application/915/18279/ajaxlayer.aspx?layerid=18279",
             "timezone": "America/New_York",
-            "enabled": true
+            "enabled": true,
+            "daily_limit": 1000
+        },
+        "dekalb": {
+            "name": "DeKalb County",
+            "url": "https://qpublic.schneidercorp.com/Application.aspx?AppID=920&LayerID=18315&PageTypeID=4&PageID=8103",
+            "search_url": "https://qpublic.schneidercorp.com/Application.aspx/UpdateSearchGrid",
+            "api_endpoint": "https://qpublic.schneidercorp.com/application/920/18315/ajaxlayer.aspx?layerid=18315",
+            "timezone": "America/New_York",
+            "enabled": true,
+            "daily_limit": 1000
+        },
+        "clayton": {
+            "name": "Clayton County",
+            "url": "https://qpublic.schneidercorp.com/Application.aspx?AppID=916&LayerID=18289&PageTypeID=4&PageID=8076",
+            "search_url": "https://qpublic.schneidercorp.com/Application.aspx/UpdateSearchGrid",
+            "api_endpoint": "https://qpublic.schneidercorp.com/application/916/18289/ajaxlayer.aspx?layerid=18289",
+            "timezone": "America/New_York",
+            "enabled": true,
+            "daily_limit": 800
         }
     },
-    "criteria": {
+    "scraping": {
+        "rate_limit_delay": 2,
+        "max_retries": 3,
+        "timeout": 30,
+        "user_agent": "GeorgiaHouseFlipDetector/1.0 (Research Project)"
+    },
+    "analysis": {
         "min_hold_days": 30,
         "max_hold_days": 365,
         "min_profit": 70000,
         "max_profit": 150000,
-        "analysis_period_days": 180
+        "min_sale_price": 100000,
+        "max_sale_price": 2000000
     }
 }
