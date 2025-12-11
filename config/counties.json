@@ -11,3 +11,36 @@ sqlite3
 jupyter==1.0.0
 numpy==1.24.3
 openpyxl==3.1.2
+
+{
+    "counties": {
+        "fulton": {
+            "name": "Fulton County",
+            "url": "https://qpublic.schneidercorp.com/Application.aspx?AppID=922&LayerID=18332&PageTypeID=4&PageID=8120",
+            "search_url": "https://qpublic.schneidercorp.com/Application.aspx/UpdateSearchGrid",
+            "timezone": "America/New_York",
+            "enabled": true
+        },
+        "gwinnett": {
+            "name": "Gwinnett County",
+            "url": "https://qpublic.schneidercorp.com/Application.aspx?AppID=926&LayerID=18358&PageTypeID=4&PageID=8154",
+            "search_url": "https://qpublic.schneidercorp.com/Application.aspx/UpdateSearchGrid",
+            "timezone": "America/New_York",
+            "enabled": true
+        },
+        "cobb": {
+            "name": "Cobb County",
+            "url": "https://qpublic.schneidercorp.com/Application.aspx?AppID=915&LayerID=18279&PageTypeID=4&PageID=8068",
+            "search_url": "https://qpublic.schneidercorp.com/Application.aspx/UpdateSearchGrid",
+            "timezone": "America/New_York",
+            "enabled": true
+        }
+    },
+    "criteria": {
+        "min_hold_days": 30,
+        "max_hold_days": 365,
+        "min_profit": 70000,
+        "max_profit": 150000,
+        "analysis_period_days": 180
+    }
+}
