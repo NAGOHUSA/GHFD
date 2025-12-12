@@ -1,0 +1,55 @@
+{
+  "timestamp": "2025-12-12T17:46:34.713790",
+  "pipeline_version": "1.0.0",
+  "data_summary": {
+    "total_transactions": 7955,
+    "unique_counties": 159,
+    "date_range": {
+      "min_date": "2025-11-12",
+      "max_date": "2025-12-12"
+    }
+  },
+  "flips_summary": {
+    "total_flips": 4,
+    "total_profit": 514111.0,
+    "avg_profit": 128527.75,
+    "avg_hold_days": 30.0
+  },
+  "investors_summary": {
+    "total_investors": 4,
+    "top_5_investors": [
+      {
+        "investor_name": "Fix & Flip GA",
+        "total_flips": 1,
+        "total_profit": 96751.0,
+        "avg_profit_per_flip": 96751.0,
+        "avg_hold_days": 30.0,
+        "avg_roi": 100.0
+      },
+      {
+        "investor_name": "Georgia Property Investors",
+        "total_flips": 1,
+        "total_profit": 130261.0,
+        "avg_profit_per_flip": 130261.0,
+        "avg_hold_days": 30.0,
+        "avg_roi": 100.0
+      },
+      {
+        "investor_name": "Property Solutions GA",
+        "total_flips": 1,
+        "total_profit": 141231.0,
+        "avg_profit_per_flip": 141231.0,
+        "avg_hold_days": 30.0,
+        "avg_roi": 100.0
+      },
+      {
+        "investor_name": "Residential Ventures",
+        "total_flips": 1,
+        "total_profit": 145868.0,
+        "avg_profit_per_flip": 145868.0,
+        "avg_hold_days": 30.0,
+        "avg_roi": 100.0
+      }
+    ]
+  }
+}
