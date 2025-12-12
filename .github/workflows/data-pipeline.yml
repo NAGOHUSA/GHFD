@@ -13,78 +13,64 @@ on:
         required: false
         default: '180'
         type: string
-
   schedule:
-    - cron: '0 12 * * 1-5'
-    - cron: '0 18 * * 1-5'
+    - cron: '0 12 * * 1-5'  # Weekdays at 12:00 UTC
+    - cron: '0 18 * * 1-5'  # Weekdays at 18:00 UTC
 
 jobs:
   run-pipeline:
     runs-on: ubuntu-latest
-    
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v4
-      with:
-        token: ${{ secrets.GITHUB_TOKEN }}
-        fetch-depth: 0
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          fetch-depth: 0
 
-    - name: Set up Python
-      uses: actions/setup-python@v4
-      with:
-        python-version: '3.11'
-        cache: 'pip'
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+          cache: 'pip'
 
-    - name: Install dependencies
-      run: |
-        python -m pip install --upgrade pip
-        pip install requests beautifulsoup4 pandas dash plotly flask openpyxl lxml
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install requests beautifulsoup4 pandas dash plotly flask openpyxl lxml
 
-    - name: Create necessary directories
-      run: |
-        mkdir -p data/raw data/results logs data/dashboard
-        # Copy configuration files to root for easier access
-        cp src/pipeline.json . 2>/dev/null || true
-        cp src/counties.json . 2>/dev/null || true
+      - name: Create necessary directories
+        run: |
+          mkdir -p data/raw data/results logs data/dashboard
+          # Copy configuration files to root for easier access
+          cp src/pipeline.json . 2>/dev/null || true
+          cp src/counties.json . 2>/dev/null || true
 
-    - name: Run data pipeline
-      run: |
-        echo "Starting pipeline at $(date)"
-        cd scripts
-        python run_pipeline.py
-        
-    - name: Commit and push data files
-      run: |
-        git config --local user.email "action@github.com"
-        git config --local user.name "GitHub Action"
-        git add data/
-        git add logs/
-        if git diff --cached --quiet; then
-          echo "No changes to commit"
-        else
-          git commit -m "Auto-update: New flip data from pipeline $(date +'%Y-%m-%d %H:%M')"
-          git push
-        fi
+      - name: Run data pipeline
+        run: |
+          echo "Starting pipeline at $(date)"
+          cd scripts
+          python run_pipeline.py
 
-    - name: Upload results as artifact
-      uses: actions/upload-artifact@v4
-      with:
-        name: pipeline-results-${{ github.run_id }}
-        path: data/
+      - name: Archive historical data
+        run: |
+          echo "Archiving historical data..."
+          python scripts/archive_data.py
 
-        - name: Archive historical data
-  run: |
-    echo "Archiving historical data..."
-    python scripts/archive_data.py
-    
-- name: Commit historical data
-  run: |
-    git config --local user.email "action@github.com"
-    git config --local user.name "GitHub Action"
-    git add data/historical/
-    if git diff --cached --quiet; then
-      echo "No changes to historical data"
-    else
-      git commit -m "Auto-archive: Historical data snapshot $(date +'%Y-%m-%d')"
-      git push
-    fi
+      - name: Commit and push all data
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add data/ logs/
+          git add data/historical/ 2>/dev/null || true
+          if git diff --cached --quiet; then
+            echo "No changes to commit"
+          else
+            git commit -m "Auto-update: New flip data from pipeline $(date +'%Y-%m-%d %H:%M')"
+            git push
+          fi
+
+      - name: Upload results as artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: pipeline-results-${{ github.run_id }}
+          path: data/
