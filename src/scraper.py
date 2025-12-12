@@ -7,7 +7,6 @@ import logging
 from datetime import datetime, timedelta
 import sqlite3
 import random
-from typing import List, Dict
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -20,8 +19,8 @@ class GeorgiaPropertyScraper:
             'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'
         })
         self.investors = self._load_investors()
-        self.properties = []
-        
+        self.properties = []  # Store properties for generating flip chains
+    
     def _load_investors(self):
         """Load list of investor names for realistic data generation"""
         return [
@@ -33,7 +32,25 @@ class GeorgiaPropertyScraper:
             "Peach State Investments", "Metro Flip Team", "Georgia Renovation Group"
         ]
     
-    def generate_buy_transactions(self, days_back=180, count=100):
+    def get_recent_sales(self, days_back=180):
+        """Main method to get both buy and sell transactions"""
+        logger.info(f"Generating data for {self.county_config['name']}")
+        
+        # Generate buy transactions
+        buy_data = self._generate_buy_transactions(days_back)
+        
+        # Generate sell transactions (flips)
+        sell_data = self._generate_sell_transactions(buy_data)
+        
+        # Combine all transactions
+        all_data = pd.concat([buy_data, sell_data], ignore_index=True)
+        
+        logger.info(f"  Generated {len(buy_data)} buy transactions")
+        logger.info(f"  Generated {len(sell_data)} sell transactions")
+        
+        return all_data
+    
+    def _generate_buy_transactions(self, days_back=180):
         """Generate buy transactions (initial purchases)"""
         data = []
         county_name = self.county_config['name']
@@ -41,7 +58,10 @@ class GeorgiaPropertyScraper:
         # Generate base buy dates
         base_date = datetime.now() - timedelta(days=days_back)
         
-        for i in range(count):
+        # Generate 50-100 transactions per county
+        num_transactions = random.randint(50, 100)
+        
+        for i in range(num_transactions):
             # Generate property ID
             property_id = f"{county_name[:3].upper()}{i:06d}"
             
@@ -49,15 +69,16 @@ class GeorgiaPropertyScraper:
             buy_date = base_date + timedelta(days=random.randint(0, days_back-30))
             
             # Generate realistic prices based on county
-            if "Fulton" in county_name or "Gwinnett" in county_name or "Cobb" in county_name:
-                buy_price = random.randint(200000, 500000)
-            elif "DeKalb" in county_name or "Clayton" in county_name:
-                buy_price = random.randint(150000, 350000)
-            else:
-                buy_price = random.randint(80000, 250000)
+            buy_price = self._generate_buy_price(county_name)
             
-            # Randomly decide if this will be flipped (70% chance)
+            # Randomly decide if this will be flipped (70% chance for investor purchases)
             will_flip = random.random() < 0.7
+            
+            # Determine buyer - investor for flips, regular buyer for non-flips
+            if will_flip:
+                buyer = random.choice(self.investors)
+            else:
+                buyer = self._generate_regular_buyer()
             
             # Store property info for potential flip generation
             self.properties.append({
@@ -65,6 +86,7 @@ class GeorgiaPropertyScraper:
                 'buy_date': buy_date,
                 'buy_price': buy_price,
                 'will_flip': will_flip,
+                'buyer': buyer,
                 'address': self._generate_address(i, county_name)
             })
             
@@ -73,16 +95,15 @@ class GeorgiaPropertyScraper:
                 'address': self._generate_address(i, county_name),
                 'sale_date': buy_date.strftime('%Y-%m-%d'),
                 'sale_price': buy_price,
-                'buyer': random.choice(self.investors) if will_flip else self._generate_seller(),
+                'buyer': buyer,
                 'seller': self._generate_seller(),
                 'county': county_name,
-                'transaction_type': 'BUY',
                 'recording_date': buy_date.strftime('%Y-%m-%d')
             })
         
         return pd.DataFrame(data)
     
-    def generate_sell_transactions(self, buy_df, flip_percentage=0.6):
+    def _generate_sell_transactions(self, buy_df, flip_percentage=0.6):
         """Generate sell transactions for flip properties"""
         data = []
         
@@ -116,17 +137,24 @@ class GeorgiaPropertyScraper:
                     'address': prop['address'],
                     'sale_date': sell_date.strftime('%Y-%m-%d'),
                     'sale_price': sell_price,
-                    'buyer': self._generate_seller(),  # New buyer (end user)
+                    'buyer': self._generate_regular_buyer(),  # New buyer (end user)
                     'seller': original_buyer,  # Original investor is now seller
                     'county': self.county_config['name'],
-                    'transaction_type': 'SELL',
-                    'recording_date': sell_date.strftime('%Y-%m-%d'),
-                    'original_buy_price': prop['buy_price'],
-                    'hold_days': hold_days,
-                    'profit': sell_price - prop['buy_price']
+                    'recording_date': sell_date.strftime('%Y-%m-%d')
                 })
         
         return pd.DataFrame(data)
+    
+    def _generate_buy_price(self, county_name):
+        """Generate realistic buy price based on county"""
+        if "Fulton" in county_name or "Gwinnett" in county_name or "Cobb" in county_name:
+            return random.randint(200000, 500000)
+        elif "DeKalb" in county_name or "Clayton" in county_name:
+            return random.randint(150000, 350000)
+        elif "Chatham" in county_name or "Cherokee" in county_name:
+            return random.randint(180000, 400000)
+        else:
+            return random.randint(80000, 250000)
     
     def _generate_address(self, index, county_name):
         """Generate realistic address based on county"""
@@ -136,12 +164,16 @@ class GeorgiaPropertyScraper:
             "Lincoln", "Broad", "Market", "Peachtree", "Sugarloaf", "Barrett", "Memorial"
         ]
         street_types = ["St", "Ave", "Rd", "Blvd", "Ln", "Dr", "Pkwy", "Way"]
+        
+        # County-specific city mapping
         cities = {
             "Fulton": ["Atlanta", "Sandy Springs", "Roswell", "Johns Creek"],
             "Gwinnett": ["Lawrenceville", "Duluth", "Norcross", "Snellville"],
             "Cobb": ["Marietta", "Smyrna", "Kennesaw", "Acworth"],
             "DeKalb": ["Decatur", "Dunwoody", "Stone Mountain", "Clarkston"],
-            "Clayton": ["Jonesboro", "Forest Park", "Riverdale", "Lovejoy"]
+            "Clayton": ["Jonesboro", "Forest Park", "Riverdale", "Lovejoy"],
+            "Chatham": ["Savannah", "Pooler", "Garden City", "Port Wentworth"],
+            "Cherokee": ["Canton", "Woodstock", "Holly Springs", "Ball Ground"]
         }
         
         # Get city based on county
@@ -167,3 +199,14 @@ class GeorgiaPropertyScraper:
             "Estate of James Lee", "Trust of Patricia White", "Bank REO", "Relocation LLC"
         ]
         return random.choice(sellers)
+    
+    def _generate_regular_buyer(self):
+        """Generate regular home buyer names (non-investors)"""
+        regular_buyers = [
+            "James Wilson", "Patricia Moore", "Robert Taylor", "Linda Anderson",
+            "Michael Thomas", "Barbara Jackson", "William White", "Elizabeth Harris",
+            "David Martin", "Jennifer Thompson", "Richard Garcia", "Maria Martinez",
+            "Joseph Robinson", "Susan Clark", "Charles Rodriguez", "Sarah Lewis",
+            "Christopher Lee", "Karen Walker", "Daniel Hall", "Lisa Allen"
+        ]
+        return random.choice(regular_buyers)
