@@ -7,6 +7,7 @@ import logging
 from datetime import datetime, timedelta
 import sqlite3
 import random
+import sys
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -32,31 +33,24 @@ class GeorgiaPropertyScraper:
             "Peach State Investments", "Metro Flip Team", "Georgia Renovation Group"
         ]
     
-def get_recent_sales(self, days_back=180):
-    """Main method to get both buy and sell transactions"""
-    logger.info(f"Generating data for {self.county_config['name']}")
+    def get_recent_sales(self, days_back=180):
+        """Main method to get both buy and sell transactions"""
+        logger.info(f"Generating data for {self.county_config['name']}")
+        
+        # Generate buy transactions
+        buy_data = self._generate_buy_transactions(days_back)
+        
+        # Generate sell transactions (flips)
+        sell_data = self._generate_sell_transactions(buy_data)
+        
+        # Combine all transactions
+        all_data = pd.concat([buy_data, sell_data], ignore_index=True)
+        
+        logger.info(f"  Generated {len(buy_data)} buy and {len(sell_data)} sell transactions")
+        
+        return all_data
     
-    # Generate fewer transactions for smaller counties
-    county_name = self.county_config['name']
-    if any(c in county_name.lower() for c in ['fulton', 'gwinnett', 'cobb', 'dekalb']):
-        num_transactions = random.randint(30, 60)  # 30-60 for large counties
-    else:
-        num_transactions = random.randint(10, 30)  # 10-30 for smaller counties
-    
-    # Generate buy transactions
-    buy_data = self._generate_buy_transactions(days_back, count=num_transactions)
-    
-    # Generate sell transactions (flips) - fewer flips
-    sell_data = self._generate_sell_transactions(buy_data, flip_percentage=0.4)
-    
-    # Combine all transactions
-    all_data = pd.concat([buy_data, sell_data], ignore_index=True)
-    
-    logger.info(f"  Generated {len(buy_data)} buy and {len(sell_data)} sell transactions")
-    
-    return all_data
-    
-    def _generate_buy_transactions(self, days_back=180):
+    def _generate_buy_transactions(self, days_back=180, count=50):
         """Generate buy transactions (initial purchases)"""
         data = []
         county_name = self.county_config['name']
@@ -64,10 +58,7 @@ def get_recent_sales(self, days_back=180):
         # Generate base buy dates
         base_date = datetime.now() - timedelta(days=days_back)
         
-        # Generate 50-100 transactions per county
-        num_transactions = random.randint(50, 100)
-        
-        for i in range(num_transactions):
+        for i in range(count):
             # Generate property ID
             property_id = f"{county_name[:3].upper()}{i:06d}"
             
@@ -109,7 +100,7 @@ def get_recent_sales(self, days_back=180):
         
         return pd.DataFrame(data)
     
-    def _generate_sell_transactions(self, buy_df, flip_percentage=0.6):
+    def _generate_sell_transactions(self, buy_df, flip_percentage=0.4):
         """Generate sell transactions for flip properties"""
         data = []
         
