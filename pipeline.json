@@ -6,9 +6,9 @@
     "default_counties": ["bibb", "houston", "fulton", "peach", "gwinnett", "cobb", "dekalb", "clayton"],
     "scrape_all_enabled": true,
     "max_counties_per_run": 159,
-    "default_days_back": 30,
-    "max_scrape_records": 1000,
-    "data_retention_days": 60,
+    "default_days_back": 90,
+    "max_scrape_records": 5000,
+    "data_retention_days": 90,
     
     "notification": {
         "email": "",
@@ -23,8 +23,8 @@
     "analysis_criteria": {
         "min_hold_days": 30,
         "max_hold_days": 365,
-        "min_profit": 70000,
-        "max_profit": 150000,
+        "min_profit": 50000,
+        "max_profit": 250000,
         "require_same_seller_buyer": true
     },
     
