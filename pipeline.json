@@ -9,6 +9,14 @@
     "default_days_back": 90,
     "max_scrape_records": 5000,
     "data_retention_days": 90,
+
+    "historical_data": {
+        "enabled": true,
+        "archive_daily": true,
+        "retention_days": 365,
+        "archive_path": "data/historical",
+        "keep_latest_copy": true
+    },
     
     "notification": {
         "email": "",
