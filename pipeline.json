@@ -5,7 +5,7 @@
     
     "default_counties": ["fulton", "gwinnett", "cobb", "dekalb", "clayton"],
     "scrape_all_enabled": true,
-    "max_counties_per_run": 50,
+    "max_counties_per_run": 10,
     "default_days_back": 180,
     "max_scrape_records": 5000,
     "data_retention_days": 90,
@@ -17,9 +17,8 @@
         "on_failure": true
     },
     
-    "output_formats": ["csv"],
+    "output_formats": ["csv", "excel", "json"],
     "enable_dashboard": true,
-    "dashboard_port": 8050,
     
     "analysis_criteria": {
         "min_hold_days": 30,
@@ -45,8 +44,6 @@
         "enable_caching": true,
         "rate_limit_delay_ms": 1000,
         "max_concurrent_scrapers": 2,
-        "timeout_seconds": 30,
-        "batch_size": 1000,
-        "use_multiprocessing": false
+        "timeout_seconds": 30
     }
 }
