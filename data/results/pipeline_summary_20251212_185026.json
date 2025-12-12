@@ -1,0 +1,63 @@
+{
+  "timestamp": "2025-12-12T18:50:26.132781",
+  "pipeline_version": "1.0.0",
+  "data_summary": {
+    "total_transactions": 8157,
+    "unique_counties": 159,
+    "date_range": {
+      "min_date": "2025-09-13",
+      "max_date": "2025-12-12"
+    }
+  },
+  "flips_summary": {
+    "total_flips": 170,
+    "total_profit": 19868059.0,
+    "avg_profit": 116870.93529411765,
+    "avg_hold_days": 50.31764705882353
+  },
+  "investors_summary": {
+    "total_investors": 18,
+    "top_5_investors": [
+      {
+        "investor_name": "Capital Flip Group",
+        "total_flips": 21,
+        "total_profit": 2357527.0,
+        "avg_profit_per_flip": 112263.19047619047,
+        "avg_hold_days": 55.23809523809524,
+        "avg_roi": 100.0
+      },
+      {
+        "investor_name": "Metro Atlanta Investments",
+        "total_flips": 18,
+        "total_profit": 2067615.0,
+        "avg_profit_per_flip": 114867.5,
+        "avg_hold_days": 45.111111111111114,
+        "avg_roi": 100.0
+      },
+      {
+        "investor_name": "Peachtree RE Group",
+        "total_flips": 14,
+        "total_profit": 1650079.0,
+        "avg_profit_per_flip": 117862.78571428571,
+        "avg_hold_days": 51.642857142857146,
+        "avg_roi": 100.0
+      },
+      {
+        "investor_name": "Southern Holdings Inc",
+        "total_flips": 12,
+        "total_profit": 1405505.0,
+        "avg_profit_per_flip": 117125.41666666667,
+        "avg_hold_days": 47.833333333333336,
+        "avg_roi": 100.0
+      },
+      {
+        "investor_name": "Urban Development LLC",
+        "total_flips": 11,
+        "total_profit": 1291086.0,
+        "avg_profit_per_flip": 117371.45454545454,
+        "avg_hold_days": 48.09090909090909,
+        "avg_roi": 100.0
+      }
+    ]
+  }
+}
