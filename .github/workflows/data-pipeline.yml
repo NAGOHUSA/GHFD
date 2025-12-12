@@ -13,6 +13,7 @@ on:
         required: false
         default: '180'
         type: string
+
   schedule:
     - cron: '0 12 * * 1-5'
     - cron: '0 18 * * 1-5'
@@ -20,81 +21,53 @@ on:
 jobs:
   run-pipeline:
     runs-on: ubuntu-latest
+    
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          fetch-depth: 0
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
+        fetch-depth: 0
 
-      - name: Set up Python
-        uses: actions/setup-python@v4
-        with:
-          python-version: '3.11'
-          cache: 'pip'
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.11'
+        cache: 'pip'
 
-      - name: Install dependencies
-        run: |
-          python -m pip install --upgrade pip
-          pip install requests beautifulsoup4 pandas dash plotly flask openpyxl lxml
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install requests beautifulsoup4 pandas dash plotly flask openpyxl lxml
 
-      - name: Create necessary directories and copy configs
-        run: |
-          mkdir -p data/raw data/results logs data/dashboard
-          
-          # Check and copy pipeline.json from src/ to root
-          echo "Checking for pipeline.json in src/ directory..."
-          if [ -f "src/pipeline.json" ]; then
-            echo "Found pipeline.json in src/, copying to root..."
-            cp src/pipeline.json .
-          else
-            echo "ERROR: src/pipeline.json does not exist!"
-            echo "Listing contents of src/ directory:"
-            ls -la src/ 2>/dev/null || echo "src/ directory doesn't exist"
-            exit 1
-          fi
-          
-          # Copy counties.json if it exists
-          if [ -f "src/counties.json" ]; then
-            cp src/counties.json .
-          else
-            echo "Note: src/counties.json not found (optional)"
-          fi
-          
-          echo "Files in root after copying:"
-          ls -la *.json 2>/dev/null || echo "No JSON files in root"
+    - name: Create necessary directories
+      run: |
+        mkdir -p data/raw data/results logs data/dashboard
+        # Copy configuration files to root for easier access
+        cp src/pipeline.json . 2>/dev/null || true
+        cp src/counties.json . 2>/dev/null || true
 
-      - name: Run data pipeline
-        run: |
-          echo "Starting pipeline at $(date)"
-          cd scripts
-          python run_pipeline.py
+    - name: Run data pipeline
+      run: |
+        echo "Starting pipeline at $(date)"
+        cd scripts
+        python run_pipeline.py
+        
+    - name: Commit and push data files
+      run: |
+        git config --local user.email "action@github.com"
+        git config --local user.name "GitHub Action"
+        git add data/
+        git add logs/
+        if git diff --cached --quiet; then
+          echo "No changes to commit"
+        else
+          git commit -m "Auto-update: New flip data from pipeline $(date +'%Y-%m-%d %H:%M')"
+          git push
+        fi
 
-      - name: Archive historical data
-        run: |
-          echo "Current directory: $(pwd)"
-          echo "Files in root:"
-          ls -la *.json
-          echo "Archiving historical data..."
-          # Change to scripts directory so archive_data.py can find ../pipeline.json
-          cd scripts
-          python archive_data.py
-
-      - name: Commit and push all data
-        run: |
-          git config --local user.email "action@github.com"
-          git config --local user.name "GitHub Action"
-          git add data/ logs/
-          git add data/historical/ 2>/dev/null || true
-          if git diff --cached --quiet; then
-            echo "No changes to commit"
-          else
-            git commit -m "Auto-update: New flip data from pipeline $(date +'%Y-%m-%d %H:%M')"
-            git push
-          fi
-
-      - name: Upload results as artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: pipeline-results-${{ github.run_id }}
-          path: data/
+    - name: Upload results as artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: pipeline-results-${{ github.run_id }}
+        path: data/
