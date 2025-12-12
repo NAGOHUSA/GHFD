@@ -678,7 +678,8 @@
                         'data/dashboard/dashboard_data.json',
                         '../data/dashboard/dashboard_data.json',
                         'data/dashboard_data.json',
-                        'dashboard_data.json'
+                        'dashboard_data.json',
+                        '../data/dashboard_data.json'
                     ];
                     
                     let data = null;
@@ -689,10 +690,12 @@
                             const response = await fetch(url + '?t=' + Date.now());
                             if (response.ok) {
                                 data = await response.json();
+                                console.log('Live data loaded from:', url, data);
                                 break;
                             }
                         } catch (e) {
                             error = e;
+                            console.log('Failed to load from:', url, e.message);
                         }
                     }
                     
@@ -727,10 +730,34 @@
         }
 
         function filterData() {
-            if (!currentData || !currentData.recent_flips) return;
+            if (!currentData) return;
+            
+            // Get the appropriate data structure based on what's available
+            let allFlips = [];
+            let allInvestors = [];
+            
+            // Check different possible data structures
+            if (currentData.filtered_flips) {
+                // From pipeline v1
+                allFlips = currentData.filtered_flips;
+                allInvestors = currentData.top_investors || [];
+            } else if (currentData.recent_flips) {
+                // From pipeline v2
+                allFlips = currentData.recent_flips;
+                allInvestors = currentData.top_investors || [];
+            } else if (currentData.flips) {
+                // From direct pipeline output
+                allFlips = currentData.flips;
+                allInvestors = currentData.investors || [];
+            }
+            
+            console.log('Total flips before filtering:', allFlips.length);
+            console.log('Sample flip:', allFlips[0]);
             
             // Filter flips based on current filters
-            const filteredFlips = currentData.recent_flips.filter(flip => {
+            const filteredFlips = allFlips.filter(flip => {
+                if (!flip) return false;
+                
                 const profit = flip.profit || 0;
                 const holdDays = flip.hold_days || 0;
                 const roi = flip.roi || 0;
@@ -753,9 +780,13 @@
                 return true;
             });
             
+            console.log('Filtered flips:', filteredFlips.length);
+            
             // Filter investors based on filtered flips
             const investorMap = {};
             filteredFlips.forEach(flip => {
+                if (!flip) return;
+                
                 const investor = flip.buyer || 'Unknown';
                 if (!investorMap[investor]) {
                     investorMap[investor] = {
@@ -782,6 +813,8 @@
                 avg_hold_days: investor.totalHoldDays / investor.flips
             })).sort((a, b) => b.total_profit - a.total_profit);
             
+            console.log('Filtered investors:', filteredInvestors.length);
+            
             // Store filtered data
             currentData.filtered = {
                 flips: filteredFlips,
@@ -792,7 +825,9 @@
                     total_profit: filteredFlips.reduce((sum, flip) => sum + (flip.profit || 0), 0),
                     avg_roi: filteredFlips.length > 0 ? 
                         filteredFlips.reduce((sum, flip) => sum + (flip.roi || 0), 0) / filteredFlips.length : 0,
-                    last_updated: currentData.summary?.timestamp || new Date().toISOString().split('T')[0]
+                    last_updated: currentData.summary?.timestamp || 
+                                 currentData.stats?.last_updated || 
+                                 new Date().toISOString().split('T')[0]
                 }
             };
         }
@@ -891,6 +926,8 @@
             const flips = currentData.filtered.flips;
             const investors = currentData.filtered.investors;
             
+            console.log('Updating dashboard with stats:', stats);
+            
             // Update main stats
             document.getElementById('totalFlips').textContent = stats.total_flips.toLocaleString();
             document.getElementById('totalInvestors').textContent = stats.total_investors.toLocaleString();
@@ -943,6 +980,8 @@
             
             // Show first 12 flips
             flips.slice(0, 12).forEach(flip => {
+                if (!flip) return;
+                
                 const profitColor = flip.profit > 120000 ? 'profit-high' : 'profit-positive';
                 const address = flip.address || 'Unknown Address';
                 const shortAddress = address.length > 30 ? address.substring(0, 30) + '...' : address;
@@ -955,14 +994,14 @@
                                     <h6 class="mb-1" title="${address}">${shortAddress}</h6>
                                     <span class="badge bg-info">${flip.county || 'Unknown'}</span>
                                 </div>
-                                <span class="${profitColor} fw-bold">$${flip.profit.toLocaleString()}</span>
+                                <span class="${profitColor} fw-bold">$${flip.profit ? flip.profit.toLocaleString() : '0'}</span>
                             </div>
                             <div class="d-flex justify-content-between text-muted small">
                                 <div>
-                                    <i class="fas fa-calendar"></i> ${flip.hold_days} days
+                                    <i class="fas fa-calendar"></i> ${flip.hold_days || 0} days
                                 </div>
                                 <div>
-                                    <i class="fas fa-chart-line"></i> ${flip.roi.toFixed(1)}% ROI
+                                    <i class="fas fa-chart-line"></i> ${flip.roi ? flip.roi.toFixed(1) : '0'}% ROI
                                 </div>
                             </div>
                             <div class="mt-2">
@@ -1041,116 +1080,185 @@
             if (chart1) chart1.destroy();
             if (chart2) chart2.destroy();
             
-            // Get county data
-            const countyData = currentData.stats?.by_county || {};
-            const countyLabels = Object.keys(countyData);
-            const countyValues = Object.values(countyData);
+            // Get county data from flips
+            const flips = currentData.filtered.flips || [];
             
-            // Get profit distribution
-            const profitData = currentData.stats?.profit_distribution || {
-                '70k-100k': 25,
-                '100k-130k': 20,
-                '130k-160k': 15,
-                '160k+': 10
+            if (flips.length === 0) {
+                // Show empty chart message
+                countyCtx.parentNode.innerHTML = `
+                    <div class="text-center py-5">
+                        <i class="fas fa-map-marked-alt fa-3x text-muted mb-3"></i>
+                        <h6 class="text-muted">No county data available</h6>
+                        <p class="small text-muted">Apply filters to see county distribution</p>
+                    </div>
+                `;
+                
+                profitCtx.parentNode.innerHTML = `
+                    <div class="text-center py-5">
+                        <i class="fas fa-chart-pie fa-3x text-muted mb-3"></i>
+                        <h6 class="text-muted">No profit data available</h6>
+                        <p class="small text-muted">Apply filters to see profit distribution</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            // Calculate county distribution from flips
+            const countyDistribution = {};
+            flips.forEach(flip => {
+                if (!flip || !flip.county) return;
+                const county = flip.county.trim();
+                countyDistribution[county] = (countyDistribution[county] || 0) + 1;
+            });
+            
+            // Calculate profit distribution
+            const profitDistribution = {
+                '70k-100k': 0,
+                '100k-130k': 0,
+                '130k-160k': 0,
+                '160k+': 0
             };
             
-            // Create county chart (bar chart)
-            chart1 = new Chart(countyCtx, {
-                type: 'bar',
-                data: {
-                    labels: countyLabels,
-                    datasets: [{
-                        label: 'Flips per County',
-                        data: countyValues,
-                        backgroundColor: [
-                            'rgba(52, 152, 219, 0.7)',
-                            'rgba(46, 204, 113, 0.7)',
-                            'rgba(155, 89, 182, 0.7)',
-                            'rgba(241, 196, 15, 0.7)',
-                            'rgba(230, 126, 34, 0.7)',
-                            'rgba(231, 76, 60, 0.7)',
-                            'rgba(149, 165, 166, 0.7)',
-                            'rgba(52, 73, 94, 0.7)'
-                        ],
-                        borderColor: [
-                            'rgb(52, 152, 219)',
-                            'rgb(46, 204, 113)',
-                            'rgb(155, 89, 182)',
-                            'rgb(241, 196, 15)',
-                            'rgb(230, 126, 34)',
-                            'rgb(231, 76, 60)',
-                            'rgb(149, 165, 166)',
-                            'rgb(52, 73, 94)'
-                        ],
-                        borderWidth: 1
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: {
-                        legend: {
-                            display: false
-                        },
-                        tooltip: {
-                            callbacks: {
-                                label: function(context) {
-                                    return `${context.label}: ${context.raw} flips`;
-                                }
-                            }
-                        }
-                    },
-                    scales: {
-                        y: {
-                            beginAtZero: true,
-                            title: {
-                                display: true,
-                                text: 'Number of Flips'
-                            }
-                        }
-                    }
+            flips.forEach(flip => {
+                if (!flip || !flip.profit) return;
+                const profit = flip.profit;
+                if (profit >= 70000 && profit < 100000) {
+                    profitDistribution['70k-100k']++;
+                } else if (profit >= 100000 && profit < 130000) {
+                    profitDistribution['100k-130k']++;
+                } else if (profit >= 130000 && profit < 160000) {
+                    profitDistribution['130k-160k']++;
+                } else if (profit >= 160000) {
+                    profitDistribution['160k+']++;
                 }
             });
             
-            // Create profit distribution chart (doughnut)
-            chart2 = new Chart(profitCtx, {
-                type: 'doughnut',
-                data: {
-                    labels: Object.keys(profitData),
-                    datasets: [{
-                        data: Object.values(profitData),
-                        backgroundColor: [
-                            'rgba(46, 204, 113, 0.7)',
-                            'rgba(52, 152, 219, 0.7)',
-                            'rgba(155, 89, 182, 0.7)',
-                            'rgba(230, 126, 34, 0.7)'
-                        ],
-                        borderColor: [
-                            'rgb(46, 204, 113)',
-                            'rgb(52, 152, 219)',
-                            'rgb(155, 89, 182)',
-                            'rgb(230, 126, 34)'
-                        ],
-                        borderWidth: 1
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: {
-                        legend: {
-                            position: 'bottom'
+            console.log('County distribution:', countyDistribution);
+            console.log('Profit distribution:', profitDistribution);
+            
+            // Create county chart (bar chart)
+            const countyLabels = Object.keys(countyDistribution);
+            const countyValues = Object.values(countyDistribution);
+            
+            if (countyLabels.length > 0) {
+                chart1 = new Chart(countyCtx, {
+                    type: 'bar',
+                    data: {
+                        labels: countyLabels,
+                        datasets: [{
+                            label: 'Flips per County',
+                            data: countyValues,
+                            backgroundColor: [
+                                'rgba(52, 152, 219, 0.7)',
+                                'rgba(46, 204, 113, 0.7)',
+                                'rgba(155, 89, 182, 0.7)',
+                                'rgba(241, 196, 15, 0.7)',
+                                'rgba(230, 126, 34, 0.7)',
+                                'rgba(231, 76, 60, 0.7)',
+                                'rgba(149, 165, 166, 0.7)',
+                                'rgba(52, 73, 94, 0.7)'
+                            ],
+                            borderColor: [
+                                'rgb(52, 152, 219)',
+                                'rgb(46, 204, 113)',
+                                'rgb(155, 89, 182)',
+                                'rgb(241, 196, 15)',
+                                'rgb(230, 126, 34)',
+                                'rgb(231, 76, 60)',
+                                'rgb(149, 165, 166)',
+                                'rgb(52, 73, 94)'
+                            ],
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: {
+                                display: false
+                            },
+                            tooltip: {
+                                callbacks: {
+                                    label: function(context) {
+                                        return `${context.label}: ${context.raw} flips`;
+                                    }
+                                }
+                            }
                         },
-                        tooltip: {
-                            callbacks: {
-                                label: function(context) {
-                                    return `${context.label}: ${context.raw} flips`;
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                                title: {
+                                    display: true,
+                                    text: 'Number of Flips'
                                 }
                             }
                         }
                     }
-                }
-            });
+                });
+            } else {
+                countyCtx.parentNode.innerHTML = `
+                    <div class="text-center py-5">
+                        <i class="fas fa-map-marked-alt fa-3x text-muted mb-3"></i>
+                        <h6 class="text-muted">No county data available</h6>
+                        <p class="small text-muted">County information not found in flip data</p>
+                    </div>
+                `;
+            }
+            
+            // Create profit distribution chart (doughnut)
+            const profitLabels = Object.keys(profitDistribution);
+            const profitValues = Object.values(profitDistribution);
+            
+            if (profitValues.some(v => v > 0)) {
+                chart2 = new Chart(profitCtx, {
+                    type: 'doughnut',
+                    data: {
+                        labels: profitLabels,
+                        datasets: [{
+                            data: profitValues,
+                            backgroundColor: [
+                                'rgba(46, 204, 113, 0.7)',
+                                'rgba(52, 152, 219, 0.7)',
+                                'rgba(155, 89, 182, 0.7)',
+                                'rgba(230, 126, 34, 0.7)'
+                            ],
+                            borderColor: [
+                                'rgb(46, 204, 113)',
+                                'rgb(52, 152, 219)',
+                                'rgb(155, 89, 182)',
+                                'rgb(230, 126, 34)'
+                            ],
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: {
+                                position: 'bottom'
+                            },
+                            tooltip: {
+                                callbacks: {
+                                    label: function(context) {
+                                        return `${context.label}: ${context.raw} flips`;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                });
+            } else {
+                profitCtx.parentNode.innerHTML = `
+                    <div class="text-center py-5">
+                        <i class="fas fa-chart-pie fa-3x text-muted mb-3"></i>
+                        <h6 class="text-muted">No profit data available</h6>
+                        <p class="small text-muted">Profit information not found in flip data</p>
+                    </div>
+                `;
+            }
         }
 
         function showLoading(show) {
