@@ -1,0 +1,63 @@
+{
+  "timestamp": "2025-12-12T18:30:56.489374",
+  "pipeline_version": "1.0.0",
+  "data_summary": {
+    "total_transactions": 8130,
+    "unique_counties": 159,
+    "date_range": {
+      "min_date": "2025-09-13",
+      "max_date": "2025-12-12"
+    }
+  },
+  "flips_summary": {
+    "total_flips": 134,
+    "total_profit": 15172458.0,
+    "avg_profit": 113227.29850746269,
+    "avg_hold_days": 50.95522388059702
+  },
+  "investors_summary": {
+    "total_investors": 18,
+    "top_5_investors": [
+      {
+        "investor_name": "Residential Ventures",
+        "total_flips": 13,
+        "total_profit": 1371859.0,
+        "avg_profit_per_flip": 105527.61538461539,
+        "avg_hold_days": 51.38461538461539,
+        "avg_roi": 100.0
+      },
+      {
+        "investor_name": "Property Solutions GA",
+        "total_flips": 11,
+        "total_profit": 1202109.0,
+        "avg_profit_per_flip": 109282.63636363637,
+        "avg_hold_days": 49.0,
+        "avg_roi": 100.0
+      },
+      {
+        "investor_name": "Southern Holdings Inc",
+        "total_flips": 11,
+        "total_profit": 1315891.0,
+        "avg_profit_per_flip": 119626.45454545454,
+        "avg_hold_days": 55.54545454545455,
+        "avg_roi": 100.0
+      },
+      {
+        "investor_name": "Capital Flip Group",
+        "total_flips": 10,
+        "total_profit": 1105694.0,
+        "avg_profit_per_flip": 110569.4,
+        "avg_hold_days": 60.5,
+        "avg_roi": 100.0
+      },
+      {
+        "investor_name": "Metro Flip Team",
+        "total_flips": 9,
+        "total_profit": 1072369.0,
+        "avg_profit_per_flip": 119152.11111111111,
+        "avg_hold_days": 40.44444444444444,
+        "avg_roi": 100.0
+      }
+    ]
+  }
+}
