@@ -42,13 +42,16 @@ jobs:
 
     - name: Create necessary directories
       run: |
-        mkdir -p data/raw data/results logs
-        mkdir -p src config
+        mkdir -p data/raw data/results logs data/dashboard
+        # Copy configuration files to root for easier access
+        cp src/pipeline.json . 2>/dev/null || true
+        cp src/counties.json . 2>/dev/null || true
 
     - name: Run data pipeline
       run: |
         echo "Starting pipeline at $(date)"
-        python scripts/run_pipeline.py
+        cd scripts
+        python run_pipeline.py
         
     - name: Commit and push data files
       run: |
