@@ -5,76 +5,7 @@ import pandas as pd
 import logging
 import sqlite3
 from datetime import datetime
-
 import time
-
-def scrape_counties(pipeline_config, counties_config):
-    """Scrape data from configured counties"""
-    
-    # Get which counties to scrape
-    if pipeline_config.get('scrape_all_enabled', False):
-        counties_to_scrape = [
-            county_id for county_id, config in counties_config['counties'].items() 
-            if config.get('enabled', True)
-        ]
-    else:
-        counties_to_scrape = pipeline_config.get('default_counties', [])
-    
-    # LIMIT for testing - remove this in production or increase
-    # counties_to_scrape = counties_to_scrape[:20]  # Test with first 20 counties
-    
-    logger.info(f"Scraping {len(counties_to_scrape)} counties")
-    
-    all_data = []
-    
-    for county_id in counties_to_scrape:
-        if county_id in counties_config['counties']:
-            county_info = counties_config['counties'][county_id]
-            scraper = GeorgiaPropertyScraper(county_info)
-            
-            # Get data for this county
-            start_time = time.time()
-            county_data = scraper.get_recent_sales(
-                days_back=pipeline_config.get('default_days_back', 180)
-            )
-            elapsed = time.time() - start_time
-            
-            if not county_data.empty:
-                all_data.append(county_data)
-                logger.info(f"  {county_info['name']}: {len(county_data)} transactions ({elapsed:.2f}s)")
-            else:
-                logger.warning(f"  {county_info['name']}: No data generated")
-        else:
-            logger.error(f"County {county_id} not found in configuration")
-    
-    # Combine all county data
-    if all_data:
-        combined_data = pd.concat(all_data, ignore_index=True)
-        logger.info(f"Total transactions collected: {len(combined_data)}")
-        return combined_data
-    
-    return pd.DataFrame()
-
-def analyze_flips(properties_df):
-    """Analyze properties to find flips"""
-    analyzer = FlipAnalyzer()
-    
-    # Identify flips with timing
-    start_time = time.time()
-    flips_df = analyzer.identify_flips(properties_df)
-    analysis_time = time.time() - start_time
-    
-    if flips_df.empty:
-        logger.warning(f"No flips found! Analysis took {analysis_time:.2f}s")
-        return pd.DataFrame(), pd.DataFrame()
-    
-    logger.info(f"Found {len(flips_df)} potential flips in {analysis_time:.2f}s")
-    
-    # Analyze investors
-    investors_df = analyzer.analyze_investors(flips_df)
-    logger.info(f"Found {len(investors_df)} active investors")
-    
-    return flips_df, investors_df
 
 # Add src directory to Python path
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..', 'src'))
@@ -109,6 +40,12 @@ def scrape_counties(pipeline_config, counties_config):
     else:
         counties_to_scrape = pipeline_config.get('default_counties', [])
     
+    # LIMIT counties for testing - remove or increase this for production
+    max_counties = pipeline_config.get('max_counties_per_run', 20)
+    if len(counties_to_scrape) > max_counties:
+        logger.info(f"Limiting to {max_counties} counties for performance (out of {len(counties_to_scrape)})")
+        counties_to_scrape = counties_to_scrape[:max_counties]
+    
     logger.info(f"Scraping {len(counties_to_scrape)} counties")
     
     all_data = []
@@ -119,13 +56,15 @@ def scrape_counties(pipeline_config, counties_config):
             scraper = GeorgiaPropertyScraper(county_info)
             
             # Get data for this county
+            start_time = time.time()
             county_data = scraper.get_recent_sales(
                 days_back=pipeline_config.get('default_days_back', 180)
             )
+            elapsed = time.time() - start_time
             
             if not county_data.empty:
                 all_data.append(county_data)
-                logger.info(f"  {county_info['name']}: {len(county_data)} transactions")
+                logger.info(f"  {county_info['name']}: {len(county_data)} transactions ({elapsed:.2f}s)")
             else:
                 logger.warning(f"  {county_info['name']}: No data generated")
         else:
@@ -157,14 +96,16 @@ def analyze_flips(properties_df):
     """Analyze properties to find flips"""
     analyzer = FlipAnalyzer()
     
-    # Identify flips
+    # Identify flips with timing
+    start_time = time.time()
     flips_df = analyzer.identify_flips(properties_df)
+    analysis_time = time.time() - start_time
     
     if flips_df.empty:
-        logger.warning("No flips found!")
+        logger.warning(f"No flips found! Analysis took {analysis_time:.2f}s")
         return pd.DataFrame(), pd.DataFrame()
     
-    logger.info(f"Found {len(flips_df)} potential flips")
+    logger.info(f"Found {len(flips_df)} potential flips in {analysis_time:.2f}s")
     
     # Analyze investors
     investors_df = analyzer.analyze_investors(flips_df)
