@@ -3,20 +3,21 @@
     "version": "1.0.0",
     "description": "Configuration for house flip detection pipeline",
     
-    "default_counties": ["houston","bibb","fulton", "gwinnett", "cobb", "dekalb", "clayton"],
+    "default_counties": ["fulton", "gwinnett", "cobb", "dekalb", "clayton"],
     "scrape_all_enabled": true,
+    "max_counties_per_run": 50,
     "default_days_back": 180,
     "max_scrape_records": 5000,
     "data_retention_days": 90,
     
     "notification": {
-        "email": "your-email@example.com",
+        "email": "",
         "slack_webhook": "",
-        "on_success": true,
+        "on_success": false,
         "on_failure": true
     },
     
-    "output_formats": ["csv", "excel", "json"],
+    "output_formats": ["csv"],
     "enable_dashboard": true,
     "dashboard_port": 8050,
     
@@ -37,15 +38,15 @@
     "database": {
         "path": "data/properties.db",
         "backup_enabled": true,
-        "backup_retention_days": 30,
-        "tables": ["properties", "flips", "investors", "outreach"]
+        "backup_retention_days": 30
     },
     
     "advanced": {
         "enable_caching": true,
         "rate_limit_delay_ms": 1000,
-        "max_concurrent_scrapers": 3,
+        "max_concurrent_scrapers": 2,
         "timeout_seconds": 30,
-        "generate_sample_data": true
+        "batch_size": 1000,
+        "use_multiprocessing": false
     }
 }
