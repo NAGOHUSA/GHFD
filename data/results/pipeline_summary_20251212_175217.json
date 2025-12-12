@@ -1,0 +1,63 @@
+{
+  "timestamp": "2025-12-12T17:52:17.208137",
+  "pipeline_version": "1.0.0",
+  "data_summary": {
+    "total_transactions": 8144,
+    "unique_counties": 159,
+    "date_range": {
+      "min_date": "2025-09-13",
+      "max_date": "2025-12-12"
+    }
+  },
+  "flips_summary": {
+    "total_flips": 155,
+    "total_profit": 17539017.0,
+    "avg_profit": 113154.94838709677,
+    "avg_hold_days": 50.76129032258064
+  },
+  "investors_summary": {
+    "total_investors": 18,
+    "top_5_investors": [
+      {
+        "investor_name": "Peach State Investments",
+        "total_flips": 13,
+        "total_profit": 1425966.0,
+        "avg_profit_per_flip": 109689.69230769231,
+        "avg_hold_days": 49.07692307692308,
+        "avg_roi": 100.0
+      },
+      {
+        "investor_name": "Capital Flip Group",
+        "total_flips": 13,
+        "total_profit": 1413694.0,
+        "avg_profit_per_flip": 108745.69230769231,
+        "avg_hold_days": 48.76923076923077,
+        "avg_roi": 100.0
+      },
+      {
+        "investor_name": "Metro Flip Team",
+        "total_flips": 11,
+        "total_profit": 1269975.0,
+        "avg_profit_per_flip": 115452.27272727272,
+        "avg_hold_days": 54.36363636363637,
+        "avg_roi": 100.0
+      },
+      {
+        "investor_name": "Fix & Flip GA",
+        "total_flips": 10,
+        "total_profit": 1123451.0,
+        "avg_profit_per_flip": 112345.1,
+        "avg_hold_days": 61.0,
+        "avg_roi": 100.0
+      },
+      {
+        "investor_name": "Urban Development LLC",
+        "total_flips": 9,
+        "total_profit": 1029317.0,
+        "avg_profit_per_flip": 114368.55555555556,
+        "avg_hold_days": 48.77777777777778,
+        "avg_roi": 100.0
+      }
+    ]
+  }
+}
