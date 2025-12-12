@@ -5,7 +5,7 @@
             "url": "https://qpublic.schneidercorp.com/Application.aspx?AppID=903&LayerID=18221&PageTypeID=4&PageID=7993",
             "search_url": "https://qpublic.schneidercorp.com/Application.aspx/UpdateSearchGrid",
             "timezone": "America/New_York",
-            "enabled": false,
+            "enabled": true,
             "daily_limit": 500
         },
         "atkinson": {
@@ -13,7 +13,7 @@
             "url": "https://qpublic.schneidercorp.com/Application.aspx?AppID=904&LayerID=18225&PageTypeID=4&PageID=7997",
             "search_url": "https://qpublic.schneidercorp.com/Application.aspx/UpdateSearchGrid",
             "timezone": "America/New_York",
-            "enabled": false,
+            "enabled": true,
             "daily_limit": 500
         },
         "bacon": {
@@ -21,7 +21,7 @@
             "url": "https://qpublic.schneidercorp.com/Application.aspx?AppID=905&LayerID=18230&PageTypeID=4&PageID=8001",
             "search_url": "https://qpublic.schneidercorp.com/Application.aspx/UpdateSearchGrid",
             "timezone": "America/New_York",
-            "enabled": false,
+            "enabled": true,
             "daily_limit": 500
         },
         "baker": {
@@ -29,7 +29,7 @@
             "url": "https://qpublic.schneidercorp.com/Application.aspx?AppID=906&LayerID=18234&PageTypeID=4&PageID=8005",
             "search_url": "https://qpublic.schneidercorp.com/Application.aspx/UpdateSearchGrid",
             "timezone": "America/New_York",
-            "enabled": false,
+            "enabled": true,
             "daily_limit": 500
         },
         "baldwin": {
@@ -37,7 +37,7 @@
             "url": "https://qpublic.schneidercorp.com/Application.aspx?AppID=907&LayerID=18239&PageTypeID=4&PageID=8009",
             "search_url": "https://qpublic.schneidercorp.com/Application.aspx/UpdateSearchGrid",
             "timezone": "America/New_York",
-            "enabled": false,
+            "enabled": true,
             "daily_limit": 500
         },
         "banks": {
@@ -45,7 +45,7 @@
             "url": "https://qpublic.schneidercorp.com/Application.aspx?AppID=908&LayerID=18243&PageTypeID=4&PageID=8013",
             "search_url": "https://qpublic.schneidercorp.com/Application.aspx/UpdateSearchGrid",
             "timezone": "America/New_York",
-            "enabled": false,
+            "enabled": true,
             "daily_limit": 500
         },
         "barrow": {
@@ -53,7 +53,7 @@
             "url": "https://qpublic.schneidercorp.com/Application.aspx?AppID=909&LayerID=18248&PageTypeID=4&PageID=8017",
             "search_url": "https://qpublic.schneidercorp.com/Application.aspx/UpdateSearchGrid",
             "timezone": "America/New_York",
-            "enabled": false,
+            "enabled": true,
             "daily_limit": 500
         },
         "bartow": {
@@ -61,7 +61,7 @@
             "url": "https://qpublic.schneidercorp.com/Application.aspx?AppID=910&LayerID=18252&PageTypeID=4&PageID=8021",
             "search_url": "https://qpublic.schneidercorp.com/Application.aspx/UpdateSearchGrid",
             "timezone": "America/New_York",
-            "enabled": false,
+            "enabled": true,
             "daily_limit": 500
         },
         "benhill": {
@@ -69,7 +69,7 @@
             "url": "https://qpublic.schneidercorp.com/Application.aspx?AppID=911&LayerID=18257&PageTypeID=4&PageID=8025",
             "search_url": "https://qpublic.schneidercorp.com/Application.aspx/UpdateSearchGrid",
             "timezone": "America/New_York",
-            "enabled": false,
+            "enabled": true,
             "daily_limit": 500
         },
         "berrien": {
@@ -77,7 +77,7 @@
             "url": "https://qpublic.schneidercorp.com/Application.aspx?AppID=912&LayerID=18261&PageTypeID=4&PageID=8029",
             "search_url": "https://qpublic.schneidercorp.com/Application.aspx/UpdateSearchGrid",
             "timezone": "America/New_York",
-            "enabled": false,
+            "enabled": true,
             "daily_limit": 500
         },
         "bibb": {
@@ -93,7 +93,7 @@
             "url": "https://qpublic.schneidercorp.com/Application.aspx?AppID=914&LayerID=18270&PageTypeID=4&PageID=8037",
             "search_url": "https://qpublic.schneidercorp.com/Application.aspx/UpdateSearchGrid",
             "timezone": "America/New_York",
-            "enabled": false,
+            "enabled": true,
             "daily_limit": 500
         },
         "brantley": {
@@ -101,7 +101,7 @@
             "url": "https://qpublic.schneidercorp.com/Application.aspx?AppID=915&LayerID=18275&PageTypeID=4&PageID=8041",
             "search_url": "https://qpublic.schneidercorp.com/Application.aspx/UpdateSearchGrid",
             "timezone": "America/New_York",
-            "enabled": false,
+            "enabled": true,
             "daily_limit": 500
         },
         "brooks": {
@@ -109,7 +109,7 @@
             "url": "https://qpublic.schneidercorp.com/Application.aspx?AppID=916&LayerID=18280&PageTypeID=4&PageID=8045",
             "search_url": "https://qpublic.schneidercorp.com/Application.aspx/UpdateSearchGrid",
             "timezone": "America/New_York",
-            "enabled": false,
+            "enabled": true,
             "daily_limit": 500
         },
         "bryan": {
@@ -117,7 +117,7 @@
             "url": "https://qpublic.schneidercorp.com/Application.aspx?AppID=917&LayerID=18284&PageTypeID=4&PageID=8049",
             "search_url": "https://qpublic.schneidercorp.com/Application.aspx/UpdateSearchGrid",
             "timezone": "America/New_York",
-            "enabled": false,
+            "enabled": true,
             "daily_limit": 500
         },
         "bulloch": {
@@ -125,7 +125,7 @@
             "url": "https://qpublic.schneidercorp.com/Application.aspx?AppID=918&LayerID=18289&PageTypeID=4&PageID=8053",
             "search_url": "https://qpublic.schneidercorp.com/Application.aspx/UpdateSearchGrid",
             "timezone": "America/New_York",
-            "enabled": false,
+            "enabled": true,
             "daily_limit": 500
         },
         "burke": {
@@ -133,7 +133,7 @@
             "url": "https://qpublic.schneidercorp.com/Application.aspx?AppID=919&LayerID=18293&PageTypeID=4&PageID=8057",
             "search_url": "https://qpublic.schneidercorp.com/Application.aspx/UpdateSearchGrid",
             "timezone": "America/New_York",
-            "enabled": false,
+            "enabled": true,
             "daily_limit": 500
         },
         "butts": {
@@ -141,7 +141,7 @@
             "url": "https://qpublic.schneidercorp.com/Application.aspx?AppID=920&LayerID=18298&PageTypeID=4&PageID=8061",
             "search_url": "https://qpublic.schneidercorp.com/Application.aspx/UpdateSearchGrid",
             "timezone": "America/New_York",
-            "enabled": false,
+            "enabled": true,
             "daily_limit": 500
         },
         "calhoun": {
@@ -149,7 +149,7 @@
             "url": "https://qpublic.schneidercorp.com/Application.aspx?AppID=921&LayerID=18302&PageTypeID=4&PageID=8065",
             "search_url": "https://qpublic.schneidercorp.com/Application.aspx/UpdateSearchGrid",
             "timezone": "America/New_York",
-            "enabled": false,
+            "enabled": true,
             "daily_limit": 500
         },
         "camden": {
@@ -157,7 +157,7 @@
             "url": "https://qpublic.schneidercorp.com/Application.aspx?AppID=922&LayerID=18307&PageTypeID=4&PageID=8069",
             "search_url": "https://qpublic.schneidercorp.com/Application.aspx/UpdateSearchGrid",
             "timezone": "America/New_York",
-            "enabled": false,
+            "enabled": true,
             "daily_limit": 500
         },
         "candler": {
@@ -165,7 +165,7 @@
             "url": "https://qpublic.schneidercorp.com/Application.aspx?AppID=923&LayerID=18311&PageTypeID=4&PageID=8073",
             "search_url": "https://qpublic.schneidercorp.com/Application.aspx/UpdateSearchGrid",
             "timezone": "America/New_York",
-            "enabled": false,
+            "enabled": true,
             "daily_limit": 500
         },
         "carroll": {
@@ -173,7 +173,7 @@
             "url": "https://qpublic.schneidercorp.com/Application.aspx?AppID=924&LayerID=18316&PageTypeID=4&PageID=8077",
             "search_url": "https://qpublic.schneidercorp.com/Application.aspx/UpdateSearchGrid",
             "timezone": "America/New_York",
-            "enabled": false,
+            "enabled": true,
             "daily_limit": 500
         },
         "catoosa": {
@@ -181,7 +181,7 @@
             "url": "https://qpublic.schneidercorp.com/Application.aspx?AppID=925&LayerID=18320&PageTypeID=4&PageID=8081",
             "search_url": "https://qpublic.schneidercorp.com/Application.aspx/UpdateSearchGrid",
             "timezone": "America/New_York",
-            "enabled": false,
+            "enabled": true,
             "daily_limit": 500
         },
         "charlton": {
@@ -189,7 +189,7 @@
             "url": "https://qpublic.schneidercorp.com/Application.aspx?AppID=926&LayerID=18325&PageTypeID=4&PageID=8085",
             "search_url": "https://qpublic.schneidercorp.com/Application.aspx/UpdateSearchGrid",
             "timezone": "America/New_York",
-            "enabled": false,
+            "enabled": true,
             "daily_limit": 500
         },
         "chatham": {
@@ -205,7 +205,7 @@
             "url": "https://qpublic.schneidercorp.com/Application.aspx?AppID=928&LayerID=18334&PageTypeID=4&PageID=8093",
             "search_url": "https://qpublic.schneidercorp.com/Application.aspx/UpdateSearchGrid",
             "timezone": "America/New_York",
-            "enabled": false,
+            "enabled": true,
             "daily_limit": 500
         },
         "chattooga": {
@@ -213,7 +213,7 @@
             "url": "https://qpublic.schneidercorp.com/Application.aspx?AppID=929&LayerID=18338&PageTypeID=4&PageID=8097",
             "search_url": "https://qpublic.schneidercorp.com/Application.aspx/UpdateSearchGrid",
             "timezone": "America/New_York",
-            "enabled": false,
+            "enabled": true,
             "daily_limit": 500
         },
         "cherokee": {
@@ -237,7 +237,7 @@
             "url": "https://qpublic.schneidercorp.com/Application.aspx?AppID=932&LayerID=18352&PageTypeID=4&PageID=8109",
             "search_url": "https://qpublic.schneidercorp.com/Application.aspx/UpdateSearchGrid",
             "timezone": "America/New_York",
-            "enabled": false,
+            "enabled": true,
             "daily_limit": 500
         },
         "clayton": {
@@ -253,7 +253,7 @@
             "url": "https://qpublic.schneidercorp.com/Application.aspx?AppID=934&LayerID=18361&PageTypeID=4&PageID=8117",
             "search_url": "https://qpublic.schneidercorp.com/Application.aspx/UpdateSearchGrid",
             "timezone": "America/New_York",
-            "enabled": false,
+            "enabled": true,
             "daily_limit": 500
         },
         "cobb": {
@@ -269,7 +269,7 @@
             "url": "https://qpublic.schneidercorp.com/Application.aspx?AppID=936&LayerID=18370&PageTypeID=4&PageID=8125",
             "search_url": "https://qpublic.schneidercorp.com/Application.aspx/UpdateSearchGrid",
             "timezone": "America/New_York",
-            "enabled": false,
+            "enabled": true,
             "daily_limit": 500
         },
         "colquitt": {
@@ -277,7 +277,7 @@
             "url": "https://qpublic.schneidercorp.com/Application.aspx?AppID=937&LayerID=18374&PageTypeID=4&PageID=8129",
             "search_url": "https://qpublic.schneidercorp.com/Application.aspx/UpdateSearchGrid",
             "timezone": "America/New_York",
-            "enabled": false,
+            "enabled": true,
             "daily_limit": 500
         },
         "columbia": {
@@ -293,7 +293,7 @@
             "url": "https://qpublic.schneidercorp.com/Application.aspx?AppID=939&LayerID=18383&PageTypeID=4&PageID=8137",
             "search_url": "https://qpublic.schneidercorp.com/Application.aspx/UpdateSearchGrid",
             "timezone": "America/New_York",
-            "enabled": false,
+            "enabled": true,
             "daily_limit": 500
         },
         "coweta": {
@@ -309,7 +309,7 @@
             "url": "https://qpublic.schneidercorp.com/Application.aspx?AppID=941&LayerID=18392&PageTypeID=4&PageID=8145",
             "search_url": "https://qpublic.schneidercorp.com/Application.aspx/UpdateSearchGrid",
             "timezone": "America/New_York",
-            "enabled": false,
+            "enabled": true,
             "daily_limit": 500
         },
         "crisp": {
@@ -317,7 +317,7 @@
             "url": "https://qpublic.schneidercorp.com/Application.aspx?AppID=942&LayerID=18397&PageTypeID=4&PageID=8149",
             "search_url": "https://qpublic.schneidercorp.com/Application.aspx/UpdateSearchGrid",
             "timezone": "America/New_York",
-            "enabled": false,
+            "enabled": true,
             "daily_limit": 500
         },
         "dade": {
@@ -325,7 +325,7 @@
             "url": "https://qpublic.schneidercorp.com/Application.aspx?AppID=943&LayerID=18401&PageTypeID=4&PageID=8153",
             "search_url": "https://qpublic.schneidercorp.com/Application.aspx/UpdateSearchGrid",
             "timezone": "America/New_York",
-            "enabled": false,
+            "enabled": true,
             "daily_limit": 500
         },
         "dawson": {
@@ -333,7 +333,7 @@
             "url": "https://qpublic.schneidercorp.com/Application.aspx?AppID=944&LayerID=18406&PageTypeID=4&PageID=8157",
             "search_url": "https://qpublic.schneidercorp.com/Application.aspx/UpdateSearchGrid",
             "timezone": "America/New_York",
-            "enabled": false,
+            "enabled": true,
             "daily_limit": 500
         },
         "decatur": {
@@ -341,7 +341,7 @@
             "url": "https://qpublic.schneidercorp.com/Application.aspx?AppID=945&LayerID=18410&PageTypeID=4&PageID=8161",
             "search_url": "https://qpublic.schneidercorp.com/Application.aspx/UpdateSearchGrid",
             "timezone": "America/New_York",
-            "enabled": false,
+            "enabled": true,
             "daily_limit": 500
         },
         "dekalb": {
@@ -357,7 +357,7 @@
             "url": "https://qpublic.schneidercorp.com/Application.aspx?AppID=947&LayerID=18419&PageTypeID=4&PageID=8169",
             "search_url": "https://qpublic.schneidercorp.com/Application.aspx/UpdateSearchGrid",
             "timezone": "America/New_York",
-            "enabled": false,
+            "enabled": true,
             "daily_limit": 500
         },
         "dooly": {
@@ -365,7 +365,7 @@
             "url": "https://qpublic.schneidercorp.com/Application.aspx?AppID=948&LayerID=18424&PageTypeID=4&PageID=8173",
             "search_url": "https://qpublic.schneidercorp.com/Application.aspx/UpdateSearchGrid",
             "timezone": "America/New_York",
-            "enabled": false,
+            "enabled": true,
             "daily_limit": 500
         },
         "dougherty": {
@@ -389,7 +389,7 @@
             "url": "https://qpublic.schneidercorp.com/Application.aspx?AppID=951&LayerID=18437&PageTypeID=4&PageID=8185",
             "search_url": "https://qpublic.schneidercorp.com/Application.aspx/UpdateSearchGrid",
             "timezone": "America/New_York",
-            "enabled": false,
+            "enabled": true,
             "daily_limit": 500
         },
         "echols": {
@@ -397,7 +397,7 @@
             "url": "https://qpublic.schneidercorp.com/Application.aspx?AppID=952&LayerID=18442&PageTypeID=4&PageID=8189",
             "search_url": "https://qpublic.schneidercorp.com/Application.aspx/UpdateSearchGrid",
             "timezone": "America/New_York",
-            "enabled": false,
+            "enabled": true,
             "daily_limit": 500
         },
         "effingham": {
@@ -413,7 +413,7 @@
             "url": "https://qpublic.schneidercorp.com/Application.aspx?AppID=954&LayerID=18451&PageTypeID=4&PageID=8197",
             "search_url": "https://qpublic.schneidercorp.com/Application.aspx/UpdateSearchGrid",
             "timezone": "America/New_York",
-            "enabled": false,
+            "enabled": true,
             "daily_limit": 500
         },
         "emanuel": {
@@ -421,7 +421,7 @@
             "url": "https://qpublic.schneidercorp.com/Application.aspx?AppID=955&LayerID=18455&PageTypeID=4&PageID=8201",
             "search_url": "https://qpublic.schneidercorp.com/Application.aspx/UpdateSearchGrid",
             "timezone": "America/New_York",
-            "enabled": false,
+            "enabled": true,
             "daily_limit": 500
         },
         "evans": {
@@ -429,7 +429,7 @@
             "url": "https://qpublic.schneidercorp.com/Application.aspx?AppID=956&LayerID=18460&PageTypeID=4&PageID=8205",
             "search_url": "https://qpublic.schneidercorp.com/Application.aspx/UpdateSearchGrid",
             "timezone": "America/New_York",
-            "enabled": false,
+            "enabled": true,
             "daily_limit": 500
         },
         "fannin": {
@@ -437,7 +437,7 @@
             "url": "https://qpublic.schneidercorp.com/Application.aspx?AppID=957&LayerID=18464&PageTypeID=4&PageID=8209",
             "search_url": "https://qpublic.schneidercorp.com/Application.aspx/UpdateSearchGrid",
             "timezone": "America/New_York",
-            "enabled": false,
+            "enabled": true,
             "daily_limit": 500
         },
         "fayette": {
@@ -469,7 +469,7 @@
             "url": "https://qpublic.schneidercorp.com/Application.aspx?AppID=961&LayerID=18482&PageTypeID=4&PageID=8225",
             "search_url": "https://qpublic.schneidercorp.com/Application.aspx/UpdateSearchGrid",
             "timezone": "America/New_York",
-            "enabled": false,
+            "enabled": true,
             "daily_limit": 500
         },
         "fulton": {
@@ -485,7 +485,7 @@
             "url": "https://qpublic.schneidercorp.com/Application.aspx?AppID=963&LayerID=18491&PageTypeID=4&PageID=8233",
             "search_url": "https://qpublic.schneidercorp.com/Application.aspx/UpdateSearchGrid",
             "timezone": "America/New_York",
-            "enabled": false,
+            "enabled": true,
             "daily_limit": 500
         },
         "glascock": {
@@ -493,7 +493,7 @@
             "url": "https://qpublic.schneidercorp.com/Application.aspx?AppID=964&LayerID=18496&PageTypeID=4&PageID=8237",
             "search_url": "https://qpublic.schneidercorp.com/Application.aspx/UpdateSearchGrid",
             "timezone": "America/New_York",
-            "enabled": false,
+            "enabled": true,
             "daily_limit": 500
         },
         "glynn": {
@@ -509,7 +509,7 @@
             "url": "https://qpublic.schneidercorp.com/Application.aspx?AppID=966&LayerID=18505&PageTypeID=4&PageID=8245",
             "search_url": "https://qpublic.schneidercorp.com/Application.aspx/UpdateSearchGrid",
             "timezone": "America/New_York",
-            "enabled": false,
+            "enabled": true,
             "daily_limit": 500
         },
         "grady": {
@@ -517,7 +517,7 @@
             "url": "https://qpublic.schneidercorp.com/Application.aspx?AppID=967&LayerID=18509&PageTypeID=4&PageID=8249",
             "search_url": "https://qpublic.schneidercorp.com/Application.aspx/UpdateSearchGrid",
             "timezone": "America/New_York",
-            "enabled": false,
+            "enabled": true,
             "daily_limit": 500
         },
         "greene": {
@@ -525,7 +525,7 @@
             "url": "https://qpublic.schneidercorp.com/Application.aspx?AppID=968&LayerID=18514&PageTypeID=4&PageID=8253",
             "search_url": "https://qpublic.schneidercorp.com/Application.aspx/UpdateSearchGrid",
             "timezone": "America/New_York",
-            "enabled": false,
+            "enabled": true,
             "daily_limit": 500
         },
         "gwinnett": {
@@ -541,7 +541,7 @@
             "url": "https://qpublic.schneidercorp.com/Application.aspx?AppID=970&LayerID=18523&PageTypeID=4&PageID=8261",
             "search_url": "https://qpublic.schneidercorp.com/Application.aspx/UpdateSearchGrid",
             "timezone": "America/New_York",
-            "enabled": false,
+            "enabled": true,
             "daily_limit": 500
         },
         "hall": {
@@ -557,7 +557,7 @@
             "url": "https://qpublic.schneidercorp.com/Application.aspx?AppID=972&LayerID=18532&PageTypeID=4&PageID=8269",
             "search_url": "https://qpublic.schneidercorp.com/Application.aspx/UpdateSearchGrid",
             "timezone": "America/New_York",
-            "enabled": false,
+            "enabled": true,
             "daily_limit": 500
         },
         "haralson": {
@@ -565,7 +565,7 @@
             "url": "https://qpublic.schneidercorp.com/Application.aspx?AppID=973&LayerID=18536&PageTypeID=4&PageID=8273",
             "search_url": "https://qpublic.schneidercorp.com/Application.aspx/UpdateSearchGrid",
             "timezone": "America/New_York",
-            "enabled": false,
+            "enabled": true,
             "daily_limit": 500
         },
         "harris": {
@@ -573,7 +573,7 @@
             "url": "https://qpublic.schneidercorp.com/Application.aspx?AppID=974&LayerID=18541&PageTypeID=4&PageID=8277",
             "search_url": "https://qpublic.schneidercorp.com/Application.aspx/UpdateSearchGrid",
             "timezone": "America/New_York",
-            "enabled": false,
+            "enabled": true,
             "daily_limit": 500
         },
         "hart": {
@@ -581,7 +581,7 @@
             "url": "https://qpublic.schneidercorp.com/Application.aspx?AppID=975&LayerID=18545&PageTypeID=4&PageID=8281",
             "search_url": "https://qpublic.schneidercorp.com/Application.aspx/UpdateSearchGrid",
             "timezone": "America/New_York",
-            "enabled": false,
+            "enabled": true,
             "daily_limit": 500
         },
         "heard": {
@@ -589,7 +589,7 @@
             "url": "https://qpublic.schneidercorp.com/Application.aspx?AppID=976&LayerID=18550&PageTypeID=4&PageID=8285",
             "search_url": "https://qpublic.schneidercorp.com/Application.aspx/UpdateSearchGrid",
             "timezone": "America/New_York",
-            "enabled": false,
+            "enabled": true,
             "daily_limit": 500
         },
         "henry": {
@@ -613,7 +613,7 @@
             "url": "https://qpublic.schneidercorp.com/Application.aspx?AppID=979&LayerID=18563&PageTypeID=4&PageID=8297",
             "search_url": "https://qpublic.schneidercorp.com/Application.aspx/UpdateSearchGrid",
             "timezone": "America/New_York",
-            "enabled": false,
+            "enabled": true,
             "daily_limit": 500
         },
         "jackson": {
@@ -621,7 +621,7 @@
             "url": "https://qpublic.schneidercorp.com/Application.aspx?AppID=980&LayerID=18568&PageTypeID=4&PageID=8301",
             "search_url": "https://qpublic.schneidercorp.com/Application.aspx/UpdateSearchGrid",
             "timezone": "America/New_York",
-            "enabled": false,
+            "enabled": true,
             "daily_limit": 500
         },
         "jasper": {
@@ -629,7 +629,7 @@
             "url": "https://qpublic.schneidercorp.com/Application.aspx?AppID=981&LayerID=18572&PageTypeID=4&PageID=8305",
             "search_url": "https://qpublic.schneidercorp.com/Application.aspx/UpdateSearchGrid",
             "timezone": "America/New_York",
-            "enabled": false,
+            "enabled": true,
             "daily_limit": 500
         },
         "jeffdavis": {
@@ -637,7 +637,7 @@
             "url": "https://qpublic.schneidercorp.com/Application.aspx?AppID=982&LayerID=18577&PageTypeID=4&PageID=8309",
             "search_url": "https://qpublic.schneidercorp.com/Application.aspx/UpdateSearchGrid",
             "timezone": "America/New_York",
-            "enabled": false,
+            "enabled": true,
             "daily_limit": 500
         },
         "jefferson": {
@@ -645,7 +645,7 @@
             "url": "https://qpublic.schneidercorp.com/Application.aspx?AppID=983&LayerID=18581&PageTypeID=4&PageID=8313",
             "search_url": "https://qpublic.schneidercorp.com/Application.aspx/UpdateSearchGrid",
             "timezone": "America/New_York",
-            "enabled": false,
+            "enabled": true,
             "daily_limit": 500
         },
         "jenkins": {
@@ -653,7 +653,7 @@
             "url": "https://qpublic.schneidercorp.com/Application.aspx?AppID=984&LayerID=18586&PageTypeID=4&PageID=8317",
             "search_url": "https://qpublic.schneidercorp.com/Application.aspx/UpdateSearchGrid",
             "timezone": "America/New_York",
-            "enabled": false,
+            "enabled": true,
             "daily_limit": 500
         },
         "johnson": {
@@ -661,7 +661,7 @@
             "url": "https://qpublic.schneidercorp.com/Application.aspx?AppID=985&LayerID=18590&PageTypeID=4&PageID=8321",
             "search_url": "https://qpublic.schneidercorp.com/Application.aspx/UpdateSearchGrid",
             "timezone": "America/New_York",
-            "enabled": false,
+            "enabled": true,
             "daily_limit": 500
         },
         "jones": {
@@ -669,7 +669,7 @@
             "url": "https://qpublic.schneidercorp.com/Application.aspx?AppID=986&LayerID=18595&PageTypeID=4&PageID=8325",
             "search_url": "https://qpublic.schneidercorp.com/Application.aspx/UpdateSearchGrid",
             "timezone": "America/New_York",
-            "enabled": false,
+            "enabled": true,
             "daily_limit": 500
         },
         "lamar": {
@@ -677,7 +677,7 @@
             "url": "https://qpublic.schneidercorp.com/Application.aspx?AppID=987&LayerID=18599&PageTypeID=4&PageID=8329",
             "search_url": "https://qpublic.schneidercorp.com/Application.aspx/UpdateSearchGrid",
             "timezone": "America/New_York",
-            "enabled": false,
+            "enabled": true,
             "daily_limit": 500
         },
         "lanier": {
@@ -685,7 +685,7 @@
             "url": "https://qpublic.schneidercorp.com/Application.aspx?AppID=988&LayerID=18604&PageTypeID=4&PageID=8333",
             "search_url": "https://qpublic.schneidercorp.com/Application.aspx/UpdateSearchGrid",
             "timezone": "America/New_York",
-            "enabled": false,
+            "enabled": true,
             "daily_limit": 500
         },
         "laurens": {
@@ -693,7 +693,7 @@
             "url": "https://qpublic.schneidercorp.com/Application.aspx?AppID=989&LayerID=18608&PageTypeID=4&PageID=8337",
             "search_url": "https://qpublic.schneidercorp.com/Application.aspx/UpdateSearchGrid",
             "timezone": "America/New_York",
-            "enabled": false,
+            "enabled": true,
             "daily_limit": 500
         },
         "lee": {
@@ -701,7 +701,7 @@
             "url": "https://qpublic.schneidercorp.com/Application.aspx?AppID=990&LayerID=18613&PageTypeID=4&PageID=8341",
             "search_url": "https://qpublic.schneidercorp.com/Application.aspx/UpdateSearchGrid",
             "timezone": "America/New_York",
-            "enabled": false,
+            "enabled": true,
             "daily_limit": 500
         },
         "liberty": {
@@ -709,7 +709,7 @@
             "url": "https://qpublic.schneidercorp.com/Application.aspx?AppID=991&LayerID=18617&PageTypeID=4&PageID=8345",
             "search_url": "https://qpublic.schneidercorp.com/Application.aspx/UpdateSearchGrid",
             "timezone": "America/New_York",
-            "enabled": false,
+            "enabled": true,
             "daily_limit": 500
         },
         "lincoln": {
@@ -717,7 +717,7 @@
             "url": "https://qpublic.schneidercorp.com/Application.aspx?AppID=992&LayerID=18622&PageTypeID=4&PageID=8349",
             "search_url": "https://qpublic.schneidercorp.com/Application.aspx/UpdateSearchGrid",
             "timezone": "America/New_York",
-            "enabled": false,
+            "enabled": true,
             "daily_limit": 500
         },
         "long": {
@@ -725,7 +725,7 @@
             "url": "https://qpublic.schneidercorp.com/Application.aspx?AppID=993&LayerID=18626&PageTypeID=4&PageID=8353",
             "search_url": "https://qpublic.schneidercorp.com/Application.aspx/UpdateSearchGrid",
             "timezone": "America/New_York",
-            "enabled": false,
+            "enabled": true,
             "daily_limit": 500
         },
         "lowndes": {
@@ -741,7 +741,7 @@
             "url": "https://qpublic.schneidercorp.com/Application.aspx?AppID=995&LayerID=18635&PageTypeID=4&PageID=8361",
             "search_url": "https://qpublic.schneidercorp.com/Application.aspx/UpdateSearchGrid",
             "timezone": "America/New_York",
-            "enabled": false,
+            "enabled": true,
             "daily_limit": 500
         },
         "macon": {
@@ -749,7 +749,7 @@
             "url": "https://qpublic.schneidercorp.com/Application.aspx?AppID=996&LayerID=18640&PageTypeID=4&PageID=8365",
             "search_url": "https://qpublic.schneidercorp.com/Application.aspx/UpdateSearchGrid",
             "timezone": "America/New_York",
-            "enabled": false,
+            "enabled": true,
             "daily_limit": 500
         },
         "madison": {
@@ -757,7 +757,7 @@
             "url": "https://qpublic.schneidercorp.com/Application.aspx?AppID=997&LayerID=18644&PageTypeID=4&PageID=8369",
             "search_url": "https://qpublic.schneidercorp.com/Application.aspx/UpdateSearchGrid",
             "timezone": "America/New_York",
-            "enabled": false,
+            "enabled": true,
             "daily_limit": 500
         },
         "marion": {
@@ -765,7 +765,7 @@
             "url": "https://qpublic.schneidercorp.com/Application.aspx?AppID=998&LayerID=18649&PageTypeID=4&PageID=8373",
             "search_url": "https://qpublic.schneidercorp.com/Application.aspx/UpdateSearchGrid",
             "timezone": "America/New_York",
-            "enabled": false,
+            "enabled": true,
             "daily_limit": 500
         },
         "mcduffie": {
@@ -773,7 +773,7 @@
             "url": "https://qpublic.schneidercorp.com/Application.aspx?AppID=999&LayerID=18653&PageTypeID=4&PageID=8377",
             "search_url": "https://qpublic.schneidercorp.com/Application.aspx/UpdateSearchGrid",
             "timezone": "America/New_York",
-            "enabled": false,
+            "enabled": true,
             "daily_limit": 500
         },
         "mcintosh": {
@@ -781,7 +781,7 @@
             "url": "https://qpublic.schneidercorp.com/Application.aspx?AppID=1000&LayerID=18658&PageTypeID=4&PageID=8381",
             "search_url": "https://qpublic.schneidercorp.com/Application.aspx/UpdateSearchGrid",
             "timezone": "America/New_York",
-            "enabled": false,
+            "enabled": true,
             "daily_limit": 500
         },
         "meriwether": {
@@ -789,7 +789,7 @@
             "url": "https://qpublic.schneidercorp.com/Application.aspx?AppID=1001&LayerID=18662&PageTypeID=4&PageID=8385",
             "search_url": "https://qpublic.schneidercorp.com/Application.aspx/UpdateSearchGrid",
             "timezone": "America/New_York",
-            "enabled": false,
+            "enabled": true,
             "daily_limit": 500
         },
         "miller": {
@@ -797,7 +797,7 @@
             "url": "https://qpublic.schneidercorp.com/Application.aspx?AppID=1002&LayerID=18667&PageTypeID=4&PageID=8389",
             "search_url": "https://qpublic.schneidercorp.com/Application.aspx/UpdateSearchGrid",
             "timezone": "America/New_York",
-            "enabled": false,
+            "enabled": true,
             "daily_limit": 500
         },
         "mitchell": {
@@ -805,7 +805,7 @@
             "url": "https://qpublic.schneidercorp.com/Application.aspx?AppID=1003&LayerID=18671&PageTypeID=4&PageID=8393",
             "search_url": "https://qpublic.schneidercorp.com/Application.aspx/UpdateSearchGrid",
             "timezone": "America/New_York",
-            "enabled": false,
+            "enabled": true,
             "daily_limit": 500
         },
         "monroe": {
@@ -813,7 +813,7 @@
             "url": "https://qpublic.schneidercorp.com/Application.aspx?AppID=1004&LayerID=18676&PageTypeID=4&PageID=8397",
             "search_url": "https://qpublic.schneidercorp.com/Application.aspx/UpdateSearchGrid",
             "timezone": "America/New_York",
-            "enabled": false,
+            "enabled": true,
             "daily_limit": 500
         },
         "montgomery": {
@@ -821,7 +821,7 @@
             "url": "https://qpublic.schneidercorp.com/Application.aspx?AppID=1005&LayerID=18680&PageTypeID=4&PageID=8401",
             "search_url": "https://qpublic.schneidercorp.com/Application.aspx/UpdateSearchGrid",
             "timezone": "America/New_York",
-            "enabled": false,
+            "enabled": true,
             "daily_limit": 500
         },
         "morgan": {
@@ -829,7 +829,7 @@
             "url": "https://qpublic.schneidercorp.com/Application.aspx?AppID=1006&LayerID=18685&PageTypeID=4&PageID=8405",
             "search_url": "https://qpublic.schneidercorp.com/Application.aspx/UpdateSearchGrid",
             "timezone": "America/New_York",
-            "enabled": false,
+            "enabled": true,
             "daily_limit": 500
         },
         "murray": {
@@ -837,7 +837,7 @@
             "url": "https://qpublic.schneidercorp.com/Application.aspx?AppID=1007&LayerID=18689&PageTypeID=4&PageID=8409",
             "search_url": "https://qpublic.schneidercorp.com/Application.aspx/UpdateSearchGrid",
             "timezone": "America/New_York",
-            "enabled": false,
+            "enabled": true,
             "daily_limit": 500
         },
         "muscogee": {
@@ -861,7 +861,7 @@
             "url": "https://qpublic.schneidercorp.com/Application.aspx?AppID=1010&LayerID=18703&PageTypeID=4&PageID=8421",
             "search_url": "https://qpublic.schneidercorp.com/Application.aspx/UpdateSearchGrid",
             "timezone": "America/New_York",
-            "enabled": false,
+            "enabled": true,
             "daily_limit": 500
         },
         "oglethorpe": {
@@ -869,7 +869,7 @@
             "url": "https://qpublic.schneidercorp.com/Application.aspx?AppID=1011&LayerID=18707&PageTypeID=4&PageID=8425",
             "search_url": "https://qpublic.schneidercorp.com/Application.aspx/UpdateSearchGrid",
             "timezone": "America/New_York",
-            "enabled": false,
+            "enabled": true,
             "daily_limit": 500
         },
         "paulding": {
@@ -885,7 +885,7 @@
             "url": "https://qpublic.schneidercorp.com/Application.aspx?AppID=1013&LayerID=18716&PageTypeID=4&PageID=8433",
             "search_url": "https://qpublic.schneidercorp.com/Application.aspx/UpdateSearchGrid",
             "timezone": "America/New_York",
-            "enabled": false,
+            "enabled": true,
             "daily_limit": 500
         },
         "pickens": {
@@ -893,7 +893,7 @@
             "url": "https://qpublic.schneidercorp.com/Application.aspx?AppID=1014&LayerID=18721&PageTypeID=4&PageID=8437",
             "search_url": "https://qpublic.schneidercorp.com/Application.aspx/UpdateSearchGrid",
             "timezone": "America/New_York",
-            "enabled": false,
+            "enabled": true,
             "daily_limit": 500
         },
         "pierce": {
@@ -901,7 +901,7 @@
             "url": "https://qpublic.schneidercorp.com/Application.aspx?AppID=1015&LayerID=18725&PageTypeID=4&PageID=8441",
             "search_url": "https://qpublic.schneidercorp.com/Application.aspx/UpdateSearchGrid",
             "timezone": "America/New_York",
-            "enabled": false,
+            "enabled": true,
             "daily_limit": 500
         },
         "pike": {
@@ -909,7 +909,7 @@
             "url": "https://qpublic.schneidercorp.com/Application.aspx?AppID=1016&LayerID=18730&PageTypeID=4&PageID=8445",
             "search_url": "https://qpublic.schneidercorp.com/Application.aspx/UpdateSearchGrid",
             "timezone": "America/New_York",
-            "enabled": false,
+            "enabled": true,
             "daily_limit": 500
         },
         "polk": {
@@ -917,7 +917,7 @@
             "url": "https://qpublic.schneidercorp.com/Application.aspx?AppID=1017&LayerID=18734&PageTypeID=4&PageID=8449",
             "search_url": "https://qpublic.schneidercorp.com/Application.aspx/UpdateSearchGrid",
             "timezone": "America/New_York",
-            "enabled": false,
+            "enabled": true,
             "daily_limit": 500
         },
         "pulaski": {
@@ -925,7 +925,7 @@
             "url": "https://qpublic.schneidercorp.com/Application.aspx?AppID=1018&LayerID=18739&PageTypeID=4&PageID=8453",
             "search_url": "https://qpublic.schneidercorp.com/Application.aspx/UpdateSearchGrid",
             "timezone": "America/New_York",
-            "enabled": false,
+            "enabled": true,
             "daily_limit": 500
         },
         "putnam": {
@@ -933,7 +933,7 @@
             "url": "https://qpublic.schneidercorp.com/Application.aspx?AppID=1019&LayerID=18743&PageTypeID=4&PageID=8457",
             "search_url": "https://qpublic.schneidercorp.com/Application.aspx/UpdateSearchGrid",
             "timezone": "America/New_York",
-            "enabled": false,
+            "enabled": true,
             "daily_limit": 500
         },
         "quitman": {
@@ -941,7 +941,7 @@
             "url": "https://qpublic.schneidercorp.com/Application.aspx?AppID=1020&LayerID=18748&PageTypeID=4&PageID=8461",
             "search_url": "https://qpublic.schneidercorp.com/Application.aspx/UpdateSearchGrid",
             "timezone": "America/New_York",
-            "enabled": false,
+            "enabled": true,
             "daily_limit": 500
         },
         "rabun": {
@@ -949,7 +949,7 @@
             "url": "https://qpublic.schneidercorp.com/Application.aspx?AppID=1021&LayerID=18752&PageTypeID=4&PageID=8465",
             "search_url": "https://qpublic.schneidercorp.com/Application.aspx/UpdateSearchGrid",
             "timezone": "America/New_York",
-            "enabled": false,
+            "enabled": true,
             "daily_limit": 500
         },
         "randolph": {
@@ -957,7 +957,7 @@
             "url": "https://qpublic.schneidercorp.com/Application.aspx?AppID=1022&LayerID=18757&PageTypeID=4&PageID=8469",
             "search_url": "https://qpublic.schneidercorp.com/Application.aspx/UpdateSearchGrid",
             "timezone": "America/New_York",
-            "enabled": false,
+            "enabled": true,
             "daily_limit": 500
         },
         "richmond": {
@@ -981,7 +981,7 @@
             "url": "https://qpublic.schneidercorp.com/Application.aspx?AppID=1025&LayerID=18770&PageTypeID=4&PageID=8481",
             "search_url": "https://qpublic.schneidercorp.com/Application.aspx/UpdateSearchGrid",
             "timezone": "America/New_York",
-            "enabled": false,
+            "enabled": true,
             "daily_limit": 500
         },
         "screven": {
@@ -989,7 +989,7 @@
             "url": "https://qpublic.schneidercorp.com/Application.aspx?AppID=1026&LayerID=18775&PageTypeID=4&PageID=8485",
             "search_url": "https://qpublic.schneidercorp.com/Application.aspx/UpdateSearchGrid",
             "timezone": "America/New_York",
-            "enabled": false,
+            "enabled": true,
             "daily_limit": 500
         },
         "seminole": {
@@ -997,7 +997,7 @@
             "url": "https://qpublic.schneidercorp.com/Application.aspx?AppID=1027&LayerID=18779&PageTypeID=4&PageID=8489",
             "search_url": "https://qpublic.schneidercorp.com/Application.aspx/UpdateSearchGrid",
             "timezone": "America/New_York",
-            "enabled": false,
+            "enabled": true,
             "daily_limit": 500
         },
         "spalding": {
@@ -1013,7 +1013,7 @@
             "url": "https://qpublic.schneidercorp.com/Application.aspx?AppID=1029&LayerID=18788&PageTypeID=4&PageID=8497",
             "search_url": "https://qpublic.schneidercorp.com/Application.aspx/UpdateSearchGrid",
             "timezone": "America/New_York",
-            "enabled": false,
+            "enabled": true,
             "daily_limit": 500
         },
         "stewart": {
@@ -1021,7 +1021,7 @@
             "url": "https://qpublic.schneidercorp.com/Application.aspx?AppID=1030&LayerID=18793&PageTypeID=4&PageID=8501",
             "search_url": "https://qpublic.schneidercorp.com/Application.aspx/UpdateSearchGrid",
             "timezone": "America/New_York",
-            "enabled": false,
+            "enabled": true,
             "daily_limit": 500
         },
         "sumter": {
@@ -1029,7 +1029,7 @@
             "url": "https://qpublic.schneidercorp.com/Application.aspx?AppID=1031&LayerID=18797&PageTypeID=4&PageID=8505",
             "search_url": "https://qpublic.schneidercorp.com/Application.aspx/UpdateSearchGrid",
             "timezone": "America/New_York",
-            "enabled": false,
+            "enabled": true,
             "daily_limit": 500
         },
         "talbot": {
@@ -1037,7 +1037,7 @@
             "url": "https://qpublic.schneidercorp.com/Application.aspx?AppID=1032&LayerID=18802&PageTypeID=4&PageID=8509",
             "search_url": "https://qpublic.schneidercorp.com/Application.aspx/UpdateSearchGrid",
             "timezone": "America/New_York",
-            "enabled": false,
+            "enabled": true,
             "daily_limit": 500
         },
         "taliaferro": {
@@ -1045,7 +1045,7 @@
             "url": "https://qpublic.schneidercorp.com/Application.aspx?AppID=1033&LayerID=18806&PageTypeID=4&PageID=8513",
             "search_url": "https://qpublic.schneidercorp.com/Application.aspx/UpdateSearchGrid",
             "timezone": "America/New_York",
-            "enabled": false,
+            "enabled": true,
             "daily_limit": 500
         },
         "tattnall": {
@@ -1053,7 +1053,7 @@
             "url": "https://qpublic.schneidercorp.com/Application.aspx?AppID=1034&LayerID=18811&PageTypeID=4&PageID=8517",
             "search_url": "https://qpublic.schneidercorp.com/Application.aspx/UpdateSearchGrid",
             "timezone": "America/New_York",
-            "enabled": false,
+            "enabled": true,
             "daily_limit": 500
         },
         "taylor": {
@@ -1061,7 +1061,7 @@
             "url": "https://qpublic.schneidercorp.com/Application.aspx?AppID=1035&LayerID=18815&PageTypeID=4&PageID=8521",
             "search_url": "https://qpublic.schneidercorp.com/Application.aspx/UpdateSearchGrid",
             "timezone": "America/New_York",
-            "enabled": false,
+            "enabled": true,
             "daily_limit": 500
         },
         "telfair": {
@@ -1069,7 +1069,7 @@
             "url": "https://qpublic.schneidercorp.com/Application.aspx?AppID=1036&LayerID=18820&PageTypeID=4&PageID=8525",
             "search_url": "https://qpublic.schneidercorp.com/Application.aspx/UpdateSearchGrid",
             "timezone": "America/New_York",
-            "enabled": false,
+            "enabled": true,
             "daily_limit": 500
         },
         "terrell": {
@@ -1077,7 +1077,7 @@
             "url": "https://qpublic.schneidercorp.com/Application.aspx?AppID=1037&LayerID=18824&PageTypeID=4&PageID=8529",
             "search_url": "https://qpublic.schneidercorp.com/Application.aspx/UpdateSearchGrid",
             "timezone": "America/New_York",
-            "enabled": false,
+            "enabled": true,
             "daily_limit": 500
         },
         "thomas": {
@@ -1093,7 +1093,7 @@
             "url": "https://qpublic.schneidercorp.com/Application.aspx?AppID=1039&LayerID=18833&PageTypeID=4&PageID=8537",
             "search_url": "https://qpublic.schneidercorp.com/Application.aspx/UpdateSearchGrid",
             "timezone": "America/New_York",
-            "enabled": false,
+            "enabled": true,
             "daily_limit": 500
         },
         "toombs": {
@@ -1101,7 +1101,7 @@
             "url": "https://qpublic.schneidercorp.com/Application.aspx?AppID=1040&LayerID=18838&PageTypeID=4&PageID=8541",
             "search_url": "https://qpublic.schneidercorp.com/Application.aspx/UpdateSearchGrid",
             "timezone": "America/New_York",
-            "enabled": false,
+            "enabled": true,
             "daily_limit": 500
         },
         "towns": {
@@ -1109,7 +1109,7 @@
             "url": "https://qpublic.schneidercorp.com/Application.aspx?AppID=1041&LayerID=18842&PageTypeID=4&PageID=8545",
             "search_url": "https://qpublic.schneidercorp.com/Application.aspx/UpdateSearchGrid",
             "timezone": "America/New_York",
-            "enabled": false,
+            "enabled": true,
             "daily_limit": 500
         },
         "treutlen": {
@@ -1117,7 +1117,7 @@
             "url": "https://qpublic.schneidercorp.com/Application.aspx?AppID=1042&LayerID=18847&PageTypeID=4&PageID=8549",
             "search_url": "https://qpublic.schneidercorp.com/Application.aspx/UpdateSearchGrid",
             "timezone": "America/New_York",
-            "enabled": false,
+            "enabled": true,
             "daily_limit": 500
         },
         "troup": {
@@ -1133,7 +1133,7 @@
             "url": "https://qpublic.schneidercorp.com/Application.aspx?AppID=1044&LayerID=18856&PageTypeID=4&PageID=8557",
             "search_url": "https://qpublic.schneidercorp.com/Application.aspx/UpdateSearchGrid",
             "timezone": "America/New_York",
-            "enabled": false,
+            "enabled": true,
             "daily_limit": 500
         },
         "twiggs": {
@@ -1141,7 +1141,7 @@
             "url": "https://qpublic.schneidercorp.com/Application.aspx?AppID=1045&LayerID=18860&PageTypeID=4&PageID=8561",
             "search_url": "https://qpublic.schneidercorp.com/Application.aspx/UpdateSearchGrid",
             "timezone": "America/New_York",
-            "enabled": false,
+            "enabled": true,
             "daily_limit": 500
         },
         "union": {
@@ -1149,7 +1149,7 @@
             "url": "https://qpublic.schneidercorp.com/Application.aspx?AppID=1046&LayerID=18865&PageTypeID=4&PageID=8565",
             "search_url": "https://qpublic.schneidercorp.com/Application.aspx/UpdateSearchGrid",
             "timezone": "America/New_York",
-            "enabled": false,
+            "enabled": true,
             "daily_limit": 500
         },
         "upson": {
@@ -1157,7 +1157,7 @@
             "url": "https://qpublic.schneidercorp.com/Application.aspx?AppID=1047&LayerID=18869&PageTypeID=4&PageID=8569",
             "search_url": "https://qpublic.schneidercorp.com/Application.aspx/UpdateSearchGrid",
             "timezone": "America/New_York",
-            "enabled": false,
+            "enabled": true,
             "daily_limit": 500
         },
         "walker": {
@@ -1181,7 +1181,7 @@
             "url": "https://qpublic.schneidercorp.com/Application.aspx?AppID=1050&LayerID=18883&PageTypeID=4&PageID=8581",
             "search_url": "https://qpublic.schneidercorp.com/Application.aspx/UpdateSearchGrid",
             "timezone": "America/New_York",
-            "enabled": false,
+            "enabled": true,
             "daily_limit": 500
         },
         "warren": {
@@ -1189,7 +1189,7 @@
             "url": "https://qpublic.schneidercorp.com/Application.aspx?AppID=1051&LayerID=18887&PageTypeID=4&PageID=8585",
             "search_url": "https://qpublic.schneidercorp.com/Application.aspx/UpdateSearchGrid",
             "timezone": "America/New_York",
-            "enabled": false,
+            "enabled": true,
             "daily_limit": 500
         },
         "washington": {
@@ -1197,7 +1197,7 @@
             "url": "https://qpublic.schneidercorp.com/Application.aspx?AppID=1052&LayerID=18892&PageTypeID=4&PageID=8589",
             "search_url": "https://qpublic.schneidercorp.com/Application.aspx/UpdateSearchGrid",
             "timezone": "America/New_York",
-            "enabled": false,
+            "enabled": true,
             "daily_limit": 500
         },
         "wayne": {
@@ -1205,7 +1205,7 @@
             "url": "https://qpublic.schneidercorp.com/Application.aspx?AppID=1053&LayerID=18896&PageTypeID=4&PageID=8593",
             "search_url": "https://qpublic.schneidercorp.com/Application.aspx/UpdateSearchGrid",
             "timezone": "America/New_York",
-            "enabled": false,
+            "enabled": true,
             "daily_limit": 500
         },
         "webster": {
@@ -1213,7 +1213,7 @@
             "url": "https://qpublic.schneidercorp.com/Application.aspx?AppID=1054&LayerID=18901&PageTypeID=4&PageID=8597",
             "search_url": "https://qpublic.schneidercorp.com/Application.aspx/UpdateSearchGrid",
             "timezone": "America/New_York",
-            "enabled": false,
+            "enabled": true,
             "daily_limit": 500
         },
         "wheeler": {
@@ -1221,7 +1221,7 @@
             "url": "https://qpublic.schneidercorp.com/Application.aspx?AppID=1055&LayerID=18905&PageTypeID=4&PageID=8601",
             "search_url": "https://qpublic.schneidercorp.com/Application.aspx/UpdateSearchGrid",
             "timezone": "America/New_York",
-            "enabled": false,
+            "enabled": true,
             "daily_limit": 500
         },
         "white": {
@@ -1229,7 +1229,7 @@
             "url": "https://qpublic.schneidercorp.com/Application.aspx?AppID=1056&LayerID=18910&PageTypeID=4&PageID=8605",
             "search_url": "https://qpublic.schneidercorp.com/Application.aspx/UpdateSearchGrid",
             "timezone": "America/New_York",
-            "enabled": false,
+            "enabled": true,
             "daily_limit": 500
         },
         "whitfield": {
@@ -1245,7 +1245,7 @@
             "url": "https://qpublic.schneidercorp.com/Application.aspx?AppID=1058&LayerID=18919&PageTypeID=4&PageID=8613",
             "search_url": "https://qpublic.schneidercorp.com/Application.aspx/UpdateSearchGrid",
             "timezone": "America/New_York",
-            "enabled": false,
+            "enabled": true,
             "daily_limit": 500
         },
         "wilkes": {
@@ -1253,7 +1253,7 @@
             "url": "https://qpublic.schneidercorp.com/Application.aspx?AppID=1059&LayerID=18923&PageTypeID=4&PageID=8617",
             "search_url": "https://qpublic.schneidercorp.com/Application.aspx/UpdateSearchGrid",
             "timezone": "America/New_York",
-            "enabled": false,
+            "enabled": true,
             "daily_limit": 500
         },
         "wilkinson": {
@@ -1261,7 +1261,7 @@
             "url": "https://qpublic.schneidercorp.com/Application.aspx?AppID=1060&LayerID=18928&PageTypeID=4&PageID=8621",
             "search_url": "https://qpublic.schneidercorp.com/Application.aspx/UpdateSearchGrid",
             "timezone": "America/New_York",
-            "enabled": false,
+            "enabled": true,
             "daily_limit": 500
         },
         "worth": {
@@ -1269,7 +1269,7 @@
             "url": "https://qpublic.schneidercorp.com/Application.aspx?AppID=1061&LayerID=18932&PageTypeID=4&PageID=8625",
             "search_url": "https://qpublic.schneidercorp.com/Application.aspx/UpdateSearchGrid",
             "timezone": "America/New_York",
-            "enabled": false,
+            "enabled": true,
             "daily_limit": 500
         }
     },
