@@ -71,3 +71,20 @@ jobs:
       with:
         name: pipeline-results-${{ github.run_id }}
         path: data/
+
+        - name: Archive historical data
+  run: |
+    echo "Archiving historical data..."
+    python scripts/archive_data.py
+    
+- name: Commit historical data
+  run: |
+    git config --local user.email "action@github.com"
+    git config --local user.name "GitHub Action"
+    git add data/historical/
+    if git diff --cached --quiet; then
+      echo "No changes to historical data"
+    else
+      git commit -m "Auto-archive: Historical data snapshot $(date +'%Y-%m-%d')"
+      git push
+    fi
