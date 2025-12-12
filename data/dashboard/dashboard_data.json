@@ -1,0 +1,280 @@
+{
+  "summary": {
+    "total_flips": 14,
+    "total_investors": 9,
+    "total_profit": 1719120.0,
+    "avg_roi": 88.24361315092949
+  },
+  "top_investors": [
+    {
+      "investor_name": "Investor Collective",
+      "total_flips": 3,
+      "total_profit": 353178.0,
+      "avg_profit_per_flip": 117726.0,
+      "avg_hold_days": 60.666666666666664,
+      "avg_roi": 100.0
+    },
+    {
+      "investor_name": "Georgia Renovation Group",
+      "total_flips": 2,
+      "total_profit": 256450.0,
+      "avg_profit_per_flip": 128225.0,
+      "avg_hold_days": 43.5,
+      "avg_roi": 100.0
+    },
+    {
+      "investor_name": "Georgia Property Investors",
+      "total_flips": 2,
+      "total_profit": 251876.0,
+      "avg_profit_per_flip": 125938.0,
+      "avg_hold_days": 98.0,
+      "avg_roi": 100.0
+    },
+    {
+      "investor_name": "Peach State Investments",
+      "total_flips": 2,
+      "total_profit": 243167.0,
+      "avg_profit_per_flip": 121583.5,
+      "avg_hold_days": 110.5,
+      "avg_roi": 100.0
+    },
+    {
+      "investor_name": "Georgia Home Solutions",
+      "total_flips": 1,
+      "total_profit": 134293.0,
+      "avg_profit_per_flip": 134293.0,
+      "avg_hold_days": 123.0,
+      "avg_roi": 100.0
+    },
+    {
+      "investor_name": "Metro Atlanta Investments",
+      "total_flips": 1,
+      "total_profit": 102094.0,
+      "avg_profit_per_flip": 102094.0,
+      "avg_hold_days": 43.0,
+      "avg_roi": 100.0
+    },
+    {
+      "investor_name": "Metro Flip Team",
+      "total_flips": 1,
+      "total_profit": 118725.0,
+      "avg_profit_per_flip": 118725.0,
+      "avg_hold_days": 41.0,
+      "avg_roi": 100.0
+    },
+    {
+      "investor_name": "Property Solutions GA",
+      "total_flips": 1,
+      "total_profit": 141923.0,
+      "avg_profit_per_flip": 141923.0,
+      "avg_hold_days": 84.0,
+      "avg_roi": 100.0
+    },
+    {
+      "investor_name": "Residential Ventures",
+      "total_flips": 1,
+      "total_profit": 117414.0,
+      "avg_profit_per_flip": 117414.0,
+      "avg_hold_days": 107.0,
+      "avg_roi": 100.0
+    }
+  ],
+  "recent_flips": [
+    {
+      "property_id": "APP000002",
+      "address": "5488 Lincoln Rd, Appling, GA 30048",
+      "buy_date": "2025-06-15",
+      "buy_price": 146171.0,
+      "buyer": "Georgia Property Investors",
+      "sell_date": "2025-08-25",
+      "sell_price": 274072.0,
+      "seller": "Georgia Property Investors",
+      "hold_days": 71,
+      "profit": 127901.0,
+      "roi": 87.50094067906767,
+      "county": "Appling County"
+    },
+    {
+      "property_id": "APP000011",
+      "address": "1456 Washington Blvd, Appling, GA 30014",
+      "buy_date": "2025-08-07",
+      "buy_price": 226574.0,
+      "buyer": "Investor Collective",
+      "sell_date": "2025-09-27",
+      "sell_price": 306658.0,
+      "seller": "Investor Collective",
+      "hold_days": 51,
+      "profit": 80084.0,
+      "roi": 35.34562659440183,
+      "county": "Appling County"
+    },
+    {
+      "property_id": "APP000013",
+      "address": "7680 Main St, Appling, GA 30032",
+      "buy_date": "2025-07-25",
+      "buy_price": 147473.0,
+      "buyer": "Georgia Home Solutions",
+      "sell_date": "2025-11-25",
+      "sell_price": 281766.0,
+      "seller": "Georgia Home Solutions",
+      "hold_days": 123,
+      "profit": 134293.0,
+      "roi": 91.06277081228427,
+      "county": "Appling County"
+    },
+    {
+      "property_id": "ATK000005",
+      "address": "3662 Sugarloaf St, Atkinson, GA 30056",
+      "buy_date": "2025-08-30",
+      "buy_price": 81959.0,
+      "buyer": "Metro Flip Team",
+      "sell_date": "2025-10-10",
+      "sell_price": 200684.0,
+      "seller": "Metro Flip Team",
+      "hold_days": 41,
+      "profit": 118725.0,
+      "roi": 144.8590148732903,
+      "county": "Atkinson County"
+    },
+    {
+      "property_id": "ATK000013",
+      "address": "4043 Pine Way, Atkinson, GA 30019",
+      "buy_date": "2025-10-13",
+      "buy_price": 102937.0,
+      "buyer": "Georgia Renovation Group",
+      "sell_date": "2025-12-02",
+      "sell_price": 249393.0,
+      "seller": "Georgia Renovation Group",
+      "hold_days": 50,
+      "profit": 146456.0,
+      "roi": 142.2773152510759,
+      "county": "Atkinson County"
+    },
+    {
+      "property_id": "BAC000015",
+      "address": "1177 Main Ln, Bacon, GA 30076",
+      "buy_date": "2025-07-22",
+      "buy_price": 93158.0,
+      "buyer": "Georgia Renovation Group",
+      "sell_date": "2025-08-28",
+      "sell_price": 203152.0,
+      "seller": "Georgia Renovation Group",
+      "hold_days": 37,
+      "profit": 109994.0,
+      "roi": 118.0725219519526,
+      "county": "Bacon County"
+    },
+    {
+      "property_id": "BAC000017",
+      "address": "8233 Memorial St, Bacon, GA 30017",
+      "buy_date": "2025-08-20",
+      "buy_price": 97217.0,
+      "buyer": "Residential Ventures",
+      "sell_date": "2025-12-05",
+      "sell_price": 214631.0,
+      "seller": "Residential Ventures",
+      "hold_days": 107,
+      "profit": 117414.0,
+      "roi": 120.775173066439,
+      "county": "Bacon County"
+    },
+    {
+      "property_id": "BAK000000",
+      "address": "2236 Broad Dr, Baker, GA 30086",
+      "buy_date": "2025-07-15",
+      "buy_price": 217827.0,
+      "buyer": "Investor Collective",
+      "sell_date": "2025-08-29",
+      "sell_price": 343342.0,
+      "seller": "Investor Collective",
+      "hold_days": 45,
+      "profit": 125515.0,
+      "roi": 57.621415159736856,
+      "county": "Baker County"
+    },
+    {
+      "property_id": "BAK000017",
+      "address": "1233 Barrett Ln, Baker, GA 30044",
+      "buy_date": "2025-08-15",
+      "buy_price": 136425.0,
+      "buyer": "Investor Collective",
+      "sell_date": "2025-11-09",
+      "sell_price": 284004.0,
+      "seller": "Investor Collective",
+      "hold_days": 86,
+      "profit": 147579.0,
+      "roi": 108.17592083562397,
+      "county": "Baker County"
+    },
+    {
+      "property_id": "BAL000003",
+      "address": "6210 Oak Dr, Baldwin, GA 30084",
+      "buy_date": "2025-08-24",
+      "buy_price": 218908.0,
+      "buyer": "Peach State Investments",
+      "sell_date": "2025-12-04",
+      "sell_price": 322565.0,
+      "seller": "Peach State Investments",
+      "hold_days": 102,
+      "profit": 103657.0,
+      "roi": 47.3518555740311,
+      "county": "Baldwin County"
+    },
+    {
+      "property_id": "BAL000019",
+      "address": "7390 Peachtree Dr, Baldwin, GA 30042",
+      "buy_date": "2025-08-04",
+      "buy_price": 216593.0,
+      "buyer": "Property Solutions GA",
+      "sell_date": "2025-10-27",
+      "sell_price": 358516.0,
+      "seller": "Property Solutions GA",
+      "hold_days": 84,
+      "profit": 141923.0,
+      "roi": 65.52520164548254,
+      "county": "Baldwin County"
+    },
+    {
+      "property_id": "BAL000023",
+      "address": "3023 Peachtree Pkwy, Baldwin, GA 30020",
+      "buy_date": "2025-08-09",
+      "buy_price": 117394.0,
+      "buyer": "Georgia Property Investors",
+      "sell_date": "2025-12-12",
+      "sell_price": 241369.0,
+      "seller": "Georgia Property Investors",
+      "hold_days": 125,
+      "profit": 123975.0,
+      "roi": 105.60590830877217,
+      "county": "Baldwin County"
+    },
+    {
+      "property_id": "BAN000015",
+      "address": "1704 Lincoln Blvd, Banks, GA 30030",
+      "buy_date": "2025-07-26",
+      "buy_price": 186585.0,
+      "buyer": "Metro Atlanta Investments",
+      "sell_date": "2025-09-07",
+      "sell_price": 288679.0,
+      "seller": "Metro Atlanta Investments",
+      "hold_days": 43,
+      "profit": 102094.0,
+      "roi": 54.717153040169364,
+      "county": "Banks County"
+    },
+    {
+      "property_id": "BEN000011",
+      "address": "1187 Washington Ave, Ben, GA 30073",
+      "buy_date": "2025-07-20",
+      "buy_price": 246834.0,
+      "buyer": "Peach State Investments",
+      "sell_date": "2025-11-16",
+      "sell_price": 386344.0,
+      "seller": "Peach State Investments",
+      "hold_days": 119,
+      "profit": 139510.0,
+      "roi": 56.519766320685164,
+      "county": "Ben Hill County"
+    }
+  ]
+}
