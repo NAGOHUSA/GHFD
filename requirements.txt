@@ -1,10 +1,22 @@
+# Core dependencies
 requests>=2.28.0
 beautifulsoup4>=4.11.0
 pandas>=2.0.0
+lxml>=4.9.0
+
+# Dashboard
 dash>=2.14.0
 plotly>=5.18.0
 flask>=3.0.0
+
+# Data handling
 openpyxl>=3.1.0
-lxml>=4.9.0
 python-dotenv>=1.0.0
 sqlalchemy>=2.0.0
+
+# Optional dependencies for better UX
+tqdm>=4.60.0
+
+# Web scraping (if needed)
+selenium>=4.0.0
+webdriver-manager>=3.8.0
