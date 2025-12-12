@@ -3,7 +3,7 @@
     "version": "1.0.0",
     "description": "Configuration for house flip detection pipeline",
     
-    "default_counties": ["fulton", "gwinnett", "cobb", "dekalb", "clayton"],
+    "default_counties": ["houston","bibb","fulton", "gwinnett", "cobb", "dekalb", "clayton"],
     "scrape_all_enabled": true,
     "default_days_back": 180,
     "max_scrape_records": 5000,
