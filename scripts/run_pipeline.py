@@ -16,7 +16,16 @@ import json
 sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
 
 import pandas as pd
-from tqdm import tqdm
+
+# Optional dependency - graceful fallback
+try:
+    from tqdm import tqdm
+    HAS_TQDM = True
+except ImportError:
+    HAS_TQDM = False
+    # Fallback: simple passthrough
+    def tqdm(iterable, **kwargs):
+        return iterable
 
 from src.scraper import GeorgiaPropertyScraper
 from src.analyzer import FlipAnalyzer
