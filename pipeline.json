@@ -1,0 +1,51 @@
+{
+    "name": "Georgia House Flip Pipeline",
+    "version": "1.0.0",
+    "description": "Configuration for house flip detection pipeline",
+    
+    "default_counties": ["houston","bibb","fulton", "gwinnett", "cobb", "dekalb", "clayton"],
+    "scrape_all_enabled": true,
+    "default_days_back": 180,
+    "max_scrape_records": 5000,
+    "data_retention_days": 90,
+    
+    "notification": {
+        "email": "your-email@example.com",
+        "slack_webhook": "",
+        "on_success": true,
+        "on_failure": true
+    },
+    
+    "output_formats": ["csv", "excel", "json"],
+    "enable_dashboard": true,
+    "dashboard_port": 8050,
+    
+    "analysis_criteria": {
+        "min_hold_days": 30,
+        "max_hold_days": 365,
+        "min_profit": 70000,
+        "max_profit": 150000,
+        "require_same_seller_buyer": true
+    },
+    
+    "schedules": {
+        "daily_morning": "0 12 * * 1-5",
+        "daily_afternoon": "0 18 * * 1-5",
+        "weekly_summary": "0 12 * * 6"
+    },
+    
+    "database": {
+        "path": "data/properties.db",
+        "backup_enabled": true,
+        "backup_retention_days": 30,
+        "tables": ["properties", "flips", "investors", "outreach"]
+    },
+    
+    "advanced": {
+        "enable_caching": true,
+        "rate_limit_delay_ms": 1000,
+        "max_concurrent_scrapers": 3,
+        "timeout_seconds": 30,
+        "generate_sample_data": true
+    }
+}
