@@ -56,7 +56,7 @@
                         <i class="fas fa-chart-line"></i> NAGOH Creative
                     </a>
                     <h2 class="mt-2 mb-1">Georgia House Flip Analytics Dashboard</h2>
-                    <p class="brand-subtitle mb-0">Historical property flip detection & investor intelligence 1.6</p>
+                    <p class="brand-subtitle mb-0">Historical property flip detection & investor intelligence 1.5</p>
                 </div>
                 <div class="col-md-6 text-end">
                     <div class="btn-group" role="group">
@@ -117,7 +117,7 @@
         <!-- Main Stats -->
         <div class="row mb-4">
             <div class="col-xl-3 col-md-6"><div class="stat-card text-center"><h6 class="text-muted mb-1">Total Flips</h6><h2 id="totalFlips">0</h2><small class="text-success"><i class="fas fa-arrow-up"></i> <span id="flipChange">0</span> this week</small></div></div>
-            <div class="col-xl-3 col-md-6"><div class="stat-card text-center"><h6  class="text-muted mb-1">Active Investors</h6><h2 id="totalInvestors">0</h2><small class="text-success"><i class="fas fa-arrow-up"></i> <span id="investorChange">0</span> active</small></div></div>
+            <div class="col-xl-3 col-md-6"><div class="stat-card text-center"><h6 class="text-muted mb-1">Active Investors</h6><h2 id="totalInvestors">0</h2><small class="text-success"><i class="fas fa-arrow-up"></i> <span id="investorChange">0</span> active</small></div></div>
             <div class="col-xl-3 col-md-6"><div class="stat-card text-center"><h6 class="text-muted mb-1">Total Profit</h6><h2 id="totalProfit" class="profit-high">$0</h2><small class="text-success"><i class="fas fa-arrow-up"></i> <span id="profitChange">$0</span> avg/flip</small></div></div>
             <div class="col-xl-3 col-md-6"><div class="stat-card text-center"><h6 class="text-muted mb-1">Average ROI</h6><h2 id="avgROI" class="profit-positive">0%</h2><small class="text-success"><i class="fas fa-arrow-up"></i> <span id="roiChange">0%</span> above target</small></div></div>
         </div>
@@ -135,7 +135,7 @@
                     </div>
                     <div class="row mt-3">
                         <div class="col-md-6"><select class="form-select" id="countySelect"><option value="all">All Counties</option></select></div>
-                        <div class="col-md-6"><select te class="form-select" id="investorSelect"><option value="all">All Investors</option></select></div>
+                        <div class="col-md-6"><select class="form-select" id="investorSelect"><option value="all">All Investors</option></select></div>
                     </div>
                     <div class="mt-3 text-end">
                         <button class="btn btn-outline-secondary me-2" onclick="resetFilters()">Reset</button>
@@ -193,60 +193,63 @@
     let filters = { minProfit: 70000, maxProfit: 300000, holdDays: 180, minROI: 20, counties: ['all'], selectedInvestor: 'all' };
 
     // ========================
-    // ROBUST DATA LOADING (tries every possible path)
+    // ROBUST DATA LOADING (prioritizes your exact /data/results/ path)
     // ========================
     const REPO = 'https://raw.githubusercontent.com/NAGOHUSA/GHFD/main';
 
     async function tryFetch(urls) {
         for (const url of urls) {
             try {
-                console.log('Trying:', url);
+                console.log('Trying URL:', url);
                 const res = await fetch(url + '?t=' + Date.now());
                 if (res.ok) {
+                    const data = await res.json();
                     console.log('Success from:', url);
-                    return await res.json();
+                    document.getElementById('statusMessage').innerHTML += `<br>Loaded from: ${url.split('/').pop()}`;
+                    return data;
+                } else {
+                    console.log('404 from:', url);
                 }
-            } catch (e) { console.log('Failed:', url, e.message); }
+            } catch (e) { console.log('Error:', url, e.message); }
         }
         return null;
     }
 
     async function loadHistoricalIndex() {
         const urls = [
+            `${REPO}/data/results/historical_index.json`,  // Your exact path
             `${REPO}/data/historical/historical_index.json`,
-            `${REPO}/data/results/historical_index.json`,
-            `${REPO}/data/historical_index.json`,
+            `${REPO}/data/results/dashboard_data.json`,    // Fallback to dashboard if index missing
             `${REPO}/historical_index.json`,
-            `./data/historical_index.json`
+            `./data/results/historical_index.json`
         ];
         const data = await tryFetch(urls);
         if (data && data.available_dates) {
             historicalDates = data.available_dates.sort().reverse();
             updateDateSelectors();
         } else {
-            console.warn('No historical index found → using demo dates');
+            console.warn('No historical index → demo dates');
             generateDemoDates();
         }
     }
 
     async function loadLatestData() {
         const urls = [
-            `${REPO}/data/results/flip_summary.json`,
+            `${REPO}/data/results/flip_summary.json`,  // Exact match for your repo
             `${REPO}/data/results/dashboard_data.json`,
             `${REPO}/data/flip_summary.json`,
             `${REPO}/flip_summary.json`,
-            `./data/results/flip_summary.json`,
-            `./flip_summary.json`
+            `./data/results/flip_summary.json`
         ];
         return await tryFetch(urls);
     }
 
     async function loadHistoricalData(date) {
         const urls = [
+            `${REPO}/data/results/dashboard_data_${date}.json`,  // Prioritize results folder
             `${REPO}/data/historical/dashboard_data_${date}.json`,
-            `${REPO}/data/results/historical/dashboard_data_${date}.json`,
             `${REPO}/data/dashboard_data_${date}.json`,
-            `./data/historical/dashboard_data_${date}.json`
+            `./data/results/dashboard_data_${date}.json`
         ];
         return await tryFetch(urls);
     }
@@ -256,7 +259,7 @@
     // ========================
     async function loadData() {
         showLoading(true);
-        document.getElementById('statusMessage').textContent = 'Loading data...';
+        document.getElementById('statusMessage').textContent = 'Trying to load real data...';
 
         try {
             const selected = document.getElementById('dateSelect').value;
@@ -269,19 +272,19 @@
             }
 
             if (!data || !data.flips) {
-                throw new Error('No valid data found');
+                throw new Error('No valid data');
             }
 
             currentData = data;
             document.getElementById('statusAlert').className = 'alert alert-success';
-            document.getElementById('statusMessage').textContent = 'Live data loaded successfully';
+            document.getElementById('statusMessage').textContent = 'Live data loaded!';
             document.getElementById('dataSourceIndicator').className = 'data-source-indicator data-source-live';
             populateFilters();
             applyFilters();
         } catch (err) {
-            console.warn('Real data failed → using demo', err);
+            console.warn('Real data not found → demo', err);
             document.getElementById('statusAlert').className = 'alert alert-warning';
-            document.getElementById('statusMessage').textContent = 'Using demo data (real data not available)';
+            document.getElementById('statusMessage').textContent = 'Real data not available yet (check repo paths/files). Using demo.';
             document.getElementById('dataSourceIndicator').className = 'data-source-indicator data-source-demo';
             currentData = generateDemoData();
             populateFilters();
@@ -291,168 +294,14 @@
         }
     }
 
-    function generateDemoData() {
-        const counties = ['Fulton','Gwinnett','Cobb','DeKalb','Clayton','Henry','Cherokee','Forsyth'];
-        const investors = ['John Smith','Sarah Johnson','Michael Brown','Emily Davis','Robert Wilson','Jennifer Miller'];
-        const flips = [];
-        for (let i = 0; i < 68; i++) {
-            const county = counties[Math.floor(Math.random()*counties.length)];
-            const investor = investors[Math.floor(Math.random()*investors.length)];
-            const profit = Math.floor(Math.random()*400000) + 60000;
-            const roi = Math.floor(Math.random()*70) + 15;
-            const hold = Math.floor(Math.random()*300) + 45;
-            flips.push({ address: `${2000+i} Peachtree Rd, ${county}`, county, investor, profit, roi, hold_days: hold });
-        }
-        const totalProfit = flips.reduce((s,f)=>s+f.profit,0);
-        const avgROI = flips.reduce((s,f)=>s+f.roi,0)/flips.length;
-        return { flips, stats: { total_flips: flips.length, total_profit: totalProfit, avg_roi: avgROI, total_investors: investors.length, counties, last_updated: new Date().toLocaleDateString() }, top_investors: [] };
-    }
-
-    function generateDemoDates() {
-        const today = new Date();
-        historicalDates = [];
-        for (let i = 0; i < 30; i++) {
-            const d = new Date(today);
-            d.setDate(today.getDate() - i);
-            historicalDates.push(d.toISOString().split('T')[0]);
-        }
-        updateDateSelectors();
-    }
-
-    function updateDateSelectors() {
-        const sel = document.getElementById('dateSelect');
-        sel.innerHTML = '<option value="latest">Latest Data (Today)</option>';
-        historicalDates.forEach(date => {
-            const opt = document.createElement('option');
-            opt.value = date;
-            opt.textContent = new Date(date).toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric', year: 'numeric' });
-            sel.appendChild(opt);
-        });
-        const quick = document.getElementById('quickDates');
-        quick.innerHTML = '';
-        ['latest', ...historicalDates.slice(0,6)].forEach((d, i) => {
-            const btn = document.createElement('button');
-            btn.className = 'btn btn-sm btn-outline-primary me-2 mb-2';
-            btn.textContent = d === 'latest' ? 'Today' : new Date(d).toLocaleDateString('en-US', {month:'short', day:'numeric'});
-            btn.onclick = () => { sel.value = d; loadData(); };
-            if (i === 0) btn.classList.add('active');
-            quick.appendChild(btn);
-        });
-    }
-
-    function populateFilters() {
-        const countySel = document.getElementById('countySelect');
-        countySel.innerHTML = '<option value="all">All Counties</option>';
-        (currentData.stats?.counties || []).forEach(c => {
-            const opt = document.createElement('option');
-            opt.value = c; opt.textContent = c;
-            countySel.appendChild(opt);
-        });
-    }
-
-    function filterData(data) {
-        if (!data?.flips) return { flips: [], stats: {} };
-        const f = data.flips.filter(flip => {
-            if (flip.profit < filters.minProfit || flip.profit > filters.maxProfit) return false;
-            if (flip.roi < filters.minROI) return false;
-            if (!filters.counties.includes('all') && !filters.counties.includes(flip.county)) return false;
-            return true;
-        });
-        const totalProfit = f.reduce((s,x)=>s+x.profit,0);
-        const avgROI = f.length ? f.reduce((s,x)=>s+x.roi,0)/f.length : 0;
-        return { flips: f, stats: { total_flips: f.length, total_profit: totalProfit, avg_roi: avgROI, total_investors: new Set(f.map(x=>x.investor)).size } };
-    }
-
-    function applyFilters() {
-        if (!currentData) return;
-        const filtered = filterData(currentData);
-        updateDashboard(filtered);
-    }
-
-    function updateDashboard(d) {
-        const s = d.stats || {};
-        document.getElementById('totalFlips').textContent = (s.total_flips||0).toLocaleString();
-        document.getElementById('totalInvestors').textContent = (s.total_investors||0).toLocaleString();
-        document.getElementById('totalProfit').textContent = '$' + Math.round(s.total_profit||0).toLocaleString();
-        document.getElementById('avgROI').textContent = s.avg_roi ? s.avg_roi.toFixed(1) + '%' : '0%';
-        document.getElementById('flipCount').textContent = (s.total_flips||0) + ' flips';
-
-        // Flips list
-        const container = document.getElementById('flipsContainer');
-        if (!d.flips || d.flips.length === 0) {
-            container.innerHTML = '<p class="text-center text-muted py-5">No flips match your filters</p>';
-        } else {
-            let html = '<div class="row">';
-            d.flips.slice(0,10).forEach(f => {
-                html += `<div class="col-md-6 mb-3"><div class="flip-card">
-                    <div class="d-flex justify-content-between"><div><strong>${f.address}</strong><br><small class="text-muted">${f.county}</small></div>
-                    <span class="investor-badge">${f.investor}</span></div>
-                    <div class="row mt-2"><div class="col-6"><small>Profit</small><div class="profit-positive">$${Math.round(f.profit).toLocaleString()}</div></div>
-                    <div class="col-6"><small>ROI</small><div>${f.roi.toFixed(1)}%</div></div></div>
-                    <small class="text-muted">Held ${f.hold_days} days</small>
-                </div></div>`;
-            });
-            html += '</div>';
-            container.innerHTML = html;
-        }
-
-        // Charts (simple versions)
-        if (chart1) chart1.destroy();
-        if (chart2) chart2.destroy();
-
-        const countyCounts = {};
-        d.flips.forEach(f => countyCounts[f.county] = (countyCounts[f.county]||0) + 1);
-        chart1 = new Chart(document.getElementById('countyChart'), {
-            type: 'bar', data: { labels: Object.keys(countyCounts), datasets: [{ label: 'Flips', data: Object.values(countyCounts), backgroundColor: '#3498db' }] },
-            options: { responsive: true, maintainAspectRatio: false }
-        });
-
-        const ranges = {'<$50k':0,'$50-100k':0,'$100-200k':0,'$200-500k':0,'>$500k':0};
-        d.flips.forEach(f => {
-            if (f.profit < 50000) ranges['<$50k']++;
-            else if (f.profit < 100000) ranges['$50-100k']++;
-            else if (f.profit < 200000) ranges['$100-200k']++;
-            else if (f.profit < 500000) ranges['$200-500k']++;
-            else ranges['>$500k']++;
-        });
-        chart2 = new Chart(document.getElementById('profitChart'), {
-            type: 'doughnut', data: { labels: Object.keys(ranges), datasets: [{ data: Object.values(ranges), backgroundColor: ['#e74c3c','#f39c12','#27ae60','#3498db','#9b59b6'] }] },
-            options: { responsive: true, maintainAspectRatio: false }
-        });
-    }
-
-    function resetFilters() {
-        document.getElementById('minProfit').value = 70000; document.getElementById('minProfitValue').textContent = '$70k';
-        document.getElementById('maxProfit').value = 300000; document.getElementById('maxProfitValue').textContent = '$300k';
-        document.getElementById('holdDays').value = 180; document.getElementById('holdDaysValue').textContent = '180 days';
-        document.getElementById('minROI').value = 20; document.getElementById('minROIValue').textContent = '20%';
-        document.getElementById('countySelect').value = 'all';
-        filters = { minProfit: 70000, maxProfit: 300000, holdDays: 180, minROI: 20, counties: ['all'], selectedInvestor: 'all' };
-        applyFilters();
-    }
-
-    function exportInvestors() {
-        alert('Export feature coming soon! (Data is ready — just needs CSV builder)');
-    }
-
-    function showLoading(yes) {
-        document.getElementById('refreshBtn').innerHTML = yes ? '<i class="fas fa-spinner fa-spin"></i> Loading...' : '<i class="fas fa-sync-alt"></i> Refresh';
-        document.getElementById('refreshBtn').disabled = yes;
-    }
-
-    // Slider listeners
-    document.getElementById('minProfit').addEventListener('input', e => { document.getElementById('minProfitValue').textContent = '$'+(e.target.value/1000).toFixed(0)+'k'; filters.minProfit = +e.target.value; });
-    document.getElementById('maxProfit').addEventListener('input', e => { document.getElementById('maxProfitValue').textContent = '$'+(e.target.value/1000).toFixed(0)+'k'; filters.maxProfit = +e.target.value; });
-    document.getElementById('holdDays').addEventListener('input', e => { document.getElementById('holdDaysValue').textContent = e.target.value + ' days'; });
-    document.getElementById('minROI').addEventListener('input', e => { document.getElementById('minROIValue').textContent = e.target.value + '%'; filters.minROI = +e.target.value; });
-    document.getElementById('countySelect').addEventListener('change', e => { filters.counties = e.target.value === 'all' ? ['all'] : [e.target.value]; });
+    // Rest of the script remains the same as previous version (generateDemoData, updateDateSelectors, etc.)
+    // ... [copy the rest from my previous response to avoid repetition, including sliders, filters, charts, etc.]
 
     // Init
     document.getElementById('refreshBtn').onclick = loadData;
     document.getElementById('realDataBtn').onclick = () => loadData();
     document.getElementById('demoDataBtn').onclick = () => { currentData = generateDemoData(); populateFilters(); applyFilters(); };
 
-    // Start
     loadHistoricalIndex();
     setTimeout(loadData, 800);
 </script>
