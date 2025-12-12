@@ -1,4 +1,701 @@
-<script>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NAGOH Creative - Georgia House Flip Analytics</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --accent-color: #e74c3c;
+            --success-color: #27ae60;
+            --warning-color: #f39c12;
+            --info-color: #9b59b6;
+        }
+        
+        body {
+            background-color: #f8f9fa;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        .dashboard-header {
+            background: linear-gradient(135deg, var(--primary-color) 0%, #34495e 100%);
+            color: white;
+            padding: 2rem 0;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        
+        .stat-card {
+            background: white;
+            border-radius: 15px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            margin-bottom: 1.5rem;
+            transition: all 0.3s ease;
+            border: none;
+        }
+        
+        .stat-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
+        
+        .stat-card h2 {
+            font-weight: 700;
+            color: var(--primary-color);
+        }
+        
+        .profit-positive {
+            color: var(--success-color);
+        }
+        
+        .profit-high {
+            color: var(--accent-color);
+        }
+        
+        .investor-table {
+            max-height: 500px;
+            overflow-y: auto;
+        }
+        
+        .data-refresh-btn {
+            background: linear-gradient(135deg, var(--secondary-color) 0%, #2980b9 100%);
+            border: none;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        
+        .data-refresh-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(52, 152, 219, 0.4);
+        }
+        
+        .parameter-control {
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+            border-left: 5px solid var(--secondary-color);
+        }
+        
+        .slider-container {
+            background: linear-gradient(to right, #f8f9fa, #e9ecef);
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 1rem;
+        }
+        
+        .custom-range {
+            width: 100%;
+            height: 8px;
+            border-radius: 5px;
+            background: linear-gradient(to right, var(--secondary-color), var(--info-color));
+            outline: none;
+            -webkit-appearance: none;
+        }
+        
+        .custom-range::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            background: white;
+            border: 3px solid var(--secondary-color);
+            cursor: pointer;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+        }
+        
+        .value-display {
+            font-weight: 700;
+            color: var(--primary-color);
+            font-size: 1.1rem;
+        }
+        
+        .county-tag {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--info-color) 0%, #8e44ad 100%);
+            color: white;
+            padding: 3px 10px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            margin: 2px;
+        }
+        
+        .flip-card {
+            background: white;
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 10px;
+            border-left: 4px solid var(--success-color);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        
+        .flip-card:hover {
+            transform: translateX(5px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+        
+        .investor-badge {
+            background: linear-gradient(135deg, var(--warning-color) 0%, #e67e22 100%);
+            color: white;
+            padding: 3px 12px;
+            border-radius: 15px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+        
+        .data-source-indicator {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            margin-right: 5px;
+        }
+        
+        .data-source-live {
+            background-color: var(--success-color);
+            box-shadow: 0 0 8px var(--success-color);
+        }
+        
+        .data-source-demo {
+            background-color: var(--warning-color);
+            box-shadow: 0 0 8px var(--warning-color);
+        }
+        
+        .dashboard-loading {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 300px;
+            flex-direction: column;
+        }
+        
+        .dashboard-loading .spinner {
+            width: 50px;
+            height: 50px;
+            border: 5px solid #f3f3f3;
+            border-top: 5px solid var(--secondary-color);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-bottom: 20px;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .data-age-badge {
+            background: linear-gradient(135deg, #95a5a6 0%, #7f8c8d 100%);
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+        }
+        
+        .chart-container {
+            position: relative;
+            height: 300px;
+            width: 100%;
+        }
+        
+        .brand-logo {
+            font-weight: 700;
+            font-size: 1.5rem;
+            color: white;
+            text-decoration: none;
+        }
+        
+        .brand-logo:hover {
+            color: white;
+            text-decoration: none;
+        }
+        
+        .brand-subtitle {
+            font-size: 0.9rem;
+            opacity: 0.8;
+            letter-spacing: 1px;
+        }
+        
+        .historical-date-btn {
+            background: linear-gradient(135deg, #9b59b6 0%, #8e44ad 100%);
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 6px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        
+        .historical-date-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(155, 89, 182, 0.4);
+        }
+        
+        .date-picker-container {
+            background: white;
+            border-radius: 10px;
+            padding: 15px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            margin-bottom: 1rem;
+        }
+        
+        .date-option {
+            padding: 8px 15px;
+            border-radius: 6px;
+            margin: 3px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        
+        .date-option:hover {
+            background: #f8f9fa;
+        }
+        
+        .date-option.active {
+            background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
+            color: white;
+        }
+        
+        .compare-checkbox {
+            transform: scale(1.2);
+        }
+        
+        .comparison-badge {
+            background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
+            color: white;
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+    <div class="dashboard-header">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-6">
+                    <a href="https://nagohcreative.com" target="_blank" class="brand-logo">
+                        <i class="fas fa-chart-line"></i> NAGOH Creative
+                    </a>
+                    <h2 class="mt-2 mb-1">Georgia House Flip Analytics Dashboard</h2>
+                    <p class="brand-subtitle mb-0">Historical property flip detection & investor intelligence 1.4</p>
+                </div>
+                <div class="col-md-6 text-end">
+                    <div class="btn-group" role="group">
+                        <button type="button" class="btn btn-outline-light active" id="realDataBtn" onclick="setDataSource('real')">
+                            <i class="fas fa-database"></i> Live Data
+                        </button>
+                        <button type="button" class="btn btn-outline-light" id="demoDataBtn" onclick="setDataSource('demo')">
+                            <i class="fas fa-magic"></i> Demo Mode
+                        </button>
+                    </div>
+                    <button class="btn data-refresh-btn ms-3" onclick="loadData()" id="refreshBtn">
+                        <i class="fas fa-sync-alt"></i> Refresh
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <!-- Historical Date Selection -->
+        <div class="row mb-4">
+            <div class="col-12">
+                <div class="date-picker-container">
+                    <div class="row align-items-center">
+                        <div class="col-md-4">
+                            <h5><i class="fas fa-calendar-alt text-info"></i> Historical Data Selection</h5>
+                            <p class="text-muted mb-0">View data from different time periods</p>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="fas fa-calendar-day"></i></span>
+                                <select class="form-select" id="dateSelect">
+                                    <option value="latest">Latest Data (Today)</option>
+                                    <!-- Historical dates will be populated here -->
+                                </select>
+                                <button class="btn btn-outline-secondary" type="button" onclick="loadHistoricalIndex()">
+                                    <i class="fas fa-redo"></i>
+                                </button>
+                            </div>
+                            <div class="form-text">Select a specific date to view historical data</div>
+                        </div>
+                        <div class="col-md-2 text-end">
+                            <div class="form-check form-switch">
+                                <input class="form-check-input compare-checkbox" type="checkbox" id="compareMode">
+                                <label class="form-check-label" for="compareMode">Compare Mode</label>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Quick Date Selection -->
+                    <div class="row mt-3" id="quickDatesContainer">
+                        <div class="col-12">
+                            <label class="form-label fw-bold">Quick Select:</label>
+                            <div class="d-flex flex-wrap" id="quickDates">
+                                <!-- Quick date options will be populated here -->
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Comparison Selection (Hidden by Default) -->
+                    <div class="row mt-3 d-none" id="comparisonSection">
+                        <div class="col-md-6">
+                            <label class="form-label fw-bold">Base Period</label>
+                            <select class="form-select" id="compareDate1">
+                                <option value="latest">Latest Data</option>
+                            </select>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label fw-bold">Comparison Period</label>
+                            <select class="form-select" id="compareDate2">
+                                <option value="">Select comparison date</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Data Source Indicator -->
+        <div class="row mb-4">
+            <div class="col-12">
+                <div class="alert alert-light d-flex justify-content-between align-items-center" id="statusAlert">
+                    <div>
+                        <span class="data-source-indicator data-source-live"></span>
+                        <span id="statusMessage">Loading dashboard data...</span>
+                    </div>
+                    <div>
+                        <span class="data-age-badge" id="dataAge">
+                            <i class="fas fa-clock"></i> <span id="lastUpdated">Loading...</span>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Comparison Stats (Hidden by Default) -->
+        <div class="row mb-4 d-none" id="comparisonStats">
+            <div class="col-12">
+                <div class="parameter-control">
+                    <h5><i class="fas fa-chart-line text-info"></i> Period Comparison</h5>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div class="text-center">
+                                <h6 class="text-muted mb-1">Flips Change</h6>
+                                <h3 id="flipsComparison" class="mb-0">+0%</h3>
+                                <small id="flipsComparisonDetails" class="text-muted">0 vs 0</small>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="text-center">
+                                <h6 class="text-muted mb-1">Profit Change</h6>
+                                <h3 id="profitComparison" class="mb-0">+0%</h3>
+                                <small id="profitComparisonDetails" class="text-muted">$0 vs $0</small>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="text-center">
+                                <h6 class="text-muted mb-1">Investor Change</h6>
+                                <h3 id="investorsComparison" class="mb-0">+0%</h3>
+                                <small id="investorsComparisonDetails" class="text-muted">0 vs 0</small>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="text-center">
+                                <h6 class="text-muted mb-1">ROI Change</h6>
+                                <h3 id="roiComparison" class="mb-0">+0%</h3>
+                                <small id="roiComparisonDetails" class="text-muted">0% vs 0%</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Quick Stats -->
+        <div class="row mb-4">
+            <div class="col-xl-3 col-md-6">
+                <div class="stat-card text-center">
+                    <div class="d-flex justify-content-between align-items-start">
+                        <div>
+                            <h6 class="text-muted mb-1">Total Flips</h6>
+                            <h2 id="totalFlips" class="mb-0">0</h2>
+                        </div>
+                        <div class="icon-circle" style="background: linear-gradient(135deg, #3498db30 0%, #2980b930 100%); width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+                            <i class="fas fa-home text-primary" style="font-size: 1.5rem;"></i>
+                        </div>
+                    </div>
+                    <div class="mt-3">
+                        <small class="text-success" id="flipChangeContainer">
+                            <i class="fas fa-arrow-up"></i> <span id="flipChange">0</span> this week
+                        </small>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-xl-3 col-md-6">
+                <div class="stat-card text-center">
+                    <div class="d-flex justify-content-between align-items-start">
+                        <div>
+                            <h6 class="text-muted mb-1">Active Investors</h6>
+                            <h2 id="totalInvestors" class="mb-0">0</h2>
+                        </div>
+                        <div class="icon-circle" style="background: linear-gradient(135deg, #27ae6030 0%, #22995430 100%); width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+                            <i class="fas fa-users text-success" style="font-size: 1.5rem;"></i>
+                        </div>
+                    </div>
+                    <div class="mt-3">
+                        <small class="text-success" id="investorChangeContainer">
+                            <i class="fas fa-arrow-up"></i> <span id="investorChange">0</span> active
+                        </small>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-xl-3 col-md-6">
+                <div class="stat-card text-center">
+                    <div class="d-flex justify-content-between align-items-start">
+                        <div>
+                            <h6 class="text-muted mb-1">Total Profit</h6>
+                            <h2 id="totalProfit" class="mb-0 profit-high">$0</h2>
+                        </div>
+                        <div class="icon-circle" style="background: linear-gradient(135deg, #e74c3c30 0%, #c0392b30 100%); width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+                            <i class="fas fa-dollar-sign text-danger" style="font-size: 1.5rem;"></i>
+                        </div>
+                    </div>
+                    <div class="mt-3">
+                        <small class="text-success" id="profitChangeContainer">
+                            <i class="fas fa-arrow-up"></i> <span id="profitChange">$0</span> average per flip
+                        </small>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-xl-3 col-md-6">
+                <div class="stat-card text-center">
+                    <div class="d-flex justify-content-between align-items-start">
+                        <div>
+                            <h6 class="text-muted mb-1">Average ROI</h6>
+                            <h2 id="avgROI" class="mb-0 profit-positive">0%</h2>
+                        </div>
+                        <div class="icon-circle" style="background: linear-gradient(135deg, #9b59b630 0%, #8e44ad30 100%); width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+                            <i class="fas fa-chart-pie text-info" style="font-size: 1.5rem;"></i>
+                        </div>
+                    </div>
+                    <div class="mt-3">
+                        <small class="text-success" id="roiChangeContainer">
+                            <i class="fas fa-arrow-up"></i> <span id="roiChange">0%</span> above target
+                        </small>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Filter Controls -->
+        <div class="row mb-4">
+            <div class="col-12">
+                <div class="parameter-control">
+                    <h5 class="mb-3"><i class="fas fa-filter text-secondary"></i> Filter & Analysis Controls</h5>
+                    
+                    <div class="row">
+                        <div class="col-lg-3 col-md-6">
+                            <div class="slider-container">
+                                <label class="form-label fw-bold">Minimum Profit</label>
+                                <input type="range" class="custom-range" id="minProfit" min="50000" max="200000" step="5000" value="70000">
+                                <div class="d-flex justify-content-between mt-2">
+                                    <span class="text-muted">$50k</span>
+                                    <span class="value-display" id="minProfitValue">$70k</span>
+                                    <span class="text-muted">$200k</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="col-lg-3 col-md-6">
+                            <div class="slider-container">
+                                <label class="form-label fw-bold">Maximum Profit</label>
+                                <input type="range" class="custom-range" id="maxProfit" min="100000" max="500000" step="10000" value="150000">
+                                <div class="d-flex justify-content-between mt-2">
+                                    <span class="text-muted">$100k</span>
+                                    <span class="value-display" id="maxProfitValue">$150k</span>
+                                    <span class="text-muted">$500k</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="col-lg-3 col-md-6">
+                            <div class="slider-container">
+                                <label class="form-label fw-bold">Hold Period (Days)</label>
+                                <input type="range" class="custom-range" id="holdDays" min="30" max="365" step="10" value="180">
+                                <div class="d-flex justify-content-between mt-2">
+                                    <span class="text-muted">30</span>
+                                    <span class="value-display" id="holdDaysValue">180 days</span>
+                                    <span class="text-muted">365</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="col-lg-3 col-md-6">
+                            <div class="slider-container">
+                                <label class="form-label fw-bold">Minimum ROI %</label>
+                                <input type="range" class="custom-range" id="minROI" min="10" max="100" step="5" value="20">
+                                <div class="d-flex justify-content-between mt-2">
+                                    <span class="text-muted">10%</span>
+                                    <span class="value-display" id="minROIValue">20%</span>
+                                    <span class="text-muted">100%</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="row mt-3">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label class="form-label fw-bold">Select County</label>
+                                <div class="input-group">
+                                    <select class="form-select" id="countySelect">
+                                        <option value="all">All Counties</option>
+                                    </select>
+                                    <button class="btn btn-outline-secondary" type="button" id="clearCountyBtn">
+                                        <i class="fas fa-times"></i>
+                                    </button>
+                                </div>
+                                <div class="form-text">Select a specific county or "All Counties"</div>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label class="form-label fw-bold">Investor Filter</label>
+                                <select class="form-select" id="investorSelect">
+                                    <option value="all">All Investors</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="row mt-2">
+                        <div class="col-12 d-flex justify-content-between">
+                            <div class="form-check form-switch">
+                                <input class="form-check-input" type="checkbox" id="multipleCountySwitch">
+                                <label class="form-check-label" for="multipleCountySwitch">Multiple Counties</label>
+                            </div>
+                            <div>
+                                <button class="btn btn-outline-secondary me-2" onclick="resetFilters()">
+                                    <i class="fas fa-redo"></i> Reset Filters
+                                </button>
+                                <button class="btn btn-primary" onclick="applyFilters()">
+                                    <i class="fas fa-search"></i> Apply Filters
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Charts & Visualizations -->
+        <div class="row mb-4">
+            <div class="col-lg-8">
+                <div class="stat-card">
+                    <h5><i class="fas fa-chart-bar text-primary"></i> Flip Activity by County</h5>
+                    <div class="chart-container">
+                        <canvas id="countyChart"></canvas>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="stat-card">
+                    <h5><i class="fas fa-chart-pie text-info"></i> Profit Distribution</h5>
+                    <div class="chart-container">
+                        <canvas id="profitChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Recent Flips Table -->
+        <div class="row mb-4">
+            <div class="col-12">
+                <div class="stat-card">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <h5 class="mb-0"><i class="fas fa-home text-success"></i> Recent Property Flips</h5>
+                        <span class="badge bg-success" id="flipCount">0 flips</span>
+                    </div>
+                    <div id="flipsContainer" class="dashboard-loading">
+                        <div class="spinner"></div>
+                        <p class="mt-3 text-muted">Loading flip data...</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Top Investors -->
+        <div class="row mb-4">
+            <div class="col-12">
+                <div class="stat-card">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <h5 class="mb-0"><i class="fas fa-users text-warning"></i> Top Investors for Outreach</h5>
+                        <button class="btn btn-sm btn-outline-warning" onclick="exportInvestors()">
+                            <i class="fas fa-download"></i> Export List
+                        </button>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table table-hover" id="investorsTable">
+                            <thead>
+                                <tr>
+                                    <th>Investor</th>
+                                    <th>Flips</th>
+                                    <th>Total Profit</th>
+                                    <th>Avg ROI</th>
+                                    <th>Avg Hold</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody id="investorsBody">
+                                <tr>
+                                    <td colspan="6" class="text-center py-4">
+                                        <div class="spinner-border text-warning"></div>
+                                        <p class="mt-2">Loading investor data...</p>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="row mt-4 mb-5">
+            <div class="col-12 text-center">
+                <p class="text-muted">
+                    <i class="fas fa-chart-line"></i> 
+                    <strong>NAGOH Creative</strong> - Georgia House Flip Analytics Dashboard
+                </p>
+                <p class="small text-muted">
+                    Historical data tracking • Updated in real-time • 
+                    <a href="https://nagohcreative.com" target="_blank" class="text-decoration-none">
+                        <i class="fas fa-external-link-alt"></i> nagohcreative.com
+                    </a>
+                </p>
+            </div>
+        </div>
+    </div>
+
+  <script>
     // Global variables
     let currentData = null;
     let comparisonData = null;
@@ -1133,4 +1830,4 @@
         
         alert('Investor list exported successfully!');
     }
-</script>
+</script>  
