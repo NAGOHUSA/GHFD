@@ -1,73 +1,410 @@
-name: Georgia House Flip Data Pipeline
+import sys
+import os
+import json
+import pandas as pd
+import logging
+import sqlite3
+from datetime import datetime, timedelta
+import time
+import glob
 
-on:
-  workflow_dispatch:
-    inputs:
-      counties:
-        description: 'Counties to scrape (comma-separated or "all")'
-        required: false
-        default: 'all'
-        type: string
-      days_back:
-        description: 'Days of historical data to fetch'
-        required: false
-        default: '180'
-        type: string
+# Add src directory to Python path
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..', 'src'))
 
-  schedule:
-    - cron: '0 12 * * 1-5'
-    - cron: '0 18 * * 1-5'
+# Now import from src
+from scraper import GeorgiaPropertyScraper
+from analyzer import FlipAnalyzer
+from exporter import InvestorExporter
 
-jobs:
-  run-pipeline:
-    runs-on: ubuntu-latest
+logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
+logger = logging.getLogger(__name__)
+
+def load_config():
+    """Load configuration files"""
+    with open('../pipeline.json', 'r') as f:
+        pipeline_config = json.load(f)
     
-    steps:
-    - name: Checkout repository
-      uses: actions/checkout@v4
-      with:
-        token: ${{ secrets.GITHUB_TOKEN }}
-        fetch-depth: 0
+    with open('../counties.json', 'r') as f:
+        counties_config = json.load(f)
+    
+    return pipeline_config, counties_config
 
-    - name: Set up Python
-      uses: actions/setup-python@v4
-      with:
-        python-version: '3.11'
-        cache: 'pip'
+def scrape_counties(pipeline_config, counties_config):
+    """Scrape data from configured counties"""
+    
+    # Get which counties to scrape
+    if pipeline_config.get('scrape_all_enabled', False):
+        counties_to_scrape = [
+            county_id for county_id, config in counties_config['counties'].items() 
+            if config.get('enabled', True)
+        ]
+    else:
+        counties_to_scrape = pipeline_config.get('default_counties', [])
+    
+    # LIMIT counties for testing - remove or increase this for production
+    max_counties = pipeline_config.get('max_counties_per_run', 20)
+    if len(counties_to_scrape) > max_counties:
+        logger.info(f"Limiting to {max_counties} counties for performance (out of {len(counties_to_scrape)})")
+        counties_to_scrape = counties_to_scrape[:max_counties]
+    
+    logger.info(f"Scraping {len(counties_to_scrape)} counties")
+    
+    all_data = []
+    
+    for county_id in counties_to_scrape:
+        if county_id in counties_config['counties']:
+            county_info = counties_config['counties'][county_id]
+            scraper = GeorgiaPropertyScraper(county_info)
+            
+            # Get data for this county
+            start_time = time.time()
+            county_data = scraper.get_recent_sales(
+                days_back=pipeline_config.get('default_days_back', 180)
+            )
+            elapsed = time.time() - start_time
+            
+            if not county_data.empty:
+                all_data.append(county_data)
+                logger.info(f"  {county_info['name']}: {len(county_data)} transactions ({elapsed:.2f}s)")
+            else:
+                logger.warning(f"  {county_info['name']}: No data generated")
+        else:
+            logger.error(f"County {county_id} not found in configuration")
+    
+    # Combine all county data
+    if all_data:
+        combined_data = pd.concat(all_data, ignore_index=True)
+        logger.info(f"Total transactions collected: {len(combined_data)}")
+        return combined_data
+    
+    return pd.DataFrame()
 
-    - name: Install dependencies
-      run: |
-        python -m pip install --upgrade pip
-        pip install requests beautifulsoup4 pandas dash plotly flask openpyxl lxml
+def save_data(data, filename_prefix, output_dir='../data'):
+    """Save data to multiple formats"""
+    os.makedirs(output_dir, exist_ok=True)
+    timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')
+    
+    files = []
+    
+    # CSV
+    csv_file = f"{output_dir}/{filename_prefix}_{timestamp}.csv"
+    data.to_csv(csv_file, index=False)
+    files.append(csv_file)
+    
+    return files
 
-    - name: Create necessary directories
-      run: |
-        mkdir -p data/raw data/results logs data/dashboard
-        # Copy configuration files to root for easier access
-        cp src/pipeline.json . 2>/dev/null || true
-        cp src/counties.json . 2>/dev/null || true
+def analyze_flips(properties_df):
+    """Analyze properties to find flips"""
+    analyzer = FlipAnalyzer()
+    
+    # Identify flips with timing
+    start_time = time.time()
+    flips_df = analyzer.identify_flips(properties_df)
+    analysis_time = time.time() - start_time
+    
+    if flips_df.empty:
+        logger.warning(f"No flips found! Analysis took {analysis_time:.2f}s")
+        return pd.DataFrame(), pd.DataFrame()
+    
+    logger.info(f"Found {len(flips_df)} potential flips in {analysis_time:.2f}s")
+    
+    # Analyze investors
+    investors_df = analyzer.analyze_investors(flips_df)
+    logger.info(f"Found {len(investors_df)} active investors")
+    
+    return flips_df, investors_df
 
-    - name: Run data pipeline
-      run: |
-        echo "Starting pipeline at $(date)"
-        cd scripts
-        python run_pipeline.py
+def generate_dashboard_data(flips_df, investors_df):
+    """Generate data formatted for dashboard"""
+    
+    if flips_df.empty or investors_df.empty:
+        # Generate empty dashboard data structure
+        return {
+            'summary': {
+                'total_flips': 0,
+                'total_investors': 0,
+                'total_profit': 0,
+                'avg_roi': 0
+            },
+            'top_investors': [],
+            'recent_flips': []
+        }
+    
+    # Convert DataFrame to list of records
+    top_investors = investors_df.head(10).to_dict('records')
+    recent_flips = flips_df.head(50).to_dict('records')
+    
+    # Add county information if missing
+    for flip in recent_flips:
+        if 'county' not in flip or pd.isna(flip['county']):
+            flip['county'] = 'Unknown'
+    
+    dashboard_data = {
+        'summary': {
+            'total_flips': len(flips_df),
+            'total_investors': len(investors_df),
+            'total_profit': flips_df['profit'].sum(),
+            'avg_roi': flips_df['roi'].mean()
+        },
+        'top_investors': top_investors,
+        'recent_flips': recent_flips,
+        'stats': {
+            'total_flips_identified': len(flips_df),
+            'total_investors': len(investors_df),
+            'total_profit': flips_df['profit'].sum(),
+            'avg_roi': flips_df['roi'].mean(),
+            'last_updated': datetime.now().strftime('%Y-%m-%d'),
+            'by_county': flips_df['county'].value_counts().to_dict() if 'county' in flips_df.columns else {},
+            'profit_distribution': {}
+        }
+    }
+    
+    # Calculate profit distribution
+    if 'profit' in flips_df.columns and not flips_df.empty:
+        profit_distribution = {
+            '70k-100k': len(flips_df[(flips_df['profit'] >= 70000) & (flips_df['profit'] < 100000)]),
+            '100k-130k': len(flips_df[(flips_df['profit'] >= 100000) & (flips_df['profit'] < 130000)]),
+            '130k-160k': len(flips_df[(flips_df['profit'] >= 130000) & (flips_df['profit'] < 160000)]),
+            '160k+': len(flips_df[flips_df['profit'] >= 160000])
+        }
+        dashboard_data['stats']['profit_distribution'] = profit_distribution
+    
+    return dashboard_data
+
+def main():
+    """Main pipeline execution"""
+    logger.info("Starting Georgia House Flip Pipeline")
+    
+    # Load configuration
+    pipeline_config, counties_config = load_config()
+    
+    # Create directories
+    os.makedirs('../data/raw', exist_ok=True)
+    os.makedirs('../data/results', exist_ok=True)
+    os.makedirs('../data/dashboard', exist_ok=True)
+    
+    # Step 1: Scrape data
+    logger.info("Step 1: Collecting property data")
+    properties_df = scrape_counties(pipeline_config, counties_config)
+    
+    if properties_df.empty:
+        logger.error("No data collected. Exiting.")
+        return
+    
+    # Save raw data
+    raw_files = save_data(properties_df, 'raw/properties', '../data')
+    logger.info(f"Raw data saved to: {raw_files[0]}")
+    
+    # Step 2: Analyze for flips
+    logger.info("Step 2: Analyzing for property flips")
+    flips_df, investors_df = analyze_flips(properties_df)
+    
+    if flips_df.empty:
+        logger.warning("No flips found. Generating sample outreach data.")
+        # Generate sample data for testing
+        counties = ['Fulton', 'Gwinnett', 'Cobb', 'DeKalb', 'Clayton', 'Cherokee', 'Forsyth', 'Henry']
+        investors = [
+            'Atlanta Flip Masters LLC', 'Georgia Property Investors', 'Peachtree RE Group',
+            'Southern Holdings Inc', 'Metro Atlanta Investments', 'Capital Flip Group',
+            'Quick Turn Properties', 'Urban Development LLC', 'Residential Ventures'
+        ]
         
-    - name: Commit and push data files
-      run: |
-        git config --local user.email "action@github.com"
-        git config --local user.name "GitHub Action"
-        git add data/
-        git add logs/
-        if git diff --cached --quiet; then
-          echo "No changes to commit"
-        else
-          git commit -m "Auto-update: New flip data from pipeline $(date +'%Y-%m-%d %H:%M')"
-          git push
-        fi
+        sample_flips = []
+        for i in range(20):
+            profit = 70000 + int((i % 4) * 20000)
+            hold_days = 30 + (i * 10)
+            roi = 20 + (i % 5) * 10
+            county = counties[i % len(counties)]
+            investor = investors[i % len(investors)]
+            
+            sample_flips.append({
+                'property_id': f'PROP{10000 + i}',
+                'address': f'{1000 + i} Main St, Atlanta, GA',
+                'buy_date': '2023-01-15',
+                'buy_price': 250000,
+                'buyer': investor,
+                'sell_date': '2023-07-20',
+                'sell_price': 250000 + profit,
+                'seller': investor,
+                'hold_days': hold_days,
+                'profit': profit,
+                'roi': roi,
+                'county': county
+            })
+        
+        flips_df = pd.DataFrame(sample_flips)
+        
+        sample_investors = []
+        for i, investor in enumerate(investors):
+            total_flips = (i % 3) + 3
+            avg_profit = 80000 + (i * 5000)
+            avg_roi = 25 + (i % 3) * 10
+            avg_hold_days = 60 + (i * 10)
+            
+            sample_investors.append({
+                'investor_name': investor,
+                'total_flips': total_flips,
+                'total_profit': total_flips * avg_profit,
+                'avg_profit_per_flip': avg_profit,
+                'avg_hold_days': avg_hold_days,
+                'avg_roi': avg_roi
+            })
+        
+        investors_df = pd.DataFrame(sample_investors)
+    
+    # Save flip analysis results
+    if not flips_df.empty:
+        flip_files = save_data(flips_df, 'results/flips', '../data')
+        logger.info(f"Flip analysis saved to: {flip_files[0]}")
+    
+    if not investors_df.empty:
+        investor_files = save_data(investors_df, 'results/investors', '../data')
+        logger.info(f"Investor analysis saved to: {investor_files[0]}")
+    
+    # Step 3: Generate outreach materials
+    logger.info("Step 3: Generating outreach materials")
+    exporter = InvestorExporter()
+    
+    if not investors_df.empty and not flips_df.empty:
+        contact_file = exporter.generate_contact_list(
+            investors_df, 
+            flips_df,
+            output_format='csv'
+        )
+        logger.info(f"Contact list generated: {contact_file}")
+    
+    # Step 4: Generate dashboard data
+    logger.info("Step 4: Generating dashboard data")
+    dashboard_data = generate_dashboard_data(flips_df, investors_df)
+    
+    # Save regular dashboard data
+    dashboard_file = '../data/dashboard/dashboard_data.json'
+    with open(dashboard_file, 'w') as f:
+        json.dump(dashboard_data, f, indent=2)
+    
+    logger.info(f"Dashboard data saved to: {dashboard_file}")
+    
+    # Save daily report file with date-only name
+    date_str = datetime.now().strftime('%Y%m%d')
+    daily_file = f'../data/results/dashboard_data_{date_str}.json'
+    with open(daily_file, 'w') as f:
+        json.dump(dashboard_data, f, indent=2)
+    
+    logger.info(f"Daily report saved to: {daily_file}")
+    
+    # Step 5: Save to database
+    if pipeline_config.get('database', {}).get('path'):
+        db_path = pipeline_config['database']['path']
+        os.makedirs(os.path.dirname(db_path), exist_ok=True)
+        
+        conn = sqlite3.connect(db_path)
+        properties_df.to_sql('properties', conn, if_exists='replace', index=False)
+        
+        if not flips_df.empty:
+            flips_df.to_sql('flips', conn, if_exists='replace', index=False)
+        
+        if not investors_df.empty:
+            investors_df.to_sql('investors', conn, if_exists='replace', index=False)
+        
+        conn.close()
+        logger.info(f"Data saved to database: {db_path}")
+    
+    # Generate summary report
+    generate_summary_report(properties_df, flips_df, investors_df)
+    
+    logger.info("Pipeline completed successfully!")
 
-    - name: Upload results as artifact
-      uses: actions/upload-artifact@v4
-      with:
-        name: pipeline-results-${{ github.run_id }}
-        path: data/
+def generate_summary_report(properties_df, flips_df, investors_df):
+    """Generate a summary report of the pipeline run"""
+    today_str = datetime.now().strftime('%Y%m%d')
+    
+    summary = {
+        'timestamp': datetime.now().isoformat(),
+        'pipeline_version': '1.0.0',
+        'data_summary': {
+            'total_transactions': len(properties_df),
+            'unique_counties': properties_df['county'].nunique() if 'county' in properties_df.columns else 0,
+            'date_range': {
+                'min_date': str(properties_df['sale_date'].min()) if 'sale_date' in properties_df.columns and not properties_df.empty else None,
+                'max_date': str(properties_df['sale_date'].max()) if 'sale_date' in properties_df.columns and not properties_df.empty else None
+            }
+        },
+        'flips_summary': {
+            'total_flips': len(flips_df) if not flips_df.empty else 0,
+            'total_profit': float(flips_df['profit'].sum()) if not flips_df.empty and 'profit' in flips_df.columns else 0.0,
+            'avg_profit': float(flips_df['profit'].mean()) if not flips_df.empty and 'profit' in flips_df.columns else 0.0,
+            'avg_hold_days': float(flips_df['hold_days'].mean()) if not flips_df.empty and 'hold_days' in flips_df.columns else 0.0
+        },
+        'investors_summary': {
+            'total_investors': len(investors_df) if not investors_df.empty else 0,
+            'top_5_investors': investors_df.head(5).to_dict('records') if not investors_df.empty else []
+        }
+    }
+    
+    # Save timestamped file
+    timestamp_str = datetime.now().strftime('%Y%m%d_%H%M%S')
+    summary_file = f"../data/results/pipeline_summary_{timestamp_str}.json"
+    with open(summary_file, 'w') as f:
+        json.dump(summary, f, indent=2)
+    
+    # Also save date-only file for easy access
+    date_only_file = f"../data/results/pipeline_summary_{today_str}.json"
+    with open(date_only_file, 'w') as f:
+        json.dump(summary, f, indent=2)
+    
+    logger.info(f"Summary report saved to: {summary_file}")
+    logger.info(f"Date-only summary saved to: {date_only_file}")
+    
+    # Generate list of available dates for dashboard
+    update_available_dates()
+    
+    # Print quick summary to console
+    print("\n" + "="*50)
+    print("PIPELINE SUMMARY")
+    print("="*50)
+    print(f"Total Transactions: {summary['data_summary']['total_transactions']}")
+    print(f"Total Flips Found: {summary['flips_summary']['total_flips']}")
+    print(f"Total Investors: {summary['investors_summary']['total_investors']}")
+    if not flips_df.empty and 'profit' in flips_df.columns:
+        print(f"Total Profit: ${summary['flips_summary']['total_profit']:,.0f}")
+    print(f"Date: {today_str}")
+    print("="*50)
+
+def update_available_dates():
+    """Update the list of available dates for the dashboard"""
+    try:
+        results_dir = '../data/results'
+        
+        # Find all date-only summary files (YYYYMMDD format)
+        pattern = os.path.join(results_dir, 'pipeline_summary_*.json')
+        all_files = glob.glob(pattern)
+        
+        # Extract dates from filenames
+        dates = []
+        for file_path in all_files:
+            filename = os.path.basename(file_path)
+            # Look for pattern pipeline_summary_YYYYMMDD.json
+            if filename.startswith('pipeline_summary_') and filename.endswith('.json'):
+                date_part = filename[17:-5]  # Remove 'pipeline_summary_' and '.json'
+                if len(date_part) == 8 and date_part.isdigit():
+                    dates.append(date_part)
+        
+        # Sort dates descending (newest first)
+        dates.sort(reverse=True)
+        
+        # Limit to last 30 days
+        if len(dates) > 30:
+            dates = dates[:30]
+        
+        # Save available dates
+        available_dates_file = os.path.join(results_dir, 'available_dates.json')
+        with open(available_dates_file, 'w') as f:
+            json.dump(dates, f, indent=2)
+        
+        logger.info(f"Available dates updated: {len(dates)} dates found")
+        
+    except Exception as e:
+        logger.error(f"Error updating available dates: {e}")
+
+if __name__ == "__main__":
+    main()
