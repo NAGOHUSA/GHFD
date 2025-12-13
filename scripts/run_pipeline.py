@@ -255,7 +255,7 @@ def main():
     # Save flip analysis results
     if not flips_df.empty:
         flip_files = save_data(flips_df, 'results/flips', '../data')
-        logger.info(f"Flip analysis saved to: {flips_files[0]}")
+        logger.info(f"Flip analysis saved to: {flip_files[0]}")
     
     if not investors_df.empty:
         investor_files = save_data(investors_df, 'results/investors', '../data')
