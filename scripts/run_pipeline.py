@@ -325,8 +325,8 @@ def generate_summary_report(properties_df, flips_df, investors_df):
             'total_transactions': len(properties_df),
             'unique_counties': properties_df['county'].nunique() if 'county' in properties_df.columns else 0,
             'date_range': {
-                'min_date': properties_df['sale_date'].min().strftime('%Y-%m-%d') if 'sale_date' in properties_df.columns and not properties_df.empty else None,
-                'max_date': properties_df['sale_date'].max().strftime('%Y-%m-%d') if 'sale_date' in properties_df.columns and not properties_df.empty else None
+                'min_date': str(properties_df['sale_date'].min()) if 'sale_date' in properties_df.columns and not properties_df.empty else None,
+                'max_date': str(properties_df['sale_date'].max()) if 'sale_date' in properties_df.columns and not properties_df.empty else None
             }
         },
         'flips_summary': {
