@@ -21,10 +21,16 @@ logger = logging.getLogger(__name__)
 
 def load_config():
     """Load configuration files"""
-    with open('../pipeline.json', 'r') as f:
+    # Look for config files in config directory
+    config_dir = os.path.join(os.path.dirname(__file__), '..', 'config')
+    
+    pipeline_path = os.path.join(config_dir, 'pipeline.json')
+    counties_path = os.path.join(config_dir, 'counties.json')
+    
+    with open(pipeline_path, 'r') as f:
         pipeline_config = json.load(f)
     
-    with open('../counties.json', 'r') as f:
+    with open(counties_path, 'r') as f:
         counties_config = json.load(f)
     
     return pipeline_config, counties_config
