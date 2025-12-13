@@ -48,7 +48,7 @@ def scrape_counties(pipeline_config, counties_config):
         counties_to_scrape = pipeline_config.get('default_counties', [])
     
     # LIMIT counties for testing - remove or increase this for production
-    max_counties = pipeline_config.get('max_counties_per_run', 20)
+    max_counties = pipeline_config.get('max_counties_per_run', 159)
     if len(counties_to_scrape) > max_counties:
         logger.info(f"Limiting to {max_counties} counties for performance (out of {len(counties_to_scrape)})")
         counties_to_scrape = counties_to_scrape[:max_counties]
