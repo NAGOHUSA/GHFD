@@ -39,7 +39,7 @@ def scrape_counties(pipeline_config, counties_config):
     """Scrape data from configured counties"""
     
     # Get which counties to scrape
-    if pipeline_config.get('scrape_all_enabled', False):
+    if pipeline_config.get('scrape_all_enabled', True):
         counties_to_scrape = [
             county_id for county_id, config in counties_config['counties'].items() 
             if config.get('enabled', True)
