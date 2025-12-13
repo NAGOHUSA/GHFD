@@ -1,5 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
+<!DOCTYPE html>
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -233,29 +235,59 @@
             letter-spacing: 1px;
         }
         
+        /* FIXED: Daily Report Selector - Now visible with dark background */
         .daily-report-selector {
-            background: rgba(255, 255, 255, 0.1);
-            border: 1px solid rgba(255, 255, 255, 0.2);
+            background: linear-gradient(135deg, rgba(52, 152, 219, 0.9) 0%, rgba(41, 128, 185, 0.9) 100%);
+            border: 2px solid rgba(255, 255, 255, 0.5);
             color: white;
             border-radius: 8px;
             padding: 8px 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            min-width: 200px;
+        }
+        
+        .daily-report-selector:hover {
+            background: linear-gradient(135deg, rgba(52, 152, 219, 1) 0%, rgba(41, 128, 185, 1) 100%);
+            border-color: white;
+            box-shadow: 0 0 10px rgba(52, 152, 219, 0.5);
         }
         
         .daily-report-selector:focus {
-            background: rgba(255, 255, 255, 0.15);
-            border-color: rgba(255, 255, 255, 0.3);
-            box-shadow: 0 0 0 0.2rem rgba(255, 255, 255, 0.25);
+            background: linear-gradient(135deg, rgba(52, 152, 219, 1) 0%, rgba(41, 128, 185, 1) 100%);
+            border-color: white;
+            box-shadow: 0 0 0 0.2rem rgba(52, 152, 219, 0.5);
+            outline: none;
+            color: white;
         }
         
-        .date-badge {
-            background: linear-gradient(135deg, #9b59b6 0%, #8e44ad 100%);
+        /* Style for the dropdown options */
+        .daily-report-selector option {
+            background: #2c3e50;
             color: white;
-            padding: 5px 12px;
+            font-weight: 500;
+            padding: 10px;
+        }
+        
+        .daily-report-selector option:hover,
+        .daily-report-selector option:focus,
+        .daily-report-selector option:checked {
+            background: #3498db;
+        }
+        
+        /* FIXED: Date Badge - More visible */
+        .date-badge {
+            background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
+            color: white;
+            padding: 6px 15px;
             border-radius: 20px;
-            font-size: 0.85rem;
+            font-size: 0.9rem;
             display: inline-flex;
             align-items: center;
             gap: 5px;
+            font-weight: 600;
+            box-shadow: 0 3px 10px rgba(52, 152, 219, 0.3);
         }
         
         .control-group {
