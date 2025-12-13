@@ -43,9 +43,6 @@ jobs:
     - name: Create necessary directories
       run: |
         mkdir -p data/raw data/results logs data/dashboard
-        # Copy configuration files to root for easier access
-        cp src/pipeline.json . 2>/dev/null || true
-        cp src/counties.json . 2>/dev/null || true
 
     - name: Run data pipeline
       run: |
