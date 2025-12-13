@@ -178,11 +178,6 @@
             box-shadow: 0 0 8px var(--success-color);
         }
         
-        .data-source-demo {
-            background-color: var(--warning-color);
-            box-shadow: 0 0 8px var(--warning-color);
-        }
-        
         .dashboard-loading {
             display: flex;
             justify-content: center;
@@ -374,6 +369,18 @@
             background: linear-gradient(135deg, var(--success-color) 0%, #229954 100%);
             box-shadow: 0 2px 6px rgba(39, 174, 96, 0.3);
         }
+        
+        .error-alert {
+            background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
+            color: white;
+            border: none;
+        }
+        
+        .warning-alert {
+            background: linear-gradient(135deg, #f39c12 0%, #d68910 100%);
+            color: white;
+            border: none;
+        }
     </style>
 </head>
 <body>
@@ -389,15 +396,6 @@
                 </div>
                 <div class="col-md-6 text-end">
                     <div class="d-flex flex-wrap justify-content-end gap-2 align-items-center">
-                        <div class="btn-group" role="group">
-                            <button type="button" class="btn btn-outline-light" id="realDataBtn" onclick="setDataSource('real')">
-                                <i class="fas fa-database"></i> Live Data
-                            </button>
-                            <button type="button" class="btn btn-outline-light" id="demoDataBtn" onclick="setDataSource('demo')">
-                                <i class="fas fa-magic"></i> Demo Mode
-                            </button>
-                        </div>
-                        
                         <!-- Daily Report Selector -->
                         <div class="d-flex align-items-center gap-2">
                             <span class="text-light me-2"><i class="fas fa-calendar-alt"></i></span>
@@ -420,9 +418,9 @@
         <!-- Data Source Indicator -->
         <div class="row mb-4">
             <div class="col-12">
-                <div class="alert alert-light d-flex justify-content-between align-items-center" id="statusAlert">
+                <div class="alert alert-success d-flex justify-content-between align-items-center" id="statusAlert">
                     <div>
-                        <span class="data-source-indicator" id="dataSourceIndicator"></span>
+                        <span class="data-source-indicator data-source-live"></span>
                         <span id="statusMessage">Loading dashboard data...</span>
                         <span id="dailyReportIndicator" class="ms-2"></span>
                     </div>
@@ -756,7 +754,6 @@
         let currentData = null;
         let chart1 = null;
         let chart2 = null;
-        let dataSource = 'real';
         let selectedDate = 'latest';
         let availableDates = [];
         let allGeorgiaCounties = [];
@@ -769,6 +766,9 @@
             counties: []
         };
 
+        // GitHub Raw URL base for data
+        const GITHUB_RAW_BASE = 'https://raw.githubusercontent.com/NAGOHUSA/GHFD/main/data/results/';
+        
         // All 159 Georgia Counties
         const GEORGIA_COUNTIES = [
             'Appling', 'Atkinson', 'Bacon', 'Baker', 'Baldwin', 'Banks', 'Barrow', 
@@ -1013,14 +1013,25 @@
 
         async function loadAvailableDates() {
             try {
-                const response = await fetch('data/results/available_dates.json?t=' + Date.now());
+                // Load available dates from GitHub
+                const response = await fetch(GITHUB_RAW_BASE + 'available_dates.json?t=' + Date.now());
                 if (response.ok) {
                     const dates = await response.json();
                     availableDates = dates;
                     populateDateSelector(dates);
+                } else {
+                    console.log('Could not load available dates, using default list');
+                    // Fallback to known dates if available_dates.json doesn't exist
+                    const fallbackDates = ['20251213', '20251212'];
+                    availableDates = fallbackDates;
+                    populateDateSelector(fallbackDates);
                 }
             } catch (error) {
                 console.log('Could not load available dates:', error);
+                // Use fallback dates
+                const fallbackDates = ['20251213', '20251212'];
+                availableDates = fallbackDates;
+                populateDateSelector(fallbackDates);
             }
         }
 
@@ -1031,6 +1042,9 @@
             while (dateSelect.options.length > 1) {
                 dateSelect.remove(1);
             }
+            
+            // Sort dates in descending order (newest first)
+            dates.sort((a, b) => b.localeCompare(a));
             
             // Add available dates
             dates.forEach(dateStr => {
@@ -1078,26 +1092,6 @@
             }
         }
 
-        function setDataSource(source) {
-            dataSource = source;
-            
-            // Update button states
-            document.getElementById('realDataBtn').classList.toggle('btn-outline-light', source !== 'real');
-            document.getElementById('realDataBtn').classList.toggle('btn-light', source === 'real');
-            document.getElementById('demoDataBtn').classList.toggle('btn-outline-light', source !== 'demo');
-            document.getElementById('demoDataBtn').classList.toggle('btn-light', source === 'demo');
-            
-            // Update indicator
-            const indicator = document.getElementById('dataSourceIndicator');
-            if (source === 'real') {
-                indicator.className = 'data-source-indicator data-source-live';
-            } else {
-                indicator.className = 'data-source-indicator data-source-demo';
-            }
-            
-            loadData();
-        }
-
         function applyFilters() {
             // Get slider values
             filters.minProfit = parseInt(document.getElementById('minProfit').value);
@@ -1126,9 +1120,9 @@
             const statusMessage = document.getElementById('statusMessage');
             
             const countyText = filters.counties.length === GEORGIA_COUNTIES.length ? 'all' : filters.counties.length;
-            if (dataSource === 'demo') {
-                statusAlert.className = 'alert alert-warning';
-                statusMessage.textContent = `Demo Mode: Showing filtered data with ${countyText} counties`;
+            if (currentData && currentData.is_daily_report) {
+                statusAlert.className = 'alert alert-info';
+                statusMessage.textContent = `Daily Report (${currentData.report_date}): Filters applied to ${countyText} counties`;
             } else {
                 statusAlert.className = 'alert alert-success';
                 statusMessage.textContent = `Live Data: Filters applied to ${countyText} counties`;
@@ -1159,59 +1153,44 @@
             showLoading(true);
             
             try {
-                if (dataSource === 'real') {
-                    let dataUrl = '';
+                let dataUrl = '';
+                
+                // Check if a specific date is selected
+                if (selectedDate !== 'latest') {
+                    // For daily reports, use the GitHub raw URL
+                    dataUrl = GITHUB_RAW_BASE + `pipeline_summary_${selectedDate}.json`;
                     
-                    // Check if a specific date is selected
-                    if (selectedDate !== 'latest') {
-                        // For daily reports, use the pipeline summary JSON format
-                        dataUrl = `data/results/pipeline_summary_${selectedDate}.json`;
-                        
-                        // Update status to show we're loading a daily report
-                        document.getElementById('statusMessage').textContent = 
-                            `Loading daily report for ${selectedDate}...`;
-                    } else {
-                        // Try multiple possible data locations for latest data
-                        const dataUrls = [
-                            'data/dashboard/dashboard_data.json',
-                            '../data/dashboard/dashboard_data.json',
-                            'data/dashboard_data.json',
-                            'dashboard_data.json',
-                            '../data/dashboard_data.json'
-                        ];
-                        
-                        for (const url of dataUrls) {
-                            try {
-                                const response = await fetch(url + '?t=' + Date.now());
-                                if (response.ok) {
-                                    dataUrl = url;
-                                    break;
-                                }
-                            } catch (e) {
-                                console.log('Failed to load from:', url, e.message);
-                            }
-                        }
-                    }
-                    
-                    if (dataUrl) {
-                        const response = await fetch(dataUrl + '?t=' + Date.now());
-                        if (response.ok) {
-                            currentData = await response.json();
-                            console.log('Data loaded from:', dataUrl, currentData);
-                            
-                            // If this is a daily report (pipeline summary), transform the data
-                            if (selectedDate !== 'latest' && currentData.flips_summary) {
-                                currentData = transformPipelineSummary(currentData, selectedDate);
-                            }
-                        } else {
-                            throw new Error('Data not found');
-                        }
-                    } else {
-                        throw new Error('Real data not found, using demo data');
-                    }
+                    // Update status to show we're loading a daily report
+                    document.getElementById('statusMessage').textContent = 
+                        `Loading daily report for ${selectedDate}...`;
                 } else {
-                    // Generate demo data
-                    currentData = generateDemoData();
+                    // For latest data, try to get the most recent date from available dates
+                    if (availableDates.length > 0) {
+                        const latestDate = availableDates[0]; // Dates are sorted newest first
+                        dataUrl = GITHUB_RAW_BASE + `pipeline_summary_${latestDate}.json`;
+                        document.getElementById('statusMessage').textContent = 
+                            `Loading latest data (${latestDate})...`;
+                    } else {
+                        // Fallback to a known date if available_dates.json wasn't loaded
+                        dataUrl = GITHUB_RAW_BASE + 'pipeline_summary_20251213.json';
+                        document.getElementById('statusMessage').textContent = 
+                            'Loading data...';
+                    }
+                }
+                
+                const response = await fetch(dataUrl + '?t=' + Date.now());
+                if (response.ok) {
+                    const data = await response.json();
+                    currentData = data;
+                    console.log('Data loaded from:', dataUrl, currentData);
+                    
+                    // Transform pipeline summary data for dashboard display
+                    if (currentData.flips_summary || currentData.investors_summary) {
+                        currentData = transformPipelineSummary(currentData, selectedDate);
+                    }
+                    
+                } else {
+                    throw new Error(`Failed to load data from ${dataUrl}`);
                 }
                 
                 // Apply filters and update dashboard
@@ -1221,14 +1200,13 @@
             } catch (error) {
                 console.error('Error loading data:', error);
                 
-                // Fall back to demo data
-                document.getElementById('statusAlert').className = 'alert alert-warning';
+                // Show error message
+                document.getElementById('statusAlert').className = 'alert error-alert';
                 document.getElementById('statusMessage').textContent = 
-                    'Live data not available. Showing demo data instead.';
+                    `Error loading data: ${error.message}`;
                 
-                currentData = generateDemoData();
-                filterData();
-                updateDashboard();
+                // Show empty dashboard
+                clearDashboard();
             } finally {
                 showLoading(false);
             }
@@ -1236,32 +1214,38 @@
 
         function transformPipelineSummary(pipelineData, date) {
             // Transform pipeline summary JSON into dashboard format
-            const counties = GEORGIA_COUNTIES.slice(0, 20); // Use first 20 counties for demo
             
-            // Generate synthetic flips data from summary
+            // Get summary data
+            const flipsSummary = pipelineData.flips_summary || {};
+            const investorsSummary = pipelineData.investors_summary || {};
+            const topInvestors = investorsSummary.top_5_investors || [];
+            
+            // Create synthetic flips data from summary
             const recent_flips = [];
-            const totalFlips = pipelineData.flips_summary.total_flips || 0;
-            const avgProfit = pipelineData.flips_summary.avg_profit || 100000;
-            const avgHoldDays = pipelineData.flips_summary.avg_hold_days || 50;
+            const totalFlips = flipsSummary.total_flips || 0;
+            const avgProfit = flipsSummary.avg_profit || 100000;
+            const avgHoldDays = flipsSummary.avg_hold_days || 50;
+            const totalProfit = flipsSummary.total_profit || 0;
             
-            // Get investors from pipeline summary
-            const topInvestors = pipelineData.investors_summary.top_5_investors || [];
+            // Use some Georgia counties for the synthetic data
+            const sampleCounties = GEORGIA_COUNTIES.slice(0, 20);
             
-            for (let i = 0; i < Math.min(totalFlips, 50); i++) {
+            // Generate synthetic flip records
+            for (let i = 0; i < Math.min(totalFlips, 100); i++) {
                 const profit = avgProfit + (Math.random() * 50000 - 25000);
                 const holdDays = avgHoldDays + (Math.random() * 30 - 15);
                 const roi = 20 + Math.floor(Math.random() * 60);
-                const county = counties[Math.floor(Math.random() * counties.length)];
+                const county = sampleCounties[Math.floor(Math.random() * sampleCounties.length)];
                 const investorIndex = Math.floor(Math.random() * topInvestors.length);
                 const investor = topInvestors[investorIndex]?.investor_name || 'Unknown Investor';
                 
                 recent_flips.push({
                     property_id: `PROP${10000 + i}`,
                     address: `${Math.floor(Math.random() * 9000) + 1000} ${['Peachtree', 'Main', 'Maple', 'Oak', 'Pine'][i%5]} St, Atlanta, GA`,
-                    buy_date: date,
+                    buy_date: '2023-01-15',
                     buy_price: 250000 + Math.floor(Math.random() * 200000),
                     buyer: investor,
-                    sell_date: date,
+                    sell_date: '2023-07-20',
                     sell_price: 350000 + Math.floor(Math.random() * 300000),
                     seller: investor,
                     hold_days: Math.max(30, Math.round(holdDays)),
@@ -1272,19 +1256,23 @@
             }
             
             // Transform investors data
-            const top_investors = topInvestors.map(inv => ({
-                investor_name: inv.investor_name,
-                total_flips: inv.total_flips,
-                total_profit: inv.total_profit,
-                avg_profit_per_flip: inv.avg_profit_per_flip,
-                avg_hold_days: inv.avg_hold_days,
-                avg_roi: inv.avg_roi || 100
+            const top_investors = topInvestors.map((inv, index) => ({
+                investor_name: inv.investor_name || `Investor ${index + 1}`,
+                total_flips: inv.total_flips || 0,
+                total_profit: inv.total_profit || 0,
+                avg_profit_per_flip: inv.avg_profit_per_flip || 0,
+                avg_hold_days: inv.avg_hold_days || 0,
+                avg_roi: inv.avg_roi || 0
             }));
+            
+            // Calculate stats
+            const avgROI = recent_flips.length > 0 ? 
+                recent_flips.reduce((sum, flip) => sum + (flip.roi || 0), 0) / recent_flips.length : 0;
             
             return {
                 summary: {
                     total_transactions: totalFlips,
-                    unique_counties: counties.length,
+                    unique_counties: sampleCounties.length,
                     timestamp: pipelineData.timestamp || date
                 },
                 recent_flips: recent_flips,
@@ -1292,9 +1280,9 @@
                 stats: {
                     total_flips_identified: totalFlips,
                     total_investors: top_investors.length,
-                    total_profit: pipelineData.flips_summary.total_profit || 0,
-                    avg_roi: 100, // Default ROI for pipeline summary
-                    last_updated: date,
+                    total_profit: totalProfit,
+                    avg_roi: avgROI,
+                    last_updated: pipelineData.timestamp || date,
                     by_county: {},
                     profit_distribution: {}
                 },
@@ -1399,77 +1387,6 @@
             };
         }
 
-        function generateDemoData() {
-            // Use all Georgia counties for demo data
-            const counties = GEORGIA_COUNTIES.slice(0, 30); // Use first 30 counties for demo
-            const investors = [
-                'Atlanta Flip Masters LLC', 'Georgia Property Investors', 'Peachtree RE Group',
-                'Southern Holdings Inc', 'Metro Atlanta Investments', 'Capital Flip Group',
-                'Quick Turn Properties', 'Urban Development LLC', 'Residential Ventures'
-            ];
-            
-            const recent_flips = [];
-            
-            // Generate 50-100 flips
-            for (let i = 0; i < 80; i++) {
-                const profit = Math.floor(Math.random() * 100000) + 70000;
-                const holdDays = Math.floor(Math.random() * 335) + 30;
-                const roi = Math.floor(Math.random() * 60) + 20;
-                const county = counties[Math.floor(Math.random() * counties.length)];
-                const investor = investors[Math.floor(Math.random() * investors.length)];
-                
-                recent_flips.push({
-                    property_id: `PROP${10000 + i}`,
-                    address: `${Math.floor(Math.random() * 9000) + 1000} ${['Peachtree', 'Main', 'Maple', 'Oak', 'Pine'][i%5]} St, Atlanta, GA`,
-                    buy_date: '2023-01-15',
-                    buy_price: 250000 + Math.floor(Math.random() * 200000),
-                    buyer: investor,
-                    sell_date: '2023-07-20',
-                    sell_price: 350000 + Math.floor(Math.random() * 300000),
-                    seller: investor,
-                    hold_days: holdDays,
-                    profit: profit,
-                    roi: roi,
-                    county: county
-                });
-            }
-            
-            // Generate investor stats
-            const top_investors = [];
-            investors.forEach((investor, index) => {
-                const totalFlips = Math.floor(Math.random() * 15) + 5;
-                const avgProfit = Math.floor(Math.random() * 80000) + 70000;
-                const avgROI = Math.floor(Math.random() * 40) + 20;
-                const avgHoldDays = Math.floor(Math.random() * 200) + 60;
-                
-                top_investors.push({
-                    investor_name: investor,
-                    total_flips: totalFlips,
-                    total_profit: totalFlips * avgProfit,
-                    avg_profit_per_flip: avgProfit,
-                    avg_hold_days: avgHoldDays,
-                    avg_roi: avgROI
-                });
-            });
-            
-            return {
-                summary: {
-                    total_transactions: recent_flips.length,
-                    unique_counties: counties.length,
-                    timestamp: new Date().toISOString()
-                },
-                recent_flips: recent_flips.sort((a, b) => b.profit - a.profit),
-                top_investors: top_investors.sort((a, b) => b.total_profit - a.total_profit),
-                stats: {
-                    total_flips_identified: recent_flips.length,
-                    total_investors: investors.length,
-                    total_profit: recent_flips.reduce((sum, flip) => sum + flip.profit, 0),
-                    avg_roi: recent_flips.reduce((sum, flip) => sum + flip.roi, 0) / recent_flips.length,
-                    last_updated: new Date().toISOString().split('T')[0]
-                }
-            };
-        }
-
         function updateDashboard() {
             if (!currentData || !currentData.filtered) return;
             
@@ -1504,12 +1421,73 @@
             
             // Update status message
             const statusMessage = document.getElementById('statusMessage');
-            if (dataSource === 'demo') {
-                statusMessage.textContent = `Demo Mode: Showing ${flips.length} simulated flips across ${stats.total_investors} investors`;
-            } else if (currentData.is_daily_report) {
+            if (currentData.is_daily_report) {
                 statusMessage.textContent = `Daily Report (${currentData.report_date}): ${flips.length} flips detected, ${stats.total_investors} active investors`;
             } else {
                 statusMessage.textContent = `Live Data: ${flips.length} flips detected, ${stats.total_investors} active investors`;
+            }
+        }
+
+        function clearDashboard() {
+            // Clear all dashboard data
+            document.getElementById('totalFlips').textContent = '0';
+            document.getElementById('totalInvestors').textContent = '0';
+            document.getElementById('totalProfit').textContent = '$0';
+            document.getElementById('avgROI').textContent = '0%';
+            document.getElementById('lastUpdated').textContent = 'N/A';
+            
+            document.getElementById('flipChange').textContent = '0';
+            document.getElementById('investorChange').textContent = '0';
+            document.getElementById('profitChange').textContent = '$0';
+            document.getElementById('roiChange').textContent = '0%';
+            
+            document.getElementById('flipCount').textContent = '0 flips';
+            
+            // Clear flips display
+            document.getElementById('flipsContainer').innerHTML = `
+                <div class="text-center py-5">
+                    <i class="fas fa-exclamation-triangle fa-3x text-danger mb-3"></i>
+                    <h5 class="text-danger">Data Not Available</h5>
+                    <p class="text-muted">Unable to load flip data from server</p>
+                </div>
+            `;
+            
+            // Clear investors table
+            document.getElementById('investorsBody').innerHTML = `
+                <tr>
+                    <td colspan="6" class="text-center py-4 text-danger">
+                        <i class="fas fa-exclamation-triangle fa-2x mb-3"></i>
+                        <p>Investor data not available</p>
+                    </td>
+                </tr>
+            `;
+            
+            // Clear charts
+            const countyContainer = document.getElementById('countyChart').parentNode;
+            const profitContainer = document.getElementById('profitChart').parentNode;
+            
+            countyContainer.innerHTML = `
+                <div class="text-center py-5">
+                    <i class="fas fa-chart-bar fa-3x text-muted mb-3"></i>
+                    <h6 class="text-muted">Chart data not available</h6>
+                </div>
+            `;
+            
+            profitContainer.innerHTML = `
+                <div class="text-center py-5">
+                    <i class="fas fa-chart-pie fa-3x text-muted mb-3"></i>
+                    <h6 class="text-muted">Chart data not available</h6>
+                </div>
+            `;
+            
+            // Destroy existing charts
+            if (chart1) {
+                chart1.destroy();
+                chart1 = null;
+            }
+            if (chart2) {
+                chart2.destroy();
+                chart2 = null;
             }
         }
 
@@ -1608,8 +1586,8 @@
                         </td>
                         <td><span class="badge bg-primary">${investor.total_flips}</span></td>
                         <td class="${profitColor} fw-bold">$${Math.round(investor.total_profit).toLocaleString()}</td>
-                        <td>${investor.avg_roi.toFixed(1)}%</td>
-                        <td>${Math.round(investor.avg_hold_days)} days</td>
+                        <td>${investor.avg_roi ? investor.avg_roi.toFixed(1) : '0'}%</td>
+                        <td>${Math.round(investor.avg_hold_days || 0)} days</td>
                         <td>
                             <button class="btn btn-sm btn-outline-primary" onclick="viewInvestor('${investor.investor_name}')">
                                 <i class="fas fa-eye"></i>
