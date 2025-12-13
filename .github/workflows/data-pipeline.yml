@@ -15,8 +15,7 @@ on:
         type: string
 
   schedule:
-    - cron: '0 12 * * 1-5'
-    - cron: '0 18 * * 1-5'
+    - cron: '0 12 * * *'  # Runs daily at 12:00 UTC
 
 jobs:
   run-pipeline:
@@ -38,7 +37,7 @@ jobs:
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
-        pip install requests beautifulsoup4 pandas dash plotly flask openpyxl lxml
+        pip install requests beautifulsoup4 pandas dash plotly flask openpyxl lxml sqlite3
 
     - name: Create necessary directories
       run: |
@@ -53,6 +52,31 @@ jobs:
         cd scripts
         python run_pipeline.py
         
+    - name: Generate date-only summary file
+      run: |
+        echo "Generating date-only summary file..."
+        TODAY=$(date +'%Y%m%d')
+        # Look for the latest summary file
+        LATEST_SUMMARY=$(ls -t data/results/pipeline_summary_*.json 2>/dev/null | head -1)
+        if [ -n "$LATEST_SUMMARY" ]; then
+          # Copy the latest summary to a date-only file
+          cp "$LATEST_SUMMARY" "data/results/pipeline_summary_${TODAY}.json"
+          echo "Created data/results/pipeline_summary_${TODAY}.json"
+        else
+          echo "No summary file found"
+        fi
+        
+    - name: Update available dates file
+      run: |
+        echo "Updating available dates..."
+        # Get list of available date-only summary files
+        ls data/results/pipeline_summary_*.json 2>/dev/null | \
+          grep -E 'pipeline_summary_[0-9]{8}\.json$' | \
+          sed 's|.*pipeline_summary_\([0-9]\{8\}\)\.json|\1|' | \
+          sort -r > data/results/available_dates.txt
+        echo "Available dates:"
+        cat data/results/available_dates.txt 2>/dev/null || echo "No dates available"
+        
     - name: Commit and push data files
       run: |
         git config --local user.email "action@github.com"
@@ -62,7 +86,7 @@ jobs:
         if git diff --cached --quiet; then
           echo "No changes to commit"
         else
-          git commit -m "Auto-update: New flip data from pipeline $(date +'%Y-%m-%d %H:%M')"
+          git commit -m "Auto-update: Daily flip data pipeline $(date +'%Y-%m-%d %H:%M')"
           git push
         fi
 
