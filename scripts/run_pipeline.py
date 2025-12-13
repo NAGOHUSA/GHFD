@@ -4,8 +4,9 @@ import json
 import pandas as pd
 import logging
 import sqlite3
-from datetime import datetime
+from datetime import datetime, timedelta
 import time
+import glob
 
 # Add src directory to Python path
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..', 'src'))
@@ -115,17 +116,58 @@ def analyze_flips(properties_df):
 
 def generate_dashboard_data(flips_df, investors_df):
     """Generate data formatted for dashboard"""
-    # This would be used by your dashboard
+    
+    if flips_df.empty or investors_df.empty:
+        # Generate empty dashboard data structure
+        return {
+            'summary': {
+                'total_flips': 0,
+                'total_investors': 0,
+                'total_profit': 0,
+                'avg_roi': 0
+            },
+            'top_investors': [],
+            'recent_flips': []
+        }
+    
+    # Convert DataFrame to list of records
+    top_investors = investors_df.head(10).to_dict('records')
+    recent_flips = flips_df.head(50).to_dict('records')
+    
+    # Add county information if missing
+    for flip in recent_flips:
+        if 'county' not in flip or pd.isna(flip['county']):
+            flip['county'] = 'Unknown'
+    
     dashboard_data = {
         'summary': {
-            'total_flips': len(flips_df) if not flips_df.empty else 0,
-            'total_investors': len(investors_df) if not investors_df.empty else 0,
-            'total_profit': flips_df['profit'].sum() if not flips_df.empty else 0,
-            'avg_roi': flips_df['roi'].mean() if not flips_df.empty else 0
+            'total_flips': len(flips_df),
+            'total_investors': len(investors_df),
+            'total_profit': flips_df['profit'].sum(),
+            'avg_roi': flips_df['roi'].mean()
         },
-        'top_investors': investors_df.head(10).to_dict('records') if not investors_df.empty else [],
-        'recent_flips': flips_df.head(50).to_dict('records') if not flips_df.empty else []
+        'top_investors': top_investors,
+        'recent_flips': recent_flips,
+        'stats': {
+            'total_flips_identified': len(flips_df),
+            'total_investors': len(investors_df),
+            'total_profit': flips_df['profit'].sum(),
+            'avg_roi': flips_df['roi'].mean(),
+            'last_updated': datetime.now().strftime('%Y-%m-%d'),
+            'by_county': flips_df['county'].value_counts().to_dict() if 'county' in flips_df.columns else {},
+            'profit_distribution': {}
+        }
     }
+    
+    # Calculate profit distribution
+    if 'profit' in flips_df.columns and not flips_df.empty:
+        profit_distribution = {
+            '70k-100k': len(flips_df[(flips_df['profit'] >= 70000) & (flips_df['profit'] < 100000)]),
+            '100k-130k': len(flips_df[(flips_df['profit'] >= 100000) & (flips_df['profit'] < 130000)]),
+            '130k-160k': len(flips_df[(flips_df['profit'] >= 130000) & (flips_df['profit'] < 160000)]),
+            '160k+': len(flips_df[flips_df['profit'] >= 160000])
+        }
+        dashboard_data['stats']['profit_distribution'] = profit_distribution
     
     return dashboard_data
 
@@ -160,34 +202,60 @@ def main():
     if flips_df.empty:
         logger.warning("No flips found. Generating sample outreach data.")
         # Generate sample data for testing
-        flips_df = pd.DataFrame([{
-            'property_id': 'F000001',
-            'address': '123 Main St, Atlanta, GA 30303',
-            'buy_date': '2023-01-15',
-            'buy_price': 250000,
-            'buyer': 'Atlanta Flip Masters LLC',
-            'sell_date': '2023-06-15',
-            'sell_price': 350000,
-            'seller': 'Atlanta Flip Masters LLC',
-            'hold_days': 150,
-            'profit': 100000,
-            'roi': 40.0,
-            'county': 'Fulton County'
-        }])
+        counties = ['Fulton', 'Gwinnett', 'Cobb', 'DeKalb', 'Clayton', 'Cherokee', 'Forsyth', 'Henry']
+        investors = [
+            'Atlanta Flip Masters LLC', 'Georgia Property Investors', 'Peachtree RE Group',
+            'Southern Holdings Inc', 'Metro Atlanta Investments', 'Capital Flip Group',
+            'Quick Turn Properties', 'Urban Development LLC', 'Residential Ventures'
+        ]
         
-        investors_df = pd.DataFrame([{
-            'investor_name': 'Atlanta Flip Masters LLC',
-            'total_flips': 5,
-            'total_profit': 500000,
-            'avg_profit_per_flip': 100000,
-            'avg_hold_days': 120,
-            'avg_roi': 35.0
-        }])
+        sample_flips = []
+        for i in range(20):
+            profit = 70000 + int((i % 4) * 20000)
+            hold_days = 30 + (i * 10)
+            roi = 20 + (i % 5) * 10
+            county = counties[i % len(counties)]
+            investor = investors[i % len(investors)]
+            
+            sample_flips.append({
+                'property_id': f'PROP{10000 + i}',
+                'address': f'{1000 + i} Main St, Atlanta, GA',
+                'buy_date': '2023-01-15',
+                'buy_price': 250000,
+                'buyer': investor,
+                'sell_date': '2023-07-20',
+                'sell_price': 250000 + profit,
+                'seller': investor,
+                'hold_days': hold_days,
+                'profit': profit,
+                'roi': roi,
+                'county': county
+            })
+        
+        flips_df = pd.DataFrame(sample_flips)
+        
+        sample_investors = []
+        for i, investor in enumerate(investors):
+            total_flips = (i % 3) + 3
+            avg_profit = 80000 + (i * 5000)
+            avg_roi = 25 + (i % 3) * 10
+            avg_hold_days = 60 + (i * 10)
+            
+            sample_investors.append({
+                'investor_name': investor,
+                'total_flips': total_flips,
+                'total_profit': total_flips * avg_profit,
+                'avg_profit_per_flip': avg_profit,
+                'avg_hold_days': avg_hold_days,
+                'avg_roi': avg_roi
+            })
+        
+        investors_df = pd.DataFrame(sample_investors)
     
     # Save flip analysis results
     if not flips_df.empty:
         flip_files = save_data(flips_df, 'results/flips', '../data')
-        logger.info(f"Flip analysis saved to: {flip_files[0]}")
+        logger.info(f"Flip analysis saved to: {flips_files[0]}")
     
     if not investors_df.empty:
         investor_files = save_data(investors_df, 'results/investors', '../data')
@@ -209,11 +277,20 @@ def main():
     logger.info("Step 4: Generating dashboard data")
     dashboard_data = generate_dashboard_data(flips_df, investors_df)
     
+    # Save regular dashboard data
     dashboard_file = '../data/dashboard/dashboard_data.json'
     with open(dashboard_file, 'w') as f:
         json.dump(dashboard_data, f, indent=2)
     
     logger.info(f"Dashboard data saved to: {dashboard_file}")
+    
+    # Save daily report file with date-only name
+    date_str = datetime.now().strftime('%Y%m%d')
+    daily_file = f'../data/results/dashboard_data_{date_str}.json'
+    with open(daily_file, 'w') as f:
+        json.dump(dashboard_data, f, indent=2)
+    
+    logger.info(f"Daily report saved to: {daily_file}")
     
     # Step 5: Save to database
     if pipeline_config.get('database', {}).get('path'):
@@ -239,6 +316,8 @@ def main():
 
 def generate_summary_report(properties_df, flips_df, investors_df):
     """Generate a summary report of the pipeline run"""
+    today_str = datetime.now().strftime('%Y%m%d')
+    
     summary = {
         'timestamp': datetime.now().isoformat(),
         'pipeline_version': '1.0.0',
@@ -246,15 +325,15 @@ def generate_summary_report(properties_df, flips_df, investors_df):
             'total_transactions': len(properties_df),
             'unique_counties': properties_df['county'].nunique() if 'county' in properties_df.columns else 0,
             'date_range': {
-                'min_date': properties_df['sale_date'].min() if 'sale_date' in properties_df.columns else None,
-                'max_date': properties_df['sale_date'].max() if 'sale_date' in properties_df.columns else None
+                'min_date': properties_df['sale_date'].min().strftime('%Y-%m-%d') if 'sale_date' in properties_df.columns and not properties_df.empty else None,
+                'max_date': properties_df['sale_date'].max().strftime('%Y-%m-%d') if 'sale_date' in properties_df.columns and not properties_df.empty else None
             }
         },
         'flips_summary': {
             'total_flips': len(flips_df) if not flips_df.empty else 0,
-            'total_profit': flips_df['profit'].sum() if not flips_df.empty else 0,
-            'avg_profit': flips_df['profit'].mean() if not flips_df.empty else 0,
-            'avg_hold_days': flips_df['hold_days'].mean() if not flips_df.empty else 0
+            'total_profit': float(flips_df['profit'].sum()) if not flips_df.empty and 'profit' in flips_df.columns else 0.0,
+            'avg_profit': float(flips_df['profit'].mean()) if not flips_df.empty and 'profit' in flips_df.columns else 0.0,
+            'avg_hold_days': float(flips_df['hold_days'].mean()) if not flips_df.empty and 'hold_days' in flips_df.columns else 0.0
         },
         'investors_summary': {
             'total_investors': len(investors_df) if not investors_df.empty else 0,
@@ -262,11 +341,22 @@ def generate_summary_report(properties_df, flips_df, investors_df):
         }
     }
     
-    summary_file = f"../data/results/pipeline_summary_{datetime.now().strftime('%Y%m%d_%H%M%S')}.json"
+    # Save timestamped file
+    timestamp_str = datetime.now().strftime('%Y%m%d_%H%M%S')
+    summary_file = f"../data/results/pipeline_summary_{timestamp_str}.json"
     with open(summary_file, 'w') as f:
         json.dump(summary, f, indent=2)
     
+    # Also save date-only file for easy access
+    date_only_file = f"../data/results/pipeline_summary_{today_str}.json"
+    with open(date_only_file, 'w') as f:
+        json.dump(summary, f, indent=2)
+    
     logger.info(f"Summary report saved to: {summary_file}")
+    logger.info(f"Date-only summary saved to: {date_only_file}")
+    
+    # Generate list of available dates for dashboard
+    update_available_dates()
     
     # Print quick summary to console
     print("\n" + "="*50)
@@ -275,9 +365,46 @@ def generate_summary_report(properties_df, flips_df, investors_df):
     print(f"Total Transactions: {summary['data_summary']['total_transactions']}")
     print(f"Total Flips Found: {summary['flips_summary']['total_flips']}")
     print(f"Total Investors: {summary['investors_summary']['total_investors']}")
-    if not flips_df.empty:
+    if not flips_df.empty and 'profit' in flips_df.columns:
         print(f"Total Profit: ${summary['flips_summary']['total_profit']:,.0f}")
+    print(f"Date: {today_str}")
     print("="*50)
+
+def update_available_dates():
+    """Update the list of available dates for the dashboard"""
+    try:
+        results_dir = '../data/results'
+        
+        # Find all date-only summary files (YYYYMMDD format)
+        pattern = os.path.join(results_dir, 'pipeline_summary_*.json')
+        all_files = glob.glob(pattern)
+        
+        # Extract dates from filenames
+        dates = []
+        for file_path in all_files:
+            filename = os.path.basename(file_path)
+            # Look for pattern pipeline_summary_YYYYMMDD.json
+            if filename.startswith('pipeline_summary_') and filename.endswith('.json'):
+                date_part = filename[17:-5]  # Remove 'pipeline_summary_' and '.json'
+                if len(date_part) == 8 and date_part.isdigit():
+                    dates.append(date_part)
+        
+        # Sort dates descending (newest first)
+        dates.sort(reverse=True)
+        
+        # Limit to last 30 days
+        if len(dates) > 30:
+            dates = dates[:30]
+        
+        # Save available dates
+        available_dates_file = os.path.join(results_dir, 'available_dates.json')
+        with open(available_dates_file, 'w') as f:
+            json.dump(dates, f, indent=2)
+        
+        logger.info(f"Available dates updated: {len(dates)} dates found")
+        
+    except Exception as e:
+        logger.error(f"Error updating available dates: {e}")
 
 if __name__ == "__main__":
     main()
