@@ -263,33 +263,116 @@
             gap: 5px;
         }
         
-        .multi-select-county {
-            max-height: 150px;
-            overflow-y: auto;
-            border: 1px solid #dee2e6;
-            border-radius: 8px;
-            padding: 10px;
-            margin-top: 10px;
-            background: #f8f9fa;
-        }
-        
-        .form-check-label {
-            cursor: pointer;
-            padding: 5px 0;
-            display: block;
-        }
-        
-        .form-check-input:checked {
-            background-color: var(--secondary-color);
-            border-color: var(--secondary-color);
-        }
-        
         .control-group {
             background: #f8f9fa;
             border-radius: 10px;
             padding: 15px;
             margin-bottom: 15px;
             border-left: 3px solid var(--secondary-color);
+        }
+        
+        .county-select-container {
+            position: relative;
+        }
+        
+        .county-search-input {
+            width: 100%;
+            padding: 10px 40px 10px 15px;
+            border: 1px solid #ced4da;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            background: white;
+        }
+        
+        .county-search-input:focus {
+            border-color: var(--secondary-color);
+            box-shadow: 0 0 0 0.2rem rgba(52, 152, 219, 0.25);
+            outline: none;
+        }
+        
+        .county-search-icon {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #6c757d;
+        }
+        
+        .county-dropdown {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            max-height: 300px;
+            overflow-y: auto;
+            background: white;
+            border: 1px solid #ced4da;
+            border-radius: 8px;
+            margin-top: 5px;
+            box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+            z-index: 1000;
+            display: none;
+        }
+        
+        .county-dropdown.show {
+            display: block;
+        }
+        
+        .county-dropdown-item {
+            padding: 8px 15px;
+            cursor: pointer;
+            border-bottom: 1px solid #f1f1f1;
+            transition: background 0.2s;
+        }
+        
+        .county-dropdown-item:hover {
+            background: #f8f9fa;
+        }
+        
+        .county-dropdown-item.active {
+            background: var(--secondary-color);
+            color: white;
+        }
+        
+        .selected-counties-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--success-color) 0%, #229954 100%);
+            color: white;
+            padding: 4px 10px;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            margin: 2px;
+        }
+        
+        .selected-counties-container {
+            min-height: 40px;
+            border: 1px dashed #dee2e6;
+            border-radius: 8px;
+            padding: 10px;
+            margin-top: 10px;
+            background: #f8f9fa;
+        }
+        
+        .quick-county-tag {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--info-color) 0%, #8e44ad 100%);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            margin: 3px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        
+        .quick-county-tag:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 3px 8px rgba(0,0,0,0.2);
+        }
+        
+        .quick-county-tag.active {
+            background: linear-gradient(135deg, var(--success-color) 0%, #229954 100%);
+            box-shadow: 0 2px 6px rgba(39, 174, 96, 0.3);
         }
     </style>
 </head>
@@ -320,11 +403,7 @@
                             <span class="text-light me-2"><i class="fas fa-calendar-alt"></i></span>
                             <select class="daily-report-selector" id="dailyReportSelect">
                                 <option value="latest">Latest Report</option>
-                                <option value="2025-12-12">Dec 12, 2025</option>
-                                <option value="2025-12-11">Dec 11, 2025</option>
-                                <option value="2025-12-10">Dec 10, 2025</option>
-                                <option value="2025-12-09">Dec 9, 2025</option>
-                                <option value="2025-12-08">Dec 8, 2025</option>
+                                <!-- Dates will be populated dynamically -->
                             </select>
                         </div>
                         
@@ -439,102 +518,78 @@
                         </div>
                     </div>
                     
-                    <!-- County Multi-Select -->
+                    <!-- County Selection -->
                     <div class="control-group">
-                        <label class="form-label fw-bold">Target Counties (Multi-Select)</label>
-                        <div class="multi-select-county">
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" id="selectAllCounties" checked>
-                                <label class="form-check-label" for="selectAllCounties">
-                                    <strong>Select All Counties</strong>
-                                </label>
+                        <label class="form-label fw-bold">Select Counties</label>
+                        <p class="small text-muted mb-2">Search and select counties from the dropdown. Click "All Counties" to select all.</p>
+                        
+                        <div class="county-select-container mb-3">
+                            <input type="text" 
+                                   class="county-search-input" 
+                                   id="countySearch" 
+                                   placeholder="Search Georgia counties (159 total)..."
+                                   autocomplete="off">
+                            <i class="fas fa-search county-search-icon"></i>
+                            <div class="county-dropdown" id="countyDropdown">
+                                <!-- County options will be populated here -->
                             </div>
-                            <hr class="my-2">
-                            <div class="row">
-                                <div class="col-md-3">
-                                    <div class="form-check">
-                                        <input class="form-check-input county-checkbox" type="checkbox" value="Fulton" id="countyFulton" checked>
-                                        <label class="form-check-label" for="countyFulton">
-                                            Fulton County
-                                        </label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input class="form-check-input county-checkbox" type="checkbox" value="Gwinnett" id="countyGwinnett" checked>
-                                        <label class="form-check-label" for="countyGwinnett">
-                                            Gwinnett County
-                                        </label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input class="form-check-input county-checkbox" type="checkbox" value="Cobb" id="countyCobb" checked>
-                                        <label class="form-check-label" for="countyCobb">
-                                            Cobb County
-                                        </label>
-                                    </div>
-                                </div>
-                                <div class="col-md-3">
-                                    <div class="form-check">
-                                        <input class="form-check-input county-checkbox" type="checkbox" value="DeKalb" id="countyDeKalb" checked>
-                                        <label class="form-check-label" for="countyDeKalb">
-                                            DeKalb County
-                                        </label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input class="form-check-input county-checkbox" type="checkbox" value="Clayton" id="countyClayton" checked>
-                                        <label class="form-check-label" for="countyClayton">
-                                            Clayton County
-                                        </label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input class="form-check-input county-checkbox" type="checkbox" value="Cherokee" id="countyCherokee" checked>
-                                        <label class="form-check-label" for="countyCherokee">
-                                            Cherokee County
-                                        </label>
-                                    </div>
-                                </div>
-                                <div class="col-md-3">
-                                    <div class="form-check">
-                                        <input class="form-check-input county-checkbox" type="checkbox" value="Forsyth" id="countyForsyth" checked>
-                                        <label class="form-check-label" for="countyForsyth">
-                                            Forsyth County
-                                        </label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input class="form-check-input county-checkbox" type="checkbox" value="Henry" id="countyHenry" checked>
-                                        <label class="form-check-label" for="countyHenry">
-                                            Henry County
-                                        </label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input class="form-check-input county-checkbox" type="checkbox" value="Hall" id="countyHall" checked>
-                                        <label class="form-check-label" for="countyHall">
-                                            Hall County
-                                        </label>
-                                    </div>
-                                </div>
-                                <div class="col-md-3">
-                                    <div class="form-check">
-                                        <input class="form-check-input county-checkbox" type="checkbox" value="Douglas" id="countyDouglas" checked>
-                                        <label class="form-check-label" for="countyDouglas">
-                                            Douglas County
-                                        </label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input class="form-check-input county-checkbox" type="checkbox" value="Rockdale" id="countyRockdale" checked>
-                                        <label class="form-check-label" for="countyRockdale">
-                                            Rockdale County
-                                        </label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input class="form-check-input county-checkbox" type="checkbox" value="Paulding" id="countyPaulding" checked>
-                                        <label class="form-check-label" for="countyPaulding">
-                                            Paulding County
-                                        </label>
-                                    </div>
-                                </div>
+                        </div>
+                        
+                        <!-- Quick Selection Tags -->
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Quick Selection:</label>
+                            <div>
+                                <span class="quick-county-tag" data-county="all" onclick="selectAllCounties()">
+                                    <i class="fas fa-check-circle"></i> All Counties
+                                </span>
+                                <span class="quick-county-tag" data-county="Fulton" onclick="toggleCounty('Fulton')">
+                                    Fulton
+                                </span>
+                                <span class="quick-county-tag" data-county="Gwinnett" onclick="toggleCounty('Gwinnett')">
+                                    Gwinnett
+                                </span>
+                                <span class="quick-county-tag" data-county="Cobb" onclick="toggleCounty('Cobb')">
+                                    Cobb
+                                </span>
+                                <span class="quick-county-tag" data-county="DeKalb" onclick="toggleCounty('DeKalb')">
+                                    DeKalb
+                                </span>
+                                <span class="quick-county-tag" data-county="Clayton" onclick="toggleCounty('Clayton')">
+                                    Clayton
+                                </span>
+                                <span class="quick-county-tag" data-county="Cherokee" onclick="toggleCounty('Cherokee')">
+                                    Cherokee
+                                </span>
+                                <span class="quick-county-tag" data-county="Forsyth" onclick="toggleCounty('Forsyth')">
+                                    Forsyth
+                                </span>
+                                <span class="quick-county-tag" data-county="Henry" onclick="toggleCounty('Henry')">
+                                    Henry
+                                </span>
+                                <span class="quick-county-tag" data-county="Hall" onclick="toggleCounty('Hall')">
+                                    Hall
+                                </span>
+                            </div>
+                        </div>
+                        
+                        <!-- Selected Counties Display -->
+                        <div>
+                            <label class="form-label fw-bold">Selected Counties (<span id="selectedCountCount">0</span>):</label>
+                            <div class="selected-counties-container" id="selectedCountiesContainer">
+                                <span class="text-muted small">No counties selected. Click "All Counties" or search to add counties.</span>
+                            </div>
+                            <div class="mt-2 d-flex justify-content-between">
+                                <button class="btn btn-sm btn-outline-secondary" onclick="clearAllCounties()">
+                                    <i class="fas fa-times"></i> Clear All
+                                </button>
+                                <button class="btn btn-sm btn-outline-info" onclick="selectAllCounties()">
+                                    <i class="fas fa-check-double"></i> Select All
+                                </button>
                             </div>
                         </div>
                     </div>
                     
+                    <!-- Filter Sliders -->
                     <div class="row">
                         <div class="col-lg-3 col-md-6">
                             <div class="slider-container">
@@ -585,27 +640,15 @@
                         </div>
                     </div>
                     
-                    <div class="row mt-3">
-                        <div class="col-md-8">
-                            <label class="form-label fw-bold">Quick County Selection</label>
-                            <div id="countyTags">
-                                <span class="county-tag active" data-county="all">All Counties</span>
-                                <span class="county-tag" data-county="Fulton">Fulton</span>
-                                <span class="county-tag" data-county="Gwinnett">Gwinnett</span>
-                                <span class="county-tag" data-county="Cobb">Cobb</span>
-                                <span class="county-tag" data-county="DeKalb">DeKalb</span>
-                                <span class="county-tag" data-county="Clayton">Clayton</span>
-                                <span class="county-tag" data-county="Cherokee">Cherokee</span>
-                                <span class="county-tag" data-county="Forsyth">Forsyth</span>
-                            </div>
-                        </div>
-                        <div class="col-md-4 d-flex align-items-end">
-                            <div class="d-grid gap-2 d-md-flex w-100">
-                                <button class="btn btn-primary flex-fill" onclick="applyFilters()">
-                                    <i class="fas fa-search"></i> Apply Filters
+                    <!-- Apply Filters Button -->
+                    <div class="row mt-4">
+                        <div class="col-12">
+                            <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                                <button class="btn btn-primary px-4" onclick="applyFilters()">
+                                    <i class="fas fa-search me-2"></i> Apply Filters
                                 </button>
                                 <button class="btn btn-outline-secondary" onclick="resetFilters()">
-                                    <i class="fas fa-redo"></i>
+                                    <i class="fas fa-redo me-2"></i> Reset All
                                 </button>
                             </div>
                         </div>
@@ -716,6 +759,8 @@
         let dataSource = 'real';
         let selectedDate = 'latest';
         let availableDates = [];
+        let allGeorgiaCounties = [];
+        let selectedCounties = new Set(); // Using Set to avoid duplicates
         let filters = {
             minProfit: 70000,
             maxProfit: 150000,
@@ -724,12 +769,40 @@
             counties: []
         };
 
+        // All 159 Georgia Counties
+        const GEORGIA_COUNTIES = [
+            'Appling', 'Atkinson', 'Bacon', 'Baker', 'Baldwin', 'Banks', 'Barrow', 
+            'Bartow', 'Ben Hill', 'Berrien', 'Bibb', 'Bleckley', 'Brantley', 'Brooks', 
+            'Bryan', 'Bulloch', 'Burke', 'Butts', 'Calhoun', 'Camden', 'Candler', 
+            'Carroll', 'Catoosa', 'Charlton', 'Chatham', 'Chattahoochee', 'Chattooga', 
+            'Cherokee', 'Clarke', 'Clay', 'Clayton', 'Clinch', 'Cobb', 'Coffee', 
+            'Colquitt', 'Columbia', 'Cook', 'Coweta', 'Crawford', 'Crisp', 'Dade', 
+            'Dawson', 'Decatur', 'DeKalb', 'Dodge', 'Dooly', 'Dougherty', 'Douglas', 
+            'Early', 'Echols', 'Effingham', 'Elbert', 'Emanuel', 'Evans', 'Fannin', 
+            'Fayette', 'Floyd', 'Forsyth', 'Franklin', 'Fulton', 'Gilmer', 'Glascock', 
+            'Glynn', 'Gordon', 'Grady', 'Greene', 'Gwinnett', 'Habersham', 'Hall', 
+            'Hancock', 'Haralson', 'Harris', 'Hart', 'Heard', 'Henry', 'Houston', 
+            'Irwin', 'Jackson', 'Jasper', 'Jeff Davis', 'Jefferson', 'Jenkins', 
+            'Johnson', 'Jones', 'Lamar', 'Lanier', 'Laurens', 'Lee', 'Liberty', 
+            'Lincoln', 'Long', 'Lowndes', 'Lumpkin', 'Macon', 'Madison', 'Marion', 
+            'McDuffie', 'McIntosh', 'Meriwether', 'Miller', 'Mitchell', 'Monroe', 
+            'Montgomery', 'Morgan', 'Murray', 'Muscogee', 'Newton', 'Oconee', 
+            'Oglethorpe', 'Paulding', 'Peach', 'Pickens', 'Pierce', 'Pike', 'Polk', 
+            'Pulaski', 'Putnam', 'Quitman', 'Rabun', 'Randolph', 'Richmond', 
+            'Rockdale', 'Schley', 'Screven', 'Seminole', 'Spalding', 'Stephens', 
+            'Stewart', 'Sumter', 'Talbot', 'Taliaferro', 'Tattnall', 'Taylor', 
+            'Telfair', 'Terrell', 'Thomas', 'Tift', 'Toombs', 'Towns', 'Treutlen', 
+            'Troup', 'Turner', 'Twiggs', 'Union', 'Upson', 'Walker', 'Walton', 
+            'Ware', 'Warren', 'Washington', 'Wayne', 'Webster', 'Wheeler', 'White', 
+            'Whitfield', 'Wilcox', 'Wilkes', 'Wilkinson', 'Worth'
+        ];
+
         // Initialize on page load
         document.addEventListener('DOMContentLoaded', function() {
             initializeSliders();
-            initializeCountyTags();
-            initializeCountyCheckboxes();
+            initializeCountySearch();
             initializeDateSelector();
+            loadAvailableDates();
             loadData();
             
             // Auto-refresh every 5 minutes
@@ -755,78 +828,178 @@
             });
         }
 
-        function initializeCountyTags() {
-            document.querySelectorAll('.county-tag').forEach(tag => {
-                tag.addEventListener('click', function() {
-                    const county = this.getAttribute('data-county');
-                    
-                    if (county === 'all') {
-                        // Select all counties
-                        document.querySelectorAll('.county-tag').forEach(t => {
-                            t.classList.add('active');
-                        });
-                        document.querySelectorAll('.county-checkbox').forEach(cb => {
-                            cb.checked = true;
-                        });
-                        document.getElementById('selectAllCounties').checked = true;
-                    } else {
-                        // Toggle individual county
-                        this.classList.toggle('active');
-                        const checkbox = document.querySelector(`.county-checkbox[value="${county}"]`);
-                        if (checkbox) {
-                            checkbox.checked = this.classList.contains('active');
-                            updateSelectAllCheckbox();
-                        }
-                    }
-                });
-            });
-        }
-
-        function initializeCountyCheckboxes() {
-            // Handle "Select All" checkbox
-            document.getElementById('selectAllCounties').addEventListener('change', function() {
-                const isChecked = this.checked;
-                document.querySelectorAll('.county-checkbox').forEach(cb => {
-                    cb.checked = isChecked;
-                });
-                
-                // Update county tags
-                document.querySelectorAll('.county-tag').forEach(tag => {
-                    if (tag.getAttribute('data-county') === 'all') {
-                        tag.classList.toggle('active', isChecked);
-                    } else {
-                        const checkbox = document.querySelector(`.county-checkbox[value="${tag.getAttribute('data-county')}"]`);
-                        if (checkbox) {
-                            tag.classList.toggle('active', isChecked);
-                        }
-                    }
-                });
-            });
-
-            // Handle individual county checkboxes
-            document.querySelectorAll('.county-checkbox').forEach(checkbox => {
-                checkbox.addEventListener('change', function() {
-                    const county = this.value;
-                    
-                    // Update county tag
-                    document.querySelectorAll('.county-tag').forEach(tag => {
-                        if (tag.getAttribute('data-county') === county) {
-                            tag.classList.toggle('active', this.checked);
-                        }
-                    });
-                    
-                    updateSelectAllCheckbox();
-                });
-            });
-        }
-
-        function updateSelectAllCheckbox() {
-            const allCheckboxes = document.querySelectorAll('.county-checkbox');
-            const checkedCheckboxes = document.querySelectorAll('.county-checkbox:checked');
-            const selectAllCheckbox = document.getElementById('selectAllCounties');
+        function initializeCountySearch() {
+            const searchInput = document.getElementById('countySearch');
+            const dropdown = document.getElementById('countyDropdown');
             
-            selectAllCheckbox.checked = allCheckboxes.length === checkedCheckboxes.length;
-            selectAllCheckbox.indeterminate = checkedCheckboxes.length > 0 && checkedCheckboxes.length < allCheckboxes.length;
+            // Populate dropdown with all counties
+            GEORGIA_COUNTIES.sort().forEach(county => {
+                const item = document.createElement('div');
+                item.className = 'county-dropdown-item';
+                item.textContent = county;
+                item.dataset.county = county;
+                item.addEventListener('click', () => {
+                    toggleCounty(county);
+                    searchInput.value = '';
+                    dropdown.classList.remove('show');
+                });
+                dropdown.appendChild(item);
+            });
+            
+            // Show dropdown on focus
+            searchInput.addEventListener('focus', () => {
+                dropdown.classList.add('show');
+                filterCountyDropdown('');
+            });
+            
+            // Hide dropdown when clicking outside
+            document.addEventListener('click', (e) => {
+                if (!searchInput.contains(e.target) && !dropdown.contains(e.target)) {
+                    dropdown.classList.remove('show');
+                }
+            });
+            
+            // Filter dropdown as user types
+            searchInput.addEventListener('input', (e) => {
+                filterCountyDropdown(e.target.value);
+            });
+            
+            // Handle keyboard navigation
+            searchInput.addEventListener('keydown', (e) => {
+                const items = dropdown.querySelectorAll('.county-dropdown-item');
+                const activeItem = dropdown.querySelector('.county-dropdown-item.active');
+                let index = Array.from(items).indexOf(activeItem);
+                
+                if (e.key === 'ArrowDown') {
+                    e.preventDefault();
+                    index = (index + 1) % items.length;
+                    setActiveDropdownItem(items[index]);
+                } else if (e.key === 'ArrowUp') {
+                    e.preventDefault();
+                    index = (index - 1 + items.length) % items.length;
+                    setActiveDropdownItem(items[index]);
+                } else if (e.key === 'Enter' && activeItem) {
+                    e.preventDefault();
+                    toggleCounty(activeItem.dataset.county);
+                    searchInput.value = '';
+                    dropdown.classList.remove('show');
+                }
+            });
+        }
+
+        function filterCountyDropdown(searchTerm) {
+            const items = document.querySelectorAll('.county-dropdown-item');
+            const lowerSearch = searchTerm.toLowerCase();
+            
+            items.forEach(item => {
+                const countyName = item.dataset.county.toLowerCase();
+                if (countyName.includes(lowerSearch)) {
+                    item.style.display = 'block';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+            
+            // Set first visible item as active
+            const visibleItems = Array.from(items).filter(item => item.style.display !== 'none');
+            if (visibleItems.length > 0) {
+                setActiveDropdownItem(visibleItems[0]);
+            }
+        }
+
+        function setActiveDropdownItem(item) {
+            document.querySelectorAll('.county-dropdown-item.active').forEach(el => {
+                el.classList.remove('active');
+            });
+            if (item) {
+                item.classList.add('active');
+                item.scrollIntoView({ block: 'nearest' });
+            }
+        }
+
+        function toggleCounty(county) {
+            if (county === 'all') {
+                selectAllCounties();
+                return;
+            }
+            
+            if (selectedCounties.has(county)) {
+                selectedCounties.delete(county);
+            } else {
+                selectedCounties.add(county);
+            }
+            
+            updateCountyDisplay();
+            updateQuickCountyTags();
+        }
+
+        function selectAllCounties() {
+            selectedCounties.clear();
+            GEORGIA_COUNTIES.forEach(county => {
+                selectedCounties.add(county);
+            });
+            updateCountyDisplay();
+            updateQuickCountyTags();
+        }
+
+        function clearAllCounties() {
+            selectedCounties.clear();
+            updateCountyDisplay();
+            updateQuickCountyTags();
+        }
+
+        function updateCountyDisplay() {
+            const container = document.getElementById('selectedCountiesContainer');
+            const countElement = document.getElementById('selectedCountCount');
+            
+            countElement.textContent = selectedCounties.size;
+            
+            if (selectedCounties.size === 0) {
+                container.innerHTML = '<span class="text-muted small">No counties selected. Click "All Counties" or search to add counties.</span>';
+                return;
+            }
+            
+            if (selectedCounties.size === GEORGIA_COUNTIES.length) {
+                container.innerHTML = '<span class="selected-counties-badge"><i class="fas fa-check-double me-1"></i> All Counties Selected</span>';
+                return;
+            }
+            
+            let html = '';
+            const countiesArray = Array.from(selectedCounties).sort();
+            
+            countiesArray.forEach(county => {
+                html += `
+                    <span class="selected-counties-badge" data-county="${county}">
+                        ${county}
+                        <i class="fas fa-times ms-1" onclick="removeCounty('${county}')" style="cursor: pointer;"></i>
+                    </span>
+                `;
+            });
+            
+            container.innerHTML = html;
+        }
+
+        function removeCounty(county) {
+            selectedCounties.delete(county);
+            updateCountyDisplay();
+            updateQuickCountyTags();
+        }
+
+        function updateQuickCountyTags() {
+            document.querySelectorAll('.quick-county-tag').forEach(tag => {
+                const county = tag.dataset.county;
+                if (county === 'all') {
+                    if (selectedCounties.size === GEORGIA_COUNTIES.length) {
+                        tag.classList.add('active');
+                    } else {
+                        tag.classList.remove('active');
+                    }
+                } else if (selectedCounties.has(county)) {
+                    tag.classList.add('active');
+                } else {
+                    tag.classList.remove('active');
+                }
+            });
         }
 
         function initializeDateSelector() {
@@ -835,6 +1008,46 @@
                 selectedDate = this.value;
                 updateDateBadge();
                 loadData();
+            });
+        }
+
+        async function loadAvailableDates() {
+            try {
+                const response = await fetch('data/results/available_dates.json?t=' + Date.now());
+                if (response.ok) {
+                    const dates = await response.json();
+                    availableDates = dates;
+                    populateDateSelector(dates);
+                }
+            } catch (error) {
+                console.log('Could not load available dates:', error);
+            }
+        }
+
+        function populateDateSelector(dates) {
+            const dateSelect = document.getElementById('dailyReportSelect');
+            
+            // Clear existing options except the first one
+            while (dateSelect.options.length > 1) {
+                dateSelect.remove(1);
+            }
+            
+            // Add available dates
+            dates.forEach(dateStr => {
+                const date = new Date(
+                    parseInt(dateStr.substring(0, 4)),
+                    parseInt(dateStr.substring(4, 6)) - 1,
+                    parseInt(dateStr.substring(6, 8))
+                );
+                
+                const option = document.createElement('option');
+                option.value = dateStr;
+                option.textContent = date.toLocaleDateString('en-US', { 
+                    year: 'numeric', 
+                    month: 'short', 
+                    day: 'numeric' 
+                });
+                dateSelect.appendChild(option);
             });
         }
 
@@ -847,7 +1060,11 @@
                 document.getElementById('dailyReportIndicator').innerHTML = '';
             } else {
                 badge.style.display = 'inline-flex';
-                const date = new Date(selectedDate);
+                const date = new Date(
+                    parseInt(selectedDate.substring(0, 4)),
+                    parseInt(selectedDate.substring(4, 6)) - 1,
+                    parseInt(selectedDate.substring(6, 8))
+                );
                 const formattedDate = date.toLocaleDateString('en-US', { 
                     weekday: 'short', 
                     year: 'numeric', 
@@ -888,16 +1105,14 @@
             filters.holdDays = parseInt(document.getElementById('holdDays').value);
             filters.minROI = parseInt(document.getElementById('minROI').value);
             
-            // Get selected counties from checkboxes
-            filters.counties = Array.from(document.querySelectorAll('.county-checkbox:checked'))
-                .map(cb => cb.value);
+            // Get selected counties
+            filters.counties = Array.from(selectedCounties);
             
             // If no counties selected, show warning
             if (filters.counties.length === 0) {
                 alert('Please select at least one county.');
-                document.getElementById('selectAllCounties').checked = true;
-                document.querySelectorAll('.county-checkbox').forEach(cb => cb.checked = true);
-                filters.counties = Array.from(document.querySelectorAll('.county-checkbox')).map(cb => cb.value);
+                selectAllCounties();
+                filters.counties = Array.from(selectedCounties);
             }
             
             // Apply filters to current data
@@ -910,7 +1125,7 @@
             const statusAlert = document.getElementById('statusAlert');
             const statusMessage = document.getElementById('statusMessage');
             
-            const countyText = filters.counties.length === 12 ? 'all' : filters.counties.length;
+            const countyText = filters.counties.length === GEORGIA_COUNTIES.length ? 'all' : filters.counties.length;
             if (dataSource === 'demo') {
                 statusAlert.className = 'alert alert-warning';
                 statusMessage.textContent = `Demo Mode: Showing filtered data with ${countyText} counties`;
@@ -934,15 +1149,7 @@
             document.getElementById('minROIValue').textContent = '20%';
             
             // Reset county selection
-            document.getElementById('selectAllCounties').checked = true;
-            document.querySelectorAll('.county-checkbox').forEach(cb => {
-                cb.checked = true;
-            });
-            
-            // Reset county tags
-            document.querySelectorAll('.county-tag').forEach(tag => {
-                tag.classList.add('active');
-            });
+            selectAllCounties();
             
             // Apply default filters
             applyFilters();
@@ -958,8 +1165,7 @@
                     // Check if a specific date is selected
                     if (selectedDate !== 'latest') {
                         // For daily reports, use the pipeline summary JSON format
-                        const dateForUrl = selectedDate.replace(/-/g, '');
-                        dataUrl = `data/results/pipeline_summary_${dateForUrl}.json`;
+                        dataUrl = `data/results/pipeline_summary_${selectedDate}.json`;
                         
                         // Update status to show we're loading a daily report
                         document.getElementById('statusMessage').textContent = 
@@ -1030,7 +1236,7 @@
 
         function transformPipelineSummary(pipelineData, date) {
             // Transform pipeline summary JSON into dashboard format
-            const counties = ['Fulton', 'Gwinnett', 'Cobb', 'DeKalb', 'Clayton', 'Cherokee', 'Forsyth', 'Henry'];
+            const counties = GEORGIA_COUNTIES.slice(0, 20); // Use first 20 counties for demo
             
             // Generate synthetic flips data from summary
             const recent_flips = [];
@@ -1194,8 +1400,8 @@
         }
 
         function generateDemoData() {
-            // Generate realistic demo data based on your pipeline output
-            const counties = ['Fulton', 'Gwinnett', 'Cobb', 'DeKalb', 'Clayton', 'Cherokee', 'Forsyth', 'Henry'];
+            // Use all Georgia counties for demo data
+            const counties = GEORGIA_COUNTIES.slice(0, 30); // Use first 30 counties for demo
             const investors = [
                 'Atlanta Flip Masters LLC', 'Georgia Property Investors', 'Peachtree RE Group',
                 'Southern Holdings Inc', 'Metro Atlanta Investments', 'Capital Flip Group',
@@ -1448,13 +1654,18 @@
                 return;
             }
             
-            // Calculate county distribution from flips
+            // Calculate county distribution from flips (limit to top 10)
             const countyDistribution = {};
             flips.forEach(flip => {
                 if (!flip || !flip.county) return;
                 const county = flip.county.trim();
                 countyDistribution[county] = (countyDistribution[county] || 0) + 1;
             });
+            
+            // Sort counties by count and take top 10
+            const sortedCounties = Object.entries(countyDistribution)
+                .sort((a, b) => b[1] - a[1])
+                .slice(0, 10);
             
             // Calculate profit distribution
             const profitDistribution = {
@@ -1479,8 +1690,8 @@
             });
             
             // Create county chart (bar chart)
-            const countyLabels = Object.keys(countyDistribution);
-            const countyValues = Object.values(countyDistribution);
+            const countyLabels = sortedCounties.map(item => item[0]);
+            const countyValues = sortedCounties.map(item => item[1]);
             
             if (countyLabels.length > 0) {
                 chart1 = new Chart(countyCtx, {
@@ -1498,7 +1709,9 @@
                                 'rgba(230, 126, 34, 0.7)',
                                 'rgba(231, 76, 60, 0.7)',
                                 'rgba(149, 165, 166, 0.7)',
-                                'rgba(52, 73, 94, 0.7)'
+                                'rgba(52, 73, 94, 0.7)',
+                                'rgba(26, 188, 156, 0.7)',
+                                'rgba(22, 160, 133, 0.7)'
                             ],
                             borderColor: [
                                 'rgb(52, 152, 219)',
@@ -1508,7 +1721,9 @@
                                 'rgb(230, 126, 34)',
                                 'rgb(231, 76, 60)',
                                 'rgb(149, 165, 166)',
-                                'rgb(52, 73, 94)'
+                                'rgb(52, 73, 94)',
+                                'rgb(26, 188, 156)',
+                                'rgb(22, 160, 133)'
                             ],
                             borderWidth: 1
                         }]
@@ -1659,7 +1874,8 @@
             const reportDate = currentData.report_date || new Date().toISOString().split('T')[0];
             let csv = `NAGOH Creative - Georgia House Flip Daily Report\n`;
             csv += `Report Date: ${reportDate}\n`;
-            csv += `Generated: ${new Date().toLocaleString()}\n\n`;
+            csv += `Generated: ${new Date().toLocaleString()}\n`;
+            csv += `Selected Counties: ${selectedCounties.size === GEORGIA_COUNTIES.length ? 'All' : selectedCounties.size}\n\n`;
             
             // Summary section
             csv += 'SUMMARY STATISTICS\n';
@@ -1690,9 +1906,11 @@
                 countyDistribution[county] = (countyDistribution[county] || 0) + 1;
             });
             
-            Object.entries(countyDistribution).forEach(([county, count]) => {
-                csv += `${county},${count}\n`;
-            });
+            Object.entries(countyDistribution)
+                .sort((a, b) => b[1] - a[1])
+                .forEach(([county, count]) => {
+                    csv += `${county},${count}\n`;
+                });
             
             // Create download link
             const blob = new Blob([csv], { type: 'text/csv' });
