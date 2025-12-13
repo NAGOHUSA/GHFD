@@ -243,8 +243,8 @@ def main():
             
             sample_investors.append({
                 'investor_name': investor,
-                'total_flips': totalFlips,
-                'total_profit': totalFlips * avg_profit,
+                'total_flips': total_flips,  # FIXED: Changed from totalFlips to total_flips
+                'total_profit': total_flips * avg_profit,  # FIXED: Changed from totalFlips to total_flips
                 'avg_profit_per_flip': avg_profit,
                 'avg_hold_days': avg_hold_days,
                 'avg_roi': avg_roi
@@ -255,7 +255,7 @@ def main():
     # Save flip analysis results
     if not flips_df.empty:
         flip_files = save_data(flips_df, 'results/flips', '../data')
-        logger.info(f"Flip analysis saved to: {flip_files[0]}")  # FIXED: Changed from flips_files to flip_files
+        logger.info(f"Flip analysis saved to: {flip_files[0]}")
     
     if not investors_df.empty:
         investor_files = save_data(investors_df, 'results/investors', '../data')
