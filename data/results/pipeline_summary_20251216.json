@@ -1,0 +1,63 @@
+{
+  "timestamp": "2025-12-16T12:39:29.452481",
+  "pipeline_version": "1.0.0",
+  "data_summary": {
+    "total_transactions": 8434,
+    "unique_counties": 159,
+    "date_range": {
+      "min_date": "2025-06-19",
+      "max_date": "2025-12-16"
+    }
+  },
+  "flips_summary": {
+    "total_flips": 381,
+    "total_profit": 42979016.0,
+    "avg_profit": 112805.81627296588,
+    "avg_hold_days": 77.0498687664042
+  },
+  "investors_summary": {
+    "total_investors": 18,
+    "top_5_investors": [
+      {
+        "investor_name": "Urban Development LLC",
+        "total_flips": 30,
+        "total_profit": 3228151.0,
+        "avg_profit_per_flip": 107605.03333333334,
+        "avg_hold_days": 83.36666666666666,
+        "avg_roi": 100.0
+      },
+      {
+        "investor_name": "Capital Flip Group",
+        "total_flips": 29,
+        "total_profit": 3249378.0,
+        "avg_profit_per_flip": 112047.5172413793,
+        "avg_hold_days": 81.41379310344827,
+        "avg_roi": 100.0
+      },
+      {
+        "investor_name": "Atlanta Capital Partners",
+        "total_flips": 27,
+        "total_profit": 3047368.0,
+        "avg_profit_per_flip": 112865.48148148147,
+        "avg_hold_days": 76.03703703703704,
+        "avg_roi": 100.0
+      },
+      {
+        "investor_name": "Georgia Property Investors",
+        "total_flips": 26,
+        "total_profit": 2934512.0,
+        "avg_profit_per_flip": 112865.84615384616,
+        "avg_hold_days": 87.84615384615384,
+        "avg_roi": 100.0
+      },
+      {
+        "investor_name": "Metro Atlanta Investments",
+        "total_flips": 25,
+        "total_profit": 2886811.0,
+        "avg_profit_per_flip": 115472.44,
+        "avg_hold_days": 76.24,
+        "avg_roi": 100.0
+      }
+    ]
+  }
+}
