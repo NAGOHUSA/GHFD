@@ -1,0 +1,63 @@
+{
+  "timestamp": "2025-12-18T12:38:32.321774",
+  "pipeline_version": "1.0.0",
+  "data_summary": {
+    "total_transactions": 8439,
+    "unique_counties": 159,
+    "date_range": {
+      "min_date": "2025-06-21",
+      "max_date": "2025-12-18"
+    }
+  },
+  "flips_summary": {
+    "total_flips": 371,
+    "total_profit": 41710470.0,
+    "avg_profit": 112427.14285714286,
+    "avg_hold_days": 78.43126684636118
+  },
+  "investors_summary": {
+    "total_investors": 18,
+    "top_5_investors": [
+      {
+        "investor_name": "Peachtree RE Group",
+        "total_flips": 27,
+        "total_profit": 3040675.0,
+        "avg_profit_per_flip": 112617.5925925926,
+        "avg_hold_days": 85.5925925925926,
+        "avg_roi": 100.0
+      },
+      {
+        "investor_name": "Atlanta Capital Partners",
+        "total_flips": 26,
+        "total_profit": 2749177.0,
+        "avg_profit_per_flip": 105737.57692307692,
+        "avg_hold_days": 79.57692307692308,
+        "avg_roi": 100.0
+      },
+      {
+        "investor_name": "Metro Flip Team",
+        "total_flips": 25,
+        "total_profit": 2931176.0,
+        "avg_profit_per_flip": 117247.04,
+        "avg_hold_days": 75.28,
+        "avg_roi": 100.0
+      },
+      {
+        "investor_name": "Capital Flip Group",
+        "total_flips": 23,
+        "total_profit": 2725787.0,
+        "avg_profit_per_flip": 118512.47826086957,
+        "avg_hold_days": 79.04347826086956,
+        "avg_roi": 100.0
+      },
+      {
+        "investor_name": "Atlanta Flip Masters LLC",
+        "total_flips": 22,
+        "total_profit": 2643619.0,
+        "avg_profit_per_flip": 120164.5,
+        "avg_hold_days": 72.13636363636364,
+        "avg_roi": 100.0
+      }
+    ]
+  }
+}
