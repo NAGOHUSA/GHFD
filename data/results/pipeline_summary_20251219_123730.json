@@ -1,0 +1,63 @@
+{
+  "timestamp": "2025-12-19T12:37:30.091153",
+  "pipeline_version": "1.0.0",
+  "data_summary": {
+    "total_transactions": 8440,
+    "unique_counties": 159,
+    "date_range": {
+      "min_date": "2025-06-22",
+      "max_date": "2025-12-19"
+    }
+  },
+  "flips_summary": {
+    "total_flips": 395,
+    "total_profit": 44993566.0,
+    "avg_profit": 113907.76202531645,
+    "avg_hold_days": 80.98987341772153
+  },
+  "investors_summary": {
+    "total_investors": 18,
+    "top_5_investors": [
+      {
+        "investor_name": "Metro Atlanta Investments",
+        "total_flips": 31,
+        "total_profit": 3490885.0,
+        "avg_profit_per_flip": 112609.19354838709,
+        "avg_hold_days": 77.06451612903226,
+        "avg_roi": 100.0
+      },
+      {
+        "investor_name": "Georgia Home Solutions",
+        "total_flips": 27,
+        "total_profit": 3211221.0,
+        "avg_profit_per_flip": 118934.11111111111,
+        "avg_hold_days": 77.22222222222223,
+        "avg_roi": 100.0
+      },
+      {
+        "investor_name": "Southern Holdings Inc",
+        "total_flips": 26,
+        "total_profit": 3039886.0,
+        "avg_profit_per_flip": 116918.69230769231,
+        "avg_hold_days": 85.42307692307692,
+        "avg_roi": 100.0
+      },
+      {
+        "investor_name": "Atlanta Capital Partners",
+        "total_flips": 26,
+        "total_profit": 2893972.0,
+        "avg_profit_per_flip": 111306.61538461539,
+        "avg_hold_days": 77.92307692307692,
+        "avg_roi": 100.0
+      },
+      {
+        "investor_name": "Atlanta Flip Masters LLC",
+        "total_flips": 25,
+        "total_profit": 2928975.0,
+        "avg_profit_per_flip": 117159.0,
+        "avg_hold_days": 86.04,
+        "avg_roi": 100.0
+      }
+    ]
+  }
+}
