@@ -1,0 +1,63 @@
+{
+  "timestamp": "2025-12-22T12:38:26.939660",
+  "pipeline_version": "1.0.0",
+  "data_summary": {
+    "total_transactions": 8476,
+    "unique_counties": 159,
+    "date_range": {
+      "min_date": "2025-06-25",
+      "max_date": "2025-12-22"
+    }
+  },
+  "flips_summary": {
+    "total_flips": 419,
+    "total_profit": 48275442.0,
+    "avg_profit": 115215.85202863962,
+    "avg_hold_days": 81.52983293556086
+  },
+  "investors_summary": {
+    "total_investors": 18,
+    "top_5_investors": [
+      {
+        "investor_name": "Quick Turn Properties",
+        "total_flips": 30,
+        "total_profit": 3460934.0,
+        "avg_profit_per_flip": 115364.46666666666,
+        "avg_hold_days": 78.53333333333333,
+        "avg_roi": 100.0
+      },
+      {
+        "investor_name": "Metro Flip Team",
+        "total_flips": 30,
+        "total_profit": 3300397.0,
+        "avg_profit_per_flip": 110013.23333333334,
+        "avg_hold_days": 84.7,
+        "avg_roi": 100.0
+      },
+      {
+        "investor_name": "Fix & Flip GA",
+        "total_flips": 27,
+        "total_profit": 2972378.0,
+        "avg_profit_per_flip": 110088.07407407407,
+        "avg_hold_days": 79.11111111111111,
+        "avg_roi": 100.0
+      },
+      {
+        "investor_name": "Peachtree RE Group",
+        "total_flips": 26,
+        "total_profit": 3001458.0,
+        "avg_profit_per_flip": 115440.69230769231,
+        "avg_hold_days": 82.3076923076923,
+        "avg_roi": 100.0
+      },
+      {
+        "investor_name": "Renovation Experts",
+        "total_flips": 26,
+        "total_profit": 2963801.0,
+        "avg_profit_per_flip": 113992.34615384616,
+        "avg_hold_days": 89.38461538461539,
+        "avg_roi": 100.0
+      }
+    ]
+  }
+}
