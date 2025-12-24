@@ -1,0 +1,63 @@
+{
+  "timestamp": "2025-12-24T12:38:20.460724",
+  "pipeline_version": "1.0.0",
+  "data_summary": {
+    "total_transactions": 8425,
+    "unique_counties": 159,
+    "date_range": {
+      "min_date": "2025-06-27",
+      "max_date": "2025-12-24"
+    }
+  },
+  "flips_summary": {
+    "total_flips": 383,
+    "total_profit": 43776159.0,
+    "avg_profit": 114298.06527415144,
+    "avg_hold_days": 80.90339425587467
+  },
+  "investors_summary": {
+    "total_investors": 18,
+    "top_5_investors": [
+      {
+        "investor_name": "Investor Collective",
+        "total_flips": 29,
+        "total_profit": 3253814.0,
+        "avg_profit_per_flip": 112200.4827586207,
+        "avg_hold_days": 79.86206896551724,
+        "avg_roi": 100.0
+      },
+      {
+        "investor_name": "Atlanta Flip Masters LLC",
+        "total_flips": 28,
+        "total_profit": 3239019.0,
+        "avg_profit_per_flip": 115679.25,
+        "avg_hold_days": 82.96428571428571,
+        "avg_roi": 100.0
+      },
+      {
+        "investor_name": "Metro Flip Team",
+        "total_flips": 24,
+        "total_profit": 2826648.0,
+        "avg_profit_per_flip": 117777.0,
+        "avg_hold_days": 70.29166666666667,
+        "avg_roi": 100.0
+      },
+      {
+        "investor_name": "Capital Flip Group",
+        "total_flips": 24,
+        "total_profit": 2561289.0,
+        "avg_profit_per_flip": 106720.375,
+        "avg_hold_days": 71.41666666666667,
+        "avg_roi": 100.0
+      },
+      {
+        "investor_name": "Renovation Experts",
+        "total_flips": 24,
+        "total_profit": 2624179.0,
+        "avg_profit_per_flip": 109340.79166666667,
+        "avg_hold_days": 77.45833333333333,
+        "avg_roi": 100.0
+      }
+    ]
+  }
+}
