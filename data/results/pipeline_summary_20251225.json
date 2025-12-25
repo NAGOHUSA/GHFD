@@ -1,0 +1,63 @@
+{
+  "timestamp": "2025-12-25T12:37:18.666414",
+  "pipeline_version": "1.0.0",
+  "data_summary": {
+    "total_transactions": 8425,
+    "unique_counties": 159,
+    "date_range": {
+      "min_date": "2025-06-28",
+      "max_date": "2025-12-25"
+    }
+  },
+  "flips_summary": {
+    "total_flips": 374,
+    "total_profit": 43293564.0,
+    "avg_profit": 115758.19251336898,
+    "avg_hold_days": 77.52941176470588
+  },
+  "investors_summary": {
+    "total_investors": 18,
+    "top_5_investors": [
+      {
+        "investor_name": "Urban Development LLC",
+        "total_flips": 27,
+        "total_profit": 3029943.0,
+        "avg_profit_per_flip": 112220.11111111111,
+        "avg_hold_days": 79.14814814814815,
+        "avg_roi": 100.0
+      },
+      {
+        "investor_name": "Residential Ventures",
+        "total_flips": 26,
+        "total_profit": 2837698.0,
+        "avg_profit_per_flip": 109142.23076923077,
+        "avg_hold_days": 73.23076923076923,
+        "avg_roi": 100.0
+      },
+      {
+        "investor_name": "Georgia Property Investors",
+        "total_flips": 25,
+        "total_profit": 3081080.0,
+        "avg_profit_per_flip": 123243.2,
+        "avg_hold_days": 85.64,
+        "avg_roi": 100.0
+      },
+      {
+        "investor_name": "Capital Flip Group",
+        "total_flips": 24,
+        "total_profit": 2738582.0,
+        "avg_profit_per_flip": 114107.58333333333,
+        "avg_hold_days": 89.5,
+        "avg_roi": 100.0
+      },
+      {
+        "investor_name": "Renovation Experts",
+        "total_flips": 24,
+        "total_profit": 2825345.0,
+        "avg_profit_per_flip": 117722.70833333333,
+        "avg_hold_days": 86.04166666666667,
+        "avg_roi": 100.0
+      }
+    ]
+  }
+}
