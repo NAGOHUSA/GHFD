@@ -1,0 +1,63 @@
+{
+  "timestamp": "2025-12-26T12:37:30.508012",
+  "pipeline_version": "1.0.0",
+  "data_summary": {
+    "total_transactions": 8459,
+    "unique_counties": 159,
+    "date_range": {
+      "min_date": "2025-06-29",
+      "max_date": "2025-12-26"
+    }
+  },
+  "flips_summary": {
+    "total_flips": 366,
+    "total_profit": 42776394.0,
+    "avg_profit": 116875.39344262295,
+    "avg_hold_days": 79.9535519125683
+  },
+  "investors_summary": {
+    "total_investors": 18,
+    "top_5_investors": [
+      {
+        "investor_name": "Metro Atlanta Investments",
+        "total_flips": 26,
+        "total_profit": 3049185.0,
+        "avg_profit_per_flip": 117276.34615384616,
+        "avg_hold_days": 73.07692307692308,
+        "avg_roi": 100.0
+      },
+      {
+        "investor_name": "Peachtree RE Group",
+        "total_flips": 25,
+        "total_profit": 2905875.0,
+        "avg_profit_per_flip": 116235.0,
+        "avg_hold_days": 84.36,
+        "avg_roi": 100.0
+      },
+      {
+        "investor_name": "Quick Turn Properties",
+        "total_flips": 25,
+        "total_profit": 2894163.0,
+        "avg_profit_per_flip": 115766.52,
+        "avg_hold_days": 73.0,
+        "avg_roi": 100.0
+      },
+      {
+        "investor_name": "Georgia Property Investors",
+        "total_flips": 23,
+        "total_profit": 2663471.0,
+        "avg_profit_per_flip": 115803.08695652174,
+        "avg_hold_days": 70.04347826086956,
+        "avg_roi": 100.0
+      },
+      {
+        "investor_name": "Georgia Home Solutions",
+        "total_flips": 23,
+        "total_profit": 2673571.0,
+        "avg_profit_per_flip": 116242.21739130435,
+        "avg_hold_days": 79.1304347826087,
+        "avg_roi": 100.0
+      }
+    ]
+  }
+}
