@@ -1,0 +1,63 @@
+{
+  "timestamp": "2025-12-29T12:39:47.464691",
+  "pipeline_version": "1.0.0",
+  "data_summary": {
+    "total_transactions": 8439,
+    "unique_counties": 159,
+    "date_range": {
+      "min_date": "2025-07-02",
+      "max_date": "2025-12-29"
+    }
+  },
+  "flips_summary": {
+    "total_flips": 380,
+    "total_profit": 43454839.0,
+    "avg_profit": 114354.83947368422,
+    "avg_hold_days": 78.53684210526316
+  },
+  "investors_summary": {
+    "total_investors": 18,
+    "top_5_investors": [
+      {
+        "investor_name": "Metro Flip Team",
+        "total_flips": 28,
+        "total_profit": 3126718.0,
+        "avg_profit_per_flip": 111668.5,
+        "avg_hold_days": 73.60714285714286,
+        "avg_roi": 100.0
+      },
+      {
+        "investor_name": "Urban Development LLC",
+        "total_flips": 26,
+        "total_profit": 3159890.0,
+        "avg_profit_per_flip": 121534.23076923077,
+        "avg_hold_days": 78.61538461538461,
+        "avg_roi": 100.0
+      },
+      {
+        "investor_name": "Property Solutions GA",
+        "total_flips": 25,
+        "total_profit": 2927947.0,
+        "avg_profit_per_flip": 117117.88,
+        "avg_hold_days": 88.72,
+        "avg_roi": 100.0
+      },
+      {
+        "investor_name": "Capital Flip Group",
+        "total_flips": 25,
+        "total_profit": 2783692.0,
+        "avg_profit_per_flip": 111347.68,
+        "avg_hold_days": 74.0,
+        "avg_roi": 100.0
+      },
+      {
+        "investor_name": "Georgia Renovation Group",
+        "total_flips": 25,
+        "total_profit": 2882096.0,
+        "avg_profit_per_flip": 115283.84,
+        "avg_hold_days": 70.0,
+        "avg_roi": 100.0
+      }
+    ]
+  }
+}
