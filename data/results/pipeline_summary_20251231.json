@@ -1,0 +1,63 @@
+{
+  "timestamp": "2025-12-31T12:38:26.617374",
+  "pipeline_version": "1.0.0",
+  "data_summary": {
+    "total_transactions": 8426,
+    "unique_counties": 159,
+    "date_range": {
+      "min_date": "2025-07-04",
+      "max_date": "2025-12-31"
+    }
+  },
+  "flips_summary": {
+    "total_flips": 378,
+    "total_profit": 43510406.0,
+    "avg_profit": 115106.89417989418,
+    "avg_hold_days": 81.42857142857143
+  },
+  "investors_summary": {
+    "total_investors": 18,
+    "top_5_investors": [
+      {
+        "investor_name": "Renovation Experts",
+        "total_flips": 30,
+        "total_profit": 3449085.0,
+        "avg_profit_per_flip": 114969.5,
+        "avg_hold_days": 77.33333333333333,
+        "avg_roi": 100.0
+      },
+      {
+        "investor_name": "Property Solutions GA",
+        "total_flips": 26,
+        "total_profit": 3066051.0,
+        "avg_profit_per_flip": 117925.03846153847,
+        "avg_hold_days": 68.3076923076923,
+        "avg_roi": 100.0
+      },
+      {
+        "investor_name": "Fix & Flip GA",
+        "total_flips": 25,
+        "total_profit": 2858408.0,
+        "avg_profit_per_flip": 114336.32,
+        "avg_hold_days": 66.92,
+        "avg_roi": 100.0
+      },
+      {
+        "investor_name": "Peach State Investments",
+        "total_flips": 25,
+        "total_profit": 2992900.0,
+        "avg_profit_per_flip": 119716.0,
+        "avg_hold_days": 81.52,
+        "avg_roi": 100.0
+      },
+      {
+        "investor_name": "Residential Ventures",
+        "total_flips": 24,
+        "total_profit": 2764163.0,
+        "avg_profit_per_flip": 115173.45833333333,
+        "avg_hold_days": 97.95833333333333,
+        "avg_roi": 100.0
+      }
+    ]
+  }
+}
