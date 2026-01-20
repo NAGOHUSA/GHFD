@@ -1,0 +1,63 @@
+{
+  "timestamp": "2026-01-20T12:43:44.236498",
+  "pipeline_version": "1.0.0",
+  "data_summary": {
+    "total_transactions": 8432,
+    "unique_counties": 159,
+    "date_range": {
+      "min_date": "2025-07-24",
+      "max_date": "2026-01-20"
+    }
+  },
+  "flips_summary": {
+    "total_flips": 380,
+    "total_profit": 42632046.0,
+    "avg_profit": 112189.5947368421,
+    "avg_hold_days": 75.40789473684211
+  },
+  "investors_summary": {
+    "total_investors": 18,
+    "top_5_investors": [
+      {
+        "investor_name": "Peachtree RE Group",
+        "total_flips": 30,
+        "total_profit": 3318022.0,
+        "avg_profit_per_flip": 110600.73333333334,
+        "avg_hold_days": 72.9,
+        "avg_roi": 100.0
+      },
+      {
+        "investor_name": "Property Solutions GA",
+        "total_flips": 29,
+        "total_profit": 3267506.0,
+        "avg_profit_per_flip": 112672.62068965517,
+        "avg_hold_days": 88.06896551724138,
+        "avg_roi": 100.0
+      },
+      {
+        "investor_name": "Residential Ventures",
+        "total_flips": 29,
+        "total_profit": 3234686.0,
+        "avg_profit_per_flip": 111540.89655172414,
+        "avg_hold_days": 79.3103448275862,
+        "avg_roi": 100.0
+      },
+      {
+        "investor_name": "Capital Flip Group",
+        "total_flips": 26,
+        "total_profit": 2954279.0,
+        "avg_profit_per_flip": 113626.11538461539,
+        "avg_hold_days": 55.92307692307692,
+        "avg_roi": 100.0
+      },
+      {
+        "investor_name": "Peach State Investments",
+        "total_flips": 24,
+        "total_profit": 2716443.0,
+        "avg_profit_per_flip": 113185.125,
+        "avg_hold_days": 69.875,
+        "avg_roi": 100.0
+      }
+    ]
+  }
+}
