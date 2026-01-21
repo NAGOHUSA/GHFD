@@ -1,0 +1,63 @@
+{
+  "timestamp": "2026-01-21T12:44:00.476034",
+  "pipeline_version": "1.0.0",
+  "data_summary": {
+    "total_transactions": 8478,
+    "unique_counties": 159,
+    "date_range": {
+      "min_date": "2025-07-25",
+      "max_date": "2026-01-21"
+    }
+  },
+  "flips_summary": {
+    "total_flips": 410,
+    "total_profit": 46987951.0,
+    "avg_profit": 114604.75853658536,
+    "avg_hold_days": 79.41463414634147
+  },
+  "investors_summary": {
+    "total_investors": 18,
+    "top_5_investors": [
+      {
+        "investor_name": "Urban Development LLC",
+        "total_flips": 31,
+        "total_profit": 3471247.0,
+        "avg_profit_per_flip": 111975.70967741935,
+        "avg_hold_days": 77.2258064516129,
+        "avg_roi": 100.0
+      },
+      {
+        "investor_name": "Renovation Experts",
+        "total_flips": 28,
+        "total_profit": 3212381.0,
+        "avg_profit_per_flip": 114727.89285714286,
+        "avg_hold_days": 80.28571428571429,
+        "avg_roi": 100.0
+      },
+      {
+        "investor_name": "Fix & Flip GA",
+        "total_flips": 27,
+        "total_profit": 3082816.0,
+        "avg_profit_per_flip": 114178.37037037036,
+        "avg_hold_days": 81.14814814814815,
+        "avg_roi": 100.0
+      },
+      {
+        "investor_name": "Peach State Investments",
+        "total_flips": 26,
+        "total_profit": 2940860.0,
+        "avg_profit_per_flip": 113110.0,
+        "avg_hold_days": 71.5,
+        "avg_roi": 100.0
+      },
+      {
+        "investor_name": "Peachtree RE Group",
+        "total_flips": 26,
+        "total_profit": 2900113.0,
+        "avg_profit_per_flip": 111542.80769230769,
+        "avg_hold_days": 85.1923076923077,
+        "avg_roi": 100.0
+      }
+    ]
+  }
+}
