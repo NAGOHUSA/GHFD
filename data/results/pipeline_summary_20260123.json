@@ -1,0 +1,63 @@
+{
+  "timestamp": "2026-01-23T12:41:39.243708",
+  "pipeline_version": "1.0.0",
+  "data_summary": {
+    "total_transactions": 8411,
+    "unique_counties": 159,
+    "date_range": {
+      "min_date": "2025-07-27",
+      "max_date": "2026-01-23"
+    }
+  },
+  "flips_summary": {
+    "total_flips": 364,
+    "total_profit": 41655745.0,
+    "avg_profit": 114438.85989010989,
+    "avg_hold_days": 78.45604395604396
+  },
+  "investors_summary": {
+    "total_investors": 18,
+    "top_5_investors": [
+      {
+        "investor_name": "Quick Turn Properties",
+        "total_flips": 29,
+        "total_profit": 3445202.0,
+        "avg_profit_per_flip": 118800.06896551725,
+        "avg_hold_days": 86.27586206896552,
+        "avg_roi": 100.0
+      },
+      {
+        "investor_name": "Renovation Experts",
+        "total_flips": 26,
+        "total_profit": 2786481.0,
+        "avg_profit_per_flip": 107172.34615384616,
+        "avg_hold_days": 82.8076923076923,
+        "avg_roi": 100.0
+      },
+      {
+        "investor_name": "Georgia Renovation Group",
+        "total_flips": 25,
+        "total_profit": 2694371.0,
+        "avg_profit_per_flip": 107774.84,
+        "avg_hold_days": 83.4,
+        "avg_roi": 100.0
+      },
+      {
+        "investor_name": "Atlanta Capital Partners",
+        "total_flips": 22,
+        "total_profit": 2611061.0,
+        "avg_profit_per_flip": 118684.59090909091,
+        "avg_hold_days": 75.95454545454545,
+        "avg_roi": 100.0
+      },
+      {
+        "investor_name": "Peach State Investments",
+        "total_flips": 22,
+        "total_profit": 2507098.0,
+        "avg_profit_per_flip": 113959.0,
+        "avg_hold_days": 76.95454545454545,
+        "avg_roi": 100.0
+      }
+    ]
+  }
+}
