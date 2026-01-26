@@ -1,0 +1,63 @@
+{
+  "timestamp": "2026-01-26T12:42:38.568955",
+  "pipeline_version": "1.0.0",
+  "data_summary": {
+    "total_transactions": 8442,
+    "unique_counties": 159,
+    "date_range": {
+      "min_date": "2025-07-30",
+      "max_date": "2026-01-26"
+    }
+  },
+  "flips_summary": {
+    "total_flips": 378,
+    "total_profit": 43173343.0,
+    "avg_profit": 114215.19312169313,
+    "avg_hold_days": 83.44444444444444
+  },
+  "investors_summary": {
+    "total_investors": 18,
+    "top_5_investors": [
+      {
+        "investor_name": "Residential Ventures",
+        "total_flips": 26,
+        "total_profit": 3047788.0,
+        "avg_profit_per_flip": 117222.61538461539,
+        "avg_hold_days": 90.92307692307692,
+        "avg_roi": 100.0
+      },
+      {
+        "investor_name": "Renovation Experts",
+        "total_flips": 26,
+        "total_profit": 2920149.0,
+        "avg_profit_per_flip": 112313.42307692308,
+        "avg_hold_days": 79.15384615384616,
+        "avg_roi": 100.0
+      },
+      {
+        "investor_name": "Capital Flip Group",
+        "total_flips": 25,
+        "total_profit": 2824061.0,
+        "avg_profit_per_flip": 112962.44,
+        "avg_hold_days": 87.16,
+        "avg_roi": 100.0
+      },
+      {
+        "investor_name": "Georgia Renovation Group",
+        "total_flips": 25,
+        "total_profit": 2790893.0,
+        "avg_profit_per_flip": 111635.72,
+        "avg_hold_days": 80.68,
+        "avg_roi": 100.0
+      },
+      {
+        "investor_name": "Georgia Home Solutions",
+        "total_flips": 24,
+        "total_profit": 2865003.0,
+        "avg_profit_per_flip": 119375.125,
+        "avg_hold_days": 86.75,
+        "avg_roi": 100.0
+      }
+    ]
+  }
+}
