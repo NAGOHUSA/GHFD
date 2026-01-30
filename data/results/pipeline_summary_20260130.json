@@ -1,0 +1,63 @@
+{
+  "timestamp": "2026-01-30T12:50:47.970489",
+  "pipeline_version": "1.0.0",
+  "data_summary": {
+    "total_transactions": 8419,
+    "unique_counties": 159,
+    "date_range": {
+      "min_date": "2025-08-03",
+      "max_date": "2026-01-30"
+    }
+  },
+  "flips_summary": {
+    "total_flips": 353,
+    "total_profit": 40915126.0,
+    "avg_profit": 115906.87252124646,
+    "avg_hold_days": 82.34277620396601
+  },
+  "investors_summary": {
+    "total_investors": 18,
+    "top_5_investors": [
+      {
+        "investor_name": "Georgia Property Investors",
+        "total_flips": 28,
+        "total_profit": 3346431.0,
+        "avg_profit_per_flip": 119515.39285714286,
+        "avg_hold_days": 82.85714285714286,
+        "avg_roi": 100.0
+      },
+      {
+        "investor_name": "Capital Flip Group",
+        "total_flips": 27,
+        "total_profit": 3175598.0,
+        "avg_profit_per_flip": 117614.74074074074,
+        "avg_hold_days": 82.70370370370371,
+        "avg_roi": 100.0
+      },
+      {
+        "investor_name": "Georgia Renovation Group",
+        "total_flips": 24,
+        "total_profit": 2881428.0,
+        "avg_profit_per_flip": 120059.5,
+        "avg_hold_days": 71.41666666666667,
+        "avg_roi": 100.0
+      },
+      {
+        "investor_name": "Property Solutions GA",
+        "total_flips": 23,
+        "total_profit": 2606048.0,
+        "avg_profit_per_flip": 113306.43478260869,
+        "avg_hold_days": 75.91304347826087,
+        "avg_roi": 100.0
+      },
+      {
+        "investor_name": "Peachtree RE Group",
+        "total_flips": 22,
+        "total_profit": 2397618.0,
+        "avg_profit_per_flip": 108982.63636363637,
+        "avg_hold_days": 85.95454545454545,
+        "avg_roi": 100.0
+      }
+    ]
+  }
+}
