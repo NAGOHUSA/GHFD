@@ -1,0 +1,63 @@
+{
+  "timestamp": "2026-02-17T12:14:44.986677",
+  "pipeline_version": "1.0.0",
+  "data_summary": {
+    "total_transactions": 8432,
+    "unique_counties": 159,
+    "date_range": {
+      "min_date": "2025-08-21",
+      "max_date": "2026-02-17"
+    }
+  },
+  "flips_summary": {
+    "total_flips": 371,
+    "total_profit": 43107573.0,
+    "avg_profit": 116192.9191374663,
+    "avg_hold_days": 79.26145552560646
+  },
+  "investors_summary": {
+    "total_investors": 18,
+    "top_5_investors": [
+      {
+        "investor_name": "Peach State Investments",
+        "total_flips": 29,
+        "total_profit": 3187499.0,
+        "avg_profit_per_flip": 109913.75862068965,
+        "avg_hold_days": 73.58620689655173,
+        "avg_roi": 100.0
+      },
+      {
+        "investor_name": "Residential Ventures",
+        "total_flips": 29,
+        "total_profit": 3395115.0,
+        "avg_profit_per_flip": 117072.93103448275,
+        "avg_hold_days": 78.72413793103448,
+        "avg_roi": 100.0
+      },
+      {
+        "investor_name": "Renovation Experts",
+        "total_flips": 28,
+        "total_profit": 3351833.0,
+        "avg_profit_per_flip": 119708.32142857143,
+        "avg_hold_days": 78.32142857142857,
+        "avg_roi": 100.0
+      },
+      {
+        "investor_name": "Atlanta Flip Masters LLC",
+        "total_flips": 24,
+        "total_profit": 2802481.0,
+        "avg_profit_per_flip": 116770.04166666667,
+        "avg_hold_days": 72.91666666666667,
+        "avg_roi": 100.0
+      },
+      {
+        "investor_name": "Southern Holdings Inc",
+        "total_flips": 23,
+        "total_profit": 2595237.0,
+        "avg_profit_per_flip": 112836.39130434782,
+        "avg_hold_days": 83.78260869565217,
+        "avg_roi": 100.0
+      }
+    ]
+  }
+}
