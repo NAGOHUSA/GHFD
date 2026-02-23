@@ -1,0 +1,63 @@
+{
+  "timestamp": "2026-02-23T12:14:49.725165",
+  "pipeline_version": "1.0.0",
+  "data_summary": {
+    "total_transactions": 8452,
+    "unique_counties": 159,
+    "date_range": {
+      "min_date": "2025-08-27",
+      "max_date": "2026-02-23"
+    }
+  },
+  "flips_summary": {
+    "total_flips": 382,
+    "total_profit": 44254131.0,
+    "avg_profit": 115848.5104712042,
+    "avg_hold_days": 81.86387434554973
+  },
+  "investors_summary": {
+    "total_investors": 18,
+    "top_5_investors": [
+      {
+        "investor_name": "Atlanta Flip Masters LLC",
+        "total_flips": 32,
+        "total_profit": 3742553.0,
+        "avg_profit_per_flip": 116954.78125,
+        "avg_hold_days": 75.90625,
+        "avg_roi": 100.0
+      },
+      {
+        "investor_name": "Atlanta Capital Partners",
+        "total_flips": 26,
+        "total_profit": 2832790.0,
+        "avg_profit_per_flip": 108953.46153846153,
+        "avg_hold_days": 90.57692307692308,
+        "avg_roi": 100.0
+      },
+      {
+        "investor_name": "Metro Flip Team",
+        "total_flips": 26,
+        "total_profit": 3017567.0,
+        "avg_profit_per_flip": 116060.26923076923,
+        "avg_hold_days": 81.73076923076923,
+        "avg_roi": 100.0
+      },
+      {
+        "investor_name": "Georgia Home Solutions",
+        "total_flips": 25,
+        "total_profit": 2936418.0,
+        "avg_profit_per_flip": 117456.72,
+        "avg_hold_days": 88.16,
+        "avg_roi": 100.0
+      },
+      {
+        "investor_name": "Residential Ventures",
+        "total_flips": 24,
+        "total_profit": 2825529.0,
+        "avg_profit_per_flip": 117730.375,
+        "avg_hold_days": 78.41666666666667,
+        "avg_roi": 100.0
+      }
+    ]
+  }
+}
