@@ -1,0 +1,63 @@
+{
+  "timestamp": "2026-02-24T12:16:04.595425",
+  "pipeline_version": "1.0.0",
+  "data_summary": {
+    "total_transactions": 8454,
+    "unique_counties": 159,
+    "date_range": {
+      "min_date": "2025-08-28",
+      "max_date": "2026-02-24"
+    }
+  },
+  "flips_summary": {
+    "total_flips": 397,
+    "total_profit": 45440621.0,
+    "avg_profit": 114460.00251889169,
+    "avg_hold_days": 79.34005037783375
+  },
+  "investors_summary": {
+    "total_investors": 18,
+    "top_5_investors": [
+      {
+        "investor_name": "Urban Development LLC",
+        "total_flips": 28,
+        "total_profit": 3087250.0,
+        "avg_profit_per_flip": 110258.92857142857,
+        "avg_hold_days": 75.71428571428571,
+        "avg_roi": 100.0
+      },
+      {
+        "investor_name": "Capital Flip Group",
+        "total_flips": 27,
+        "total_profit": 3102805.0,
+        "avg_profit_per_flip": 114918.70370370371,
+        "avg_hold_days": 74.03703703703704,
+        "avg_roi": 100.0
+      },
+      {
+        "investor_name": "Property Solutions GA",
+        "total_flips": 27,
+        "total_profit": 3098662.0,
+        "avg_profit_per_flip": 114765.25925925926,
+        "avg_hold_days": 80.11111111111111,
+        "avg_roi": 100.0
+      },
+      {
+        "investor_name": "Fix & Flip GA",
+        "total_flips": 26,
+        "total_profit": 2848582.0,
+        "avg_profit_per_flip": 109560.84615384616,
+        "avg_hold_days": 82.07692307692308,
+        "avg_roi": 100.0
+      },
+      {
+        "investor_name": "Georgia Property Investors",
+        "total_flips": 26,
+        "total_profit": 3013782.0,
+        "avg_profit_per_flip": 115914.69230769231,
+        "avg_hold_days": 73.5,
+        "avg_roi": 100.0
+      }
+    ]
+  }
+}
