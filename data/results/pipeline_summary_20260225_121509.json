@@ -1,0 +1,63 @@
+{
+  "timestamp": "2026-02-25T12:15:09.987473",
+  "pipeline_version": "1.0.0",
+  "data_summary": {
+    "total_transactions": 8398,
+    "unique_counties": 159,
+    "date_range": {
+      "min_date": "2025-08-29",
+      "max_date": "2026-02-25"
+    }
+  },
+  "flips_summary": {
+    "total_flips": 354,
+    "total_profit": 39969932.0,
+    "avg_profit": 112909.41242937853,
+    "avg_hold_days": 82.045197740113
+  },
+  "investors_summary": {
+    "total_investors": 18,
+    "top_5_investors": [
+      {
+        "investor_name": "Investor Collective",
+        "total_flips": 24,
+        "total_profit": 2829107.0,
+        "avg_profit_per_flip": 117879.45833333333,
+        "avg_hold_days": 77.58333333333333,
+        "avg_roi": 100.0
+      },
+      {
+        "investor_name": "Southern Holdings Inc",
+        "total_flips": 23,
+        "total_profit": 2659291.0,
+        "avg_profit_per_flip": 115621.34782608696,
+        "avg_hold_days": 89.17391304347827,
+        "avg_roi": 100.0
+      },
+      {
+        "investor_name": "Urban Development LLC",
+        "total_flips": 23,
+        "total_profit": 2441035.0,
+        "avg_profit_per_flip": 106131.95652173914,
+        "avg_hold_days": 91.43478260869566,
+        "avg_roi": 100.0
+      },
+      {
+        "investor_name": "Property Solutions GA",
+        "total_flips": 23,
+        "total_profit": 2598497.0,
+        "avg_profit_per_flip": 112978.13043478261,
+        "avg_hold_days": 94.8695652173913,
+        "avg_roi": 100.0
+      },
+      {
+        "investor_name": "Peach State Investments",
+        "total_flips": 22,
+        "total_profit": 2473502.0,
+        "avg_profit_per_flip": 112431.90909090909,
+        "avg_hold_days": 75.54545454545455,
+        "avg_roi": 100.0
+      }
+    ]
+  }
+}
