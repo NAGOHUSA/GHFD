@@ -1,0 +1,63 @@
+{
+  "timestamp": "2026-03-10T12:13:09.770777",
+  "pipeline_version": "1.0.0",
+  "data_summary": {
+    "total_transactions": 8407,
+    "unique_counties": 159,
+    "date_range": {
+      "min_date": "2025-09-11",
+      "max_date": "2026-03-10"
+    }
+  },
+  "flips_summary": {
+    "total_flips": 345,
+    "total_profit": 40047037.0,
+    "avg_profit": 116078.36811594202,
+    "avg_hold_days": 79.73913043478261
+  },
+  "investors_summary": {
+    "total_investors": 18,
+    "top_5_investors": [
+      {
+        "investor_name": "Atlanta Capital Partners",
+        "total_flips": 24,
+        "total_profit": 2822406.0,
+        "avg_profit_per_flip": 117600.25,
+        "avg_hold_days": 72.5,
+        "avg_roi": 100.0
+      },
+      {
+        "investor_name": "Capital Flip Group",
+        "total_flips": 24,
+        "total_profit": 2809441.0,
+        "avg_profit_per_flip": 117060.04166666667,
+        "avg_hold_days": 89.70833333333333,
+        "avg_roi": 100.0
+      },
+      {
+        "investor_name": "Fix & Flip GA",
+        "total_flips": 24,
+        "total_profit": 2695226.0,
+        "avg_profit_per_flip": 112301.08333333333,
+        "avg_hold_days": 77.83333333333333,
+        "avg_roi": 100.0
+      },
+      {
+        "investor_name": "Atlanta Flip Masters LLC",
+        "total_flips": 22,
+        "total_profit": 2684904.0,
+        "avg_profit_per_flip": 122041.09090909091,
+        "avg_hold_days": 68.72727272727273,
+        "avg_roi": 100.0
+      },
+      {
+        "investor_name": "Investor Collective",
+        "total_flips": 22,
+        "total_profit": 2489555.0,
+        "avg_profit_per_flip": 113161.59090909091,
+        "avg_hold_days": 84.0909090909091,
+        "avg_roi": 100.0
+      }
+    ]
+  }
+}
