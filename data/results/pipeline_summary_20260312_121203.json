@@ -1,0 +1,63 @@
+{
+  "timestamp": "2026-03-12T12:12:03.839887",
+  "pipeline_version": "1.0.0",
+  "data_summary": {
+    "total_transactions": 8464,
+    "unique_counties": 159,
+    "date_range": {
+      "min_date": "2025-09-13",
+      "max_date": "2026-03-12"
+    }
+  },
+  "flips_summary": {
+    "total_flips": 427,
+    "total_profit": 48947564.0,
+    "avg_profit": 114631.29742388759,
+    "avg_hold_days": 78.47775175644028
+  },
+  "investors_summary": {
+    "total_investors": 18,
+    "top_5_investors": [
+      {
+        "investor_name": "Atlanta Flip Masters LLC",
+        "total_flips": 28,
+        "total_profit": 3251187.0,
+        "avg_profit_per_flip": 116113.82142857143,
+        "avg_hold_days": 73.46428571428571,
+        "avg_roi": 100.0
+      },
+      {
+        "investor_name": "Georgia Property Investors",
+        "total_flips": 28,
+        "total_profit": 3337177.0,
+        "avg_profit_per_flip": 119184.89285714286,
+        "avg_hold_days": 61.32142857142857,
+        "avg_roi": 100.0
+      },
+      {
+        "investor_name": "Georgia Home Solutions",
+        "total_flips": 27,
+        "total_profit": 3366179.0,
+        "avg_profit_per_flip": 124673.29629629629,
+        "avg_hold_days": 76.85185185185185,
+        "avg_roi": 100.0
+      },
+      {
+        "investor_name": "Fix & Flip GA",
+        "total_flips": 27,
+        "total_profit": 3008250.0,
+        "avg_profit_per_flip": 111416.66666666667,
+        "avg_hold_days": 86.88888888888889,
+        "avg_roi": 100.0
+      },
+      {
+        "investor_name": "Property Solutions GA",
+        "total_flips": 26,
+        "total_profit": 3016108.0,
+        "avg_profit_per_flip": 116004.15384615384,
+        "avg_hold_days": 74.46153846153847,
+        "avg_roi": 100.0
+      }
+    ]
+  }
+}
