@@ -1,0 +1,63 @@
+{
+  "timestamp": "2026-03-18T12:18:34.776352",
+  "pipeline_version": "1.0.0",
+  "data_summary": {
+    "total_transactions": 8432,
+    "unique_counties": 159,
+    "date_range": {
+      "min_date": "2025-09-19",
+      "max_date": "2026-03-18"
+    }
+  },
+  "flips_summary": {
+    "total_flips": 367,
+    "total_profit": 42328031.0,
+    "avg_profit": 115335.23433242507,
+    "avg_hold_days": 81.17438692098092
+  },
+  "investors_summary": {
+    "total_investors": 18,
+    "top_5_investors": [
+      {
+        "investor_name": "Atlanta Capital Partners",
+        "total_flips": 31,
+        "total_profit": 3505104.0,
+        "avg_profit_per_flip": 113067.87096774194,
+        "avg_hold_days": 89.12903225806451,
+        "avg_roi": 100.0
+      },
+      {
+        "investor_name": "Atlanta Flip Masters LLC",
+        "total_flips": 25,
+        "total_profit": 2960342.0,
+        "avg_profit_per_flip": 118413.68,
+        "avg_hold_days": 82.0,
+        "avg_roi": 100.0
+      },
+      {
+        "investor_name": "Urban Development LLC",
+        "total_flips": 25,
+        "total_profit": 2798443.0,
+        "avg_profit_per_flip": 111937.72,
+        "avg_hold_days": 86.08,
+        "avg_roi": 100.0
+      },
+      {
+        "investor_name": "Renovation Experts",
+        "total_flips": 24,
+        "total_profit": 2791924.0,
+        "avg_profit_per_flip": 116330.16666666667,
+        "avg_hold_days": 87.29166666666667,
+        "avg_roi": 100.0
+      },
+      {
+        "investor_name": "Quick Turn Properties",
+        "total_flips": 22,
+        "total_profit": 2580285.0,
+        "avg_profit_per_flip": 117285.68181818182,
+        "avg_hold_days": 82.18181818181819,
+        "avg_roi": 100.0
+      }
+    ]
+  }
+}
