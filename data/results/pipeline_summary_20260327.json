@@ -1,0 +1,63 @@
+{
+  "timestamp": "2026-03-27T12:16:44.590261",
+  "pipeline_version": "1.0.0",
+  "data_summary": {
+    "total_transactions": 8434,
+    "unique_counties": 159,
+    "date_range": {
+      "min_date": "2025-09-28",
+      "max_date": "2026-03-27"
+    }
+  },
+  "flips_summary": {
+    "total_flips": 389,
+    "total_profit": 44668476.0,
+    "avg_profit": 114828.98714652956,
+    "avg_hold_days": 77.58611825192801
+  },
+  "investors_summary": {
+    "total_investors": 18,
+    "top_5_investors": [
+      {
+        "investor_name": "Georgia Property Investors",
+        "total_flips": 31,
+        "total_profit": 3697973.0,
+        "avg_profit_per_flip": 119289.45161290323,
+        "avg_hold_days": 79.12903225806451,
+        "avg_roi": 100.0
+      },
+      {
+        "investor_name": "Residential Ventures",
+        "total_flips": 29,
+        "total_profit": 3449078.0,
+        "avg_profit_per_flip": 118933.72413793103,
+        "avg_hold_days": 67.58620689655173,
+        "avg_roi": 100.0
+      },
+      {
+        "investor_name": "Peach State Investments",
+        "total_flips": 28,
+        "total_profit": 3250327.0,
+        "avg_profit_per_flip": 116083.10714285714,
+        "avg_hold_days": 70.78571428571429,
+        "avg_roi": 100.0
+      },
+      {
+        "investor_name": "Quick Turn Properties",
+        "total_flips": 27,
+        "total_profit": 3010142.0,
+        "avg_profit_per_flip": 111486.74074074074,
+        "avg_hold_days": 79.85185185185185,
+        "avg_roi": 100.0
+      },
+      {
+        "investor_name": "Southern Holdings Inc",
+        "total_flips": 25,
+        "total_profit": 2841414.0,
+        "avg_profit_per_flip": 113656.56,
+        "avg_hold_days": 78.52,
+        "avg_roi": 100.0
+      }
+    ]
+  }
+}
