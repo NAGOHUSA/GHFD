@@ -1,0 +1,63 @@
+{
+  "timestamp": "2026-04-06T12:19:54.790583",
+  "pipeline_version": "1.0.0",
+  "data_summary": {
+    "total_transactions": 8405,
+    "unique_counties": 159,
+    "date_range": {
+      "min_date": "2025-10-08",
+      "max_date": "2026-04-06"
+    }
+  },
+  "flips_summary": {
+    "total_flips": 345,
+    "total_profit": 39211619.0,
+    "avg_profit": 113656.86666666667,
+    "avg_hold_days": 79.98260869565217
+  },
+  "investors_summary": {
+    "total_investors": 18,
+    "top_5_investors": [
+      {
+        "investor_name": "Fix & Flip GA",
+        "total_flips": 28,
+        "total_profit": 3249207.0,
+        "avg_profit_per_flip": 116043.10714285714,
+        "avg_hold_days": 74.42857142857143,
+        "avg_roi": 100.0
+      },
+      {
+        "investor_name": "Georgia Property Investors",
+        "total_flips": 24,
+        "total_profit": 2575931.0,
+        "avg_profit_per_flip": 107330.45833333333,
+        "avg_hold_days": 90.79166666666667,
+        "avg_roi": 100.0
+      },
+      {
+        "investor_name": "Metro Atlanta Investments",
+        "total_flips": 24,
+        "total_profit": 2785909.0,
+        "avg_profit_per_flip": 116079.54166666667,
+        "avg_hold_days": 80.625,
+        "avg_roi": 100.0
+      },
+      {
+        "investor_name": "Renovation Experts",
+        "total_flips": 22,
+        "total_profit": 2523283.0,
+        "avg_profit_per_flip": 114694.68181818182,
+        "avg_hold_days": 83.45454545454545,
+        "avg_roi": 100.0
+      },
+      {
+        "investor_name": "Metro Flip Team",
+        "total_flips": 22,
+        "total_profit": 2450247.0,
+        "avg_profit_per_flip": 111374.86363636363,
+        "avg_hold_days": 79.63636363636364,
+        "avg_roi": 100.0
+      }
+    ]
+  }
+}
