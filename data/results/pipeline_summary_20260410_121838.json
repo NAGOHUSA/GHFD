@@ -1,0 +1,63 @@
+{
+  "timestamp": "2026-04-10T12:18:38.877446",
+  "pipeline_version": "1.0.0",
+  "data_summary": {
+    "total_transactions": 8457,
+    "unique_counties": 159,
+    "date_range": {
+      "min_date": "2025-10-12",
+      "max_date": "2026-04-10"
+    }
+  },
+  "flips_summary": {
+    "total_flips": 393,
+    "total_profit": 45265414.0,
+    "avg_profit": 115179.17048346056,
+    "avg_hold_days": 78.42493638676845
+  },
+  "investors_summary": {
+    "total_investors": 18,
+    "top_5_investors": [
+      {
+        "investor_name": "Capital Flip Group",
+        "total_flips": 36,
+        "total_profit": 4229458.0,
+        "avg_profit_per_flip": 117484.94444444444,
+        "avg_hold_days": 79.55555555555556,
+        "avg_roi": 100.0
+      },
+      {
+        "investor_name": "Atlanta Flip Masters LLC",
+        "total_flips": 31,
+        "total_profit": 3520942.0,
+        "avg_profit_per_flip": 113578.7741935484,
+        "avg_hold_days": 64.54838709677419,
+        "avg_roi": 100.0
+      },
+      {
+        "investor_name": "Atlanta Capital Partners",
+        "total_flips": 30,
+        "total_profit": 3430613.0,
+        "avg_profit_per_flip": 114353.76666666666,
+        "avg_hold_days": 82.53333333333333,
+        "avg_roi": 100.0
+      },
+      {
+        "investor_name": "Georgia Home Solutions",
+        "total_flips": 24,
+        "total_profit": 2778494.0,
+        "avg_profit_per_flip": 115770.58333333333,
+        "avg_hold_days": 75.0,
+        "avg_roi": 100.0
+      },
+      {
+        "investor_name": "Quick Turn Properties",
+        "total_flips": 24,
+        "total_profit": 2795862.0,
+        "avg_profit_per_flip": 116494.25,
+        "avg_hold_days": 67.95833333333333,
+        "avg_roi": 100.0
+      }
+    ]
+  }
+}
