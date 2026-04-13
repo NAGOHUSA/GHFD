@@ -1,0 +1,63 @@
+{
+  "timestamp": "2026-04-13T12:25:08.378701",
+  "pipeline_version": "1.0.0",
+  "data_summary": {
+    "total_transactions": 8402,
+    "unique_counties": 159,
+    "date_range": {
+      "min_date": "2025-10-15",
+      "max_date": "2026-04-13"
+    }
+  },
+  "flips_summary": {
+    "total_flips": 340,
+    "total_profit": 38550502.0,
+    "avg_profit": 113383.8294117647,
+    "avg_hold_days": 80.08235294117647
+  },
+  "investors_summary": {
+    "total_investors": 18,
+    "top_5_investors": [
+      {
+        "investor_name": "Georgia Property Investors",
+        "total_flips": 25,
+        "total_profit": 2764849.0,
+        "avg_profit_per_flip": 110593.96,
+        "avg_hold_days": 83.8,
+        "avg_roi": 100.0
+      },
+      {
+        "investor_name": "Investor Collective",
+        "total_flips": 23,
+        "total_profit": 2677162.0,
+        "avg_profit_per_flip": 116398.34782608696,
+        "avg_hold_days": 77.56521739130434,
+        "avg_roi": 100.0
+      },
+      {
+        "investor_name": "Fix & Flip GA",
+        "total_flips": 22,
+        "total_profit": 2517426.0,
+        "avg_profit_per_flip": 114428.45454545454,
+        "avg_hold_days": 82.04545454545455,
+        "avg_roi": 100.0
+      },
+      {
+        "investor_name": "Atlanta Flip Masters LLC",
+        "total_flips": 22,
+        "total_profit": 2648206.0,
+        "avg_profit_per_flip": 120373.0,
+        "avg_hold_days": 82.36363636363636,
+        "avg_roi": 100.0
+      },
+      {
+        "investor_name": "Peachtree RE Group",
+        "total_flips": 22,
+        "total_profit": 2424810.0,
+        "avg_profit_per_flip": 110218.63636363637,
+        "avg_hold_days": 76.36363636363636,
+        "avg_roi": 100.0
+      }
+    ]
+  }
+}
