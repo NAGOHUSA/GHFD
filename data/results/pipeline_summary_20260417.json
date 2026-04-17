@@ -1,0 +1,63 @@
+{
+  "timestamp": "2026-04-17T12:22:27.983592",
+  "pipeline_version": "1.0.0",
+  "data_summary": {
+    "total_transactions": 8422,
+    "unique_counties": 159,
+    "date_range": {
+      "min_date": "2025-10-19",
+      "max_date": "2026-04-17"
+    }
+  },
+  "flips_summary": {
+    "total_flips": 373,
+    "total_profit": 42683151.0,
+    "avg_profit": 114432.04021447721,
+    "avg_hold_days": 78.9195710455764
+  },
+  "investors_summary": {
+    "total_investors": 18,
+    "top_5_investors": [
+      {
+        "investor_name": "Peachtree RE Group",
+        "total_flips": 32,
+        "total_profit": 3572061.0,
+        "avg_profit_per_flip": 111626.90625,
+        "avg_hold_days": 87.75,
+        "avg_roi": 100.0
+      },
+      {
+        "investor_name": "Southern Holdings Inc",
+        "total_flips": 30,
+        "total_profit": 3569706.0,
+        "avg_profit_per_flip": 118990.2,
+        "avg_hold_days": 75.2,
+        "avg_roi": 100.0
+      },
+      {
+        "investor_name": "Quick Turn Properties",
+        "total_flips": 27,
+        "total_profit": 3179723.0,
+        "avg_profit_per_flip": 117767.51851851853,
+        "avg_hold_days": 69.88888888888889,
+        "avg_roi": 100.0
+      },
+      {
+        "investor_name": "Residential Ventures",
+        "total_flips": 27,
+        "total_profit": 2953771.0,
+        "avg_profit_per_flip": 109398.92592592593,
+        "avg_hold_days": 72.18518518518519,
+        "avg_roi": 100.0
+      },
+      {
+        "investor_name": "Investor Collective",
+        "total_flips": 24,
+        "total_profit": 2845024.0,
+        "avg_profit_per_flip": 118542.66666666667,
+        "avg_hold_days": 67.91666666666667,
+        "avg_roi": 100.0
+      }
+    ]
+  }
+}
