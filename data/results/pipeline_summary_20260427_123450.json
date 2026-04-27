@@ -1,0 +1,63 @@
+{
+  "timestamp": "2026-04-27T12:34:50.287012",
+  "pipeline_version": "1.0.0",
+  "data_summary": {
+    "total_transactions": 8423,
+    "unique_counties": 159,
+    "date_range": {
+      "min_date": "2025-10-29",
+      "max_date": "2026-04-27"
+    }
+  },
+  "flips_summary": {
+    "total_flips": 356,
+    "total_profit": 40582816.0,
+    "avg_profit": 113996.67415730337,
+    "avg_hold_days": 77.9438202247191
+  },
+  "investors_summary": {
+    "total_investors": 18,
+    "top_5_investors": [
+      {
+        "investor_name": "Investor Collective",
+        "total_flips": 33,
+        "total_profit": 3846262.0,
+        "avg_profit_per_flip": 116553.39393939394,
+        "avg_hold_days": 79.24242424242425,
+        "avg_roi": 100.0
+      },
+      {
+        "investor_name": "Metro Atlanta Investments",
+        "total_flips": 23,
+        "total_profit": 2724178.0,
+        "avg_profit_per_flip": 118442.52173913043,
+        "avg_hold_days": 93.65217391304348,
+        "avg_roi": 100.0
+      },
+      {
+        "investor_name": "Metro Flip Team",
+        "total_flips": 23,
+        "total_profit": 2487162.0,
+        "avg_profit_per_flip": 108137.47826086957,
+        "avg_hold_days": 74.43478260869566,
+        "avg_roi": 100.0
+      },
+      {
+        "investor_name": "Atlanta Capital Partners",
+        "total_flips": 22,
+        "total_profit": 2510494.0,
+        "avg_profit_per_flip": 114113.36363636363,
+        "avg_hold_days": 78.45454545454545,
+        "avg_roi": 100.0
+      },
+      {
+        "investor_name": "Urban Development LLC",
+        "total_flips": 22,
+        "total_profit": 2547596.0,
+        "avg_profit_per_flip": 115799.81818181818,
+        "avg_hold_days": 64.22727272727273,
+        "avg_roi": 100.0
+      }
+    ]
+  }
+}
