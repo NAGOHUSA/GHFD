@@ -1,0 +1,63 @@
+{
+  "timestamp": "2026-04-28T12:38:14.591651",
+  "pipeline_version": "1.0.0",
+  "data_summary": {
+    "total_transactions": 8453,
+    "unique_counties": 159,
+    "date_range": {
+      "min_date": "2025-10-30",
+      "max_date": "2026-04-28"
+    }
+  },
+  "flips_summary": {
+    "total_flips": 395,
+    "total_profit": 45601482.0,
+    "avg_profit": 115446.78987341771,
+    "avg_hold_days": 80.0632911392405
+  },
+  "investors_summary": {
+    "total_investors": 18,
+    "top_5_investors": [
+      {
+        "investor_name": "Quick Turn Properties",
+        "total_flips": 32,
+        "total_profit": 3587299.0,
+        "avg_profit_per_flip": 112103.09375,
+        "avg_hold_days": 73.9375,
+        "avg_roi": 100.0
+      },
+      {
+        "investor_name": "Metro Flip Team",
+        "total_flips": 29,
+        "total_profit": 3331162.0,
+        "avg_profit_per_flip": 114867.6551724138,
+        "avg_hold_days": 79.72413793103448,
+        "avg_roi": 100.0
+      },
+      {
+        "investor_name": "Capital Flip Group",
+        "total_flips": 28,
+        "total_profit": 3330762.0,
+        "avg_profit_per_flip": 118955.78571428571,
+        "avg_hold_days": 84.89285714285714,
+        "avg_roi": 100.0
+      },
+      {
+        "investor_name": "Atlanta Flip Masters LLC",
+        "total_flips": 28,
+        "total_profit": 3076953.0,
+        "avg_profit_per_flip": 109891.17857142857,
+        "avg_hold_days": 87.21428571428571,
+        "avg_roi": 100.0
+      },
+      {
+        "investor_name": "Georgia Renovation Group",
+        "total_flips": 26,
+        "total_profit": 3110853.0,
+        "avg_profit_per_flip": 119648.19230769231,
+        "avg_hold_days": 78.3076923076923,
+        "avg_roi": 100.0
+      }
+    ]
+  }
+}
