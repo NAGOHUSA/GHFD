@@ -1,0 +1,63 @@
+{
+  "timestamp": "2026-05-06T12:40:00.137812",
+  "pipeline_version": "1.0.0",
+  "data_summary": {
+    "total_transactions": 8429,
+    "unique_counties": 159,
+    "date_range": {
+      "min_date": "2025-11-07",
+      "max_date": "2026-05-06"
+    }
+  },
+  "flips_summary": {
+    "total_flips": 381,
+    "total_profit": 43189150.0,
+    "avg_profit": 113357.34908136482,
+    "avg_hold_days": 81.79265091863518
+  },
+  "investors_summary": {
+    "total_investors": 18,
+    "top_5_investors": [
+      {
+        "investor_name": "Georgia Property Investors",
+        "total_flips": 30,
+        "total_profit": 3449014.0,
+        "avg_profit_per_flip": 114967.13333333333,
+        "avg_hold_days": 79.5,
+        "avg_roi": 100.0
+      },
+      {
+        "investor_name": "Southern Holdings Inc",
+        "total_flips": 26,
+        "total_profit": 2965462.0,
+        "avg_profit_per_flip": 114056.23076923077,
+        "avg_hold_days": 81.38461538461539,
+        "avg_roi": 100.0
+      },
+      {
+        "investor_name": "Georgia Renovation Group",
+        "total_flips": 25,
+        "total_profit": 2776658.0,
+        "avg_profit_per_flip": 111066.32,
+        "avg_hold_days": 78.64,
+        "avg_roi": 100.0
+      },
+      {
+        "investor_name": "Atlanta Flip Masters LLC",
+        "total_flips": 24,
+        "total_profit": 2784618.0,
+        "avg_profit_per_flip": 116025.75,
+        "avg_hold_days": 83.83333333333333,
+        "avg_roi": 100.0
+      },
+      {
+        "investor_name": "Investor Collective",
+        "total_flips": 24,
+        "total_profit": 2724182.0,
+        "avg_profit_per_flip": 113507.58333333333,
+        "avg_hold_days": 88.91666666666667,
+        "avg_roi": 100.0
+      }
+    ]
+  }
+}
