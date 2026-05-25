@@ -1,0 +1,63 @@
+{
+  "timestamp": "2026-05-25T13:11:34.281992",
+  "pipeline_version": "1.0.0",
+  "data_summary": {
+    "total_transactions": 8428,
+    "unique_counties": 159,
+    "date_range": {
+      "min_date": "2025-11-26",
+      "max_date": "2026-05-25"
+    }
+  },
+  "flips_summary": {
+    "total_flips": 373,
+    "total_profit": 42906319.0,
+    "avg_profit": 115030.34584450402,
+    "avg_hold_days": 79.12332439678285
+  },
+  "investors_summary": {
+    "total_investors": 18,
+    "top_5_investors": [
+      {
+        "investor_name": "Georgia Renovation Group",
+        "total_flips": 36,
+        "total_profit": 4177071.0,
+        "avg_profit_per_flip": 116029.75,
+        "avg_hold_days": 75.16666666666667,
+        "avg_roi": 100.0
+      },
+      {
+        "investor_name": "Atlanta Flip Masters LLC",
+        "total_flips": 29,
+        "total_profit": 3163397.0,
+        "avg_profit_per_flip": 109082.6551724138,
+        "avg_hold_days": 79.24137931034483,
+        "avg_roi": 100.0
+      },
+      {
+        "investor_name": "Peachtree RE Group",
+        "total_flips": 28,
+        "total_profit": 3191789.0,
+        "avg_profit_per_flip": 113992.46428571429,
+        "avg_hold_days": 85.92857142857143,
+        "avg_roi": 100.0
+      },
+      {
+        "investor_name": "Quick Turn Properties",
+        "total_flips": 27,
+        "total_profit": 3136177.0,
+        "avg_profit_per_flip": 116154.70370370371,
+        "avg_hold_days": 73.4074074074074,
+        "avg_roi": 100.0
+      },
+      {
+        "investor_name": "Southern Holdings Inc",
+        "total_flips": 27,
+        "total_profit": 3092402.0,
+        "avg_profit_per_flip": 114533.4074074074,
+        "avg_hold_days": 78.33333333333333,
+        "avg_roi": 100.0
+      }
+    ]
+  }
+}
