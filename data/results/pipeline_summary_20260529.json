@@ -1,0 +1,63 @@
+{
+  "timestamp": "2026-05-29T13:08:04.311294",
+  "pipeline_version": "1.0.0",
+  "data_summary": {
+    "total_transactions": 8411,
+    "unique_counties": 159,
+    "date_range": {
+      "min_date": "2025-11-30",
+      "max_date": "2026-05-29"
+    }
+  },
+  "flips_summary": {
+    "total_flips": 368,
+    "total_profit": 42032264.0,
+    "avg_profit": 114218.10869565218,
+    "avg_hold_days": 78.50815217391305
+  },
+  "investors_summary": {
+    "total_investors": 18,
+    "top_5_investors": [
+      {
+        "investor_name": "Georgia Property Investors",
+        "total_flips": 31,
+        "total_profit": 3547426.0,
+        "avg_profit_per_flip": 114433.09677419355,
+        "avg_hold_days": 85.09677419354838,
+        "avg_roi": 100.0
+      },
+      {
+        "investor_name": "Atlanta Flip Masters LLC",
+        "total_flips": 28,
+        "total_profit": 3119249.0,
+        "avg_profit_per_flip": 111401.75,
+        "avg_hold_days": 77.92857142857143,
+        "avg_roi": 100.0
+      },
+      {
+        "investor_name": "Peach State Investments",
+        "total_flips": 27,
+        "total_profit": 3130922.0,
+        "avg_profit_per_flip": 115960.07407407407,
+        "avg_hold_days": 76.07407407407408,
+        "avg_roi": 100.0
+      },
+      {
+        "investor_name": "Residential Ventures",
+        "total_flips": 24,
+        "total_profit": 2635685.0,
+        "avg_profit_per_flip": 109820.20833333333,
+        "avg_hold_days": 74.95833333333333,
+        "avg_roi": 100.0
+      },
+      {
+        "investor_name": "Metro Flip Team",
+        "total_flips": 23,
+        "total_profit": 2543778.0,
+        "avg_profit_per_flip": 110599.04347826086,
+        "avg_hold_days": 75.52173913043478,
+        "avg_roi": 100.0
+      }
+    ]
+  }
+}
