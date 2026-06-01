@@ -1,0 +1,63 @@
+{
+  "timestamp": "2026-06-01T14:02:59.881108",
+  "pipeline_version": "1.0.0",
+  "data_summary": {
+    "total_transactions": 8449,
+    "unique_counties": 159,
+    "date_range": {
+      "min_date": "2025-12-03",
+      "max_date": "2026-06-01"
+    }
+  },
+  "flips_summary": {
+    "total_flips": 374,
+    "total_profit": 42959726.0,
+    "avg_profit": 114865.57754010695,
+    "avg_hold_days": 81.98930481283422
+  },
+  "investors_summary": {
+    "total_investors": 18,
+    "top_5_investors": [
+      {
+        "investor_name": "Renovation Experts",
+        "total_flips": 29,
+        "total_profit": 3524535.0,
+        "avg_profit_per_flip": 121535.68965517242,
+        "avg_hold_days": 73.89655172413794,
+        "avg_roi": 100.0
+      },
+      {
+        "investor_name": "Investor Collective",
+        "total_flips": 29,
+        "total_profit": 3167102.0,
+        "avg_profit_per_flip": 109210.41379310345,
+        "avg_hold_days": 69.62068965517241,
+        "avg_roi": 100.0
+      },
+      {
+        "investor_name": "Atlanta Flip Masters LLC",
+        "total_flips": 26,
+        "total_profit": 2862211.0,
+        "avg_profit_per_flip": 110085.03846153847,
+        "avg_hold_days": 73.26923076923077,
+        "avg_roi": 100.0
+      },
+      {
+        "investor_name": "Peach State Investments",
+        "total_flips": 25,
+        "total_profit": 2775201.0,
+        "avg_profit_per_flip": 111008.04,
+        "avg_hold_days": 78.76,
+        "avg_roi": 100.0
+      },
+      {
+        "investor_name": "Georgia Renovation Group",
+        "total_flips": 25,
+        "total_profit": 2929853.0,
+        "avg_profit_per_flip": 117194.12,
+        "avg_hold_days": 90.28,
+        "avg_roi": 100.0
+      }
+    ]
+  }
+}
