@@ -1,0 +1,63 @@
+{
+  "timestamp": "2026-06-08T13:29:53.478089",
+  "pipeline_version": "1.0.0",
+  "data_summary": {
+    "total_transactions": 8461,
+    "unique_counties": 159,
+    "date_range": {
+      "min_date": "2025-12-10",
+      "max_date": "2026-06-08"
+    }
+  },
+  "flips_summary": {
+    "total_flips": 396,
+    "total_profit": 44883774.0,
+    "avg_profit": 113342.86363636363,
+    "avg_hold_days": 78.28030303030303
+  },
+  "investors_summary": {
+    "total_investors": 18,
+    "top_5_investors": [
+      {
+        "investor_name": "Quick Turn Properties",
+        "total_flips": 40,
+        "total_profit": 4513444.0,
+        "avg_profit_per_flip": 112836.1,
+        "avg_hold_days": 80.575,
+        "avg_roi": 100.0
+      },
+      {
+        "investor_name": "Capital Flip Group",
+        "total_flips": 30,
+        "total_profit": 3300444.0,
+        "avg_profit_per_flip": 110014.8,
+        "avg_hold_days": 69.06666666666666,
+        "avg_roi": 100.0
+      },
+      {
+        "investor_name": "Residential Ventures",
+        "total_flips": 26,
+        "total_profit": 2794404.0,
+        "avg_profit_per_flip": 107477.07692307692,
+        "avg_hold_days": 80.03846153846153,
+        "avg_roi": 100.0
+      },
+      {
+        "investor_name": "Atlanta Capital Partners",
+        "total_flips": 26,
+        "total_profit": 3002581.0,
+        "avg_profit_per_flip": 115483.88461538461,
+        "avg_hold_days": 77.26923076923077,
+        "avg_roi": 100.0
+      },
+      {
+        "investor_name": "Peach State Investments",
+        "total_flips": 24,
+        "total_profit": 2786783.0,
+        "avg_profit_per_flip": 116115.95833333333,
+        "avg_hold_days": 82.95833333333333,
+        "avg_roi": 100.0
+      }
+    ]
+  }
+}
