@@ -1,0 +1,63 @@
+{
+  "timestamp": "2026-06-09T13:02:21.573385",
+  "pipeline_version": "1.0.0",
+  "data_summary": {
+    "total_transactions": 8455,
+    "unique_counties": 159,
+    "date_range": {
+      "min_date": "2025-12-11",
+      "max_date": "2026-06-09"
+    }
+  },
+  "flips_summary": {
+    "total_flips": 380,
+    "total_profit": 43559056.0,
+    "avg_profit": 114629.0947368421,
+    "avg_hold_days": 81.06052631578947
+  },
+  "investors_summary": {
+    "total_investors": 18,
+    "top_5_investors": [
+      {
+        "investor_name": "Atlanta Flip Masters LLC",
+        "total_flips": 30,
+        "total_profit": 3480720.0,
+        "avg_profit_per_flip": 116024.0,
+        "avg_hold_days": 81.86666666666666,
+        "avg_roi": 100.0
+      },
+      {
+        "investor_name": "Investor Collective",
+        "total_flips": 30,
+        "total_profit": 3596119.0,
+        "avg_profit_per_flip": 119870.63333333333,
+        "avg_hold_days": 78.5,
+        "avg_roi": 100.0
+      },
+      {
+        "investor_name": "Residential Ventures",
+        "total_flips": 27,
+        "total_profit": 3195234.0,
+        "avg_profit_per_flip": 118342.0,
+        "avg_hold_days": 89.66666666666667,
+        "avg_roi": 100.0
+      },
+      {
+        "investor_name": "Georgia Home Solutions",
+        "total_flips": 27,
+        "total_profit": 2805660.0,
+        "avg_profit_per_flip": 103913.33333333333,
+        "avg_hold_days": 80.92592592592592,
+        "avg_roi": 100.0
+      },
+      {
+        "investor_name": "Southern Holdings Inc",
+        "total_flips": 26,
+        "total_profit": 3053721.0,
+        "avg_profit_per_flip": 117450.80769230769,
+        "avg_hold_days": 60.23076923076923,
+        "avg_roi": 100.0
+      }
+    ]
+  }
+}
