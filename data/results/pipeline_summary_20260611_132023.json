@@ -1,0 +1,63 @@
+{
+  "timestamp": "2026-06-11T13:20:23.016962",
+  "pipeline_version": "1.0.0",
+  "data_summary": {
+    "total_transactions": 8460,
+    "unique_counties": 159,
+    "date_range": {
+      "min_date": "2025-12-13",
+      "max_date": "2026-06-11"
+    }
+  },
+  "flips_summary": {
+    "total_flips": 392,
+    "total_profit": 44110635.0,
+    "avg_profit": 112527.13010204081,
+    "avg_hold_days": 76.41071428571429
+  },
+  "investors_summary": {
+    "total_investors": 18,
+    "top_5_investors": [
+      {
+        "investor_name": "Renovation Experts",
+        "total_flips": 37,
+        "total_profit": 4192229.0,
+        "avg_profit_per_flip": 113303.48648648648,
+        "avg_hold_days": 72.43243243243244,
+        "avg_roi": 100.0
+      },
+      {
+        "investor_name": "Metro Flip Team",
+        "total_flips": 30,
+        "total_profit": 3355235.0,
+        "avg_profit_per_flip": 111841.16666666667,
+        "avg_hold_days": 73.7,
+        "avg_roi": 100.0
+      },
+      {
+        "investor_name": "Atlanta Capital Partners",
+        "total_flips": 27,
+        "total_profit": 2994290.0,
+        "avg_profit_per_flip": 110899.62962962964,
+        "avg_hold_days": 70.14814814814815,
+        "avg_roi": 100.0
+      },
+      {
+        "investor_name": "Southern Holdings Inc",
+        "total_flips": 24,
+        "total_profit": 2608495.0,
+        "avg_profit_per_flip": 108687.29166666667,
+        "avg_hold_days": 80.04166666666667,
+        "avg_roi": 100.0
+      },
+      {
+        "investor_name": "Residential Ventures",
+        "total_flips": 24,
+        "total_profit": 2606769.0,
+        "avg_profit_per_flip": 108615.375,
+        "avg_hold_days": 92.5,
+        "avg_roi": 100.0
+      }
+    ]
+  }
+}
