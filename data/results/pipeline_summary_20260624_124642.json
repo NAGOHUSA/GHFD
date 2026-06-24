@@ -1,0 +1,63 @@
+{
+  "timestamp": "2026-06-24T12:46:42.657091",
+  "pipeline_version": "1.0.0",
+  "data_summary": {
+    "total_transactions": 8431,
+    "unique_counties": 159,
+    "date_range": {
+      "min_date": "2025-12-26",
+      "max_date": "2026-06-24"
+    }
+  },
+  "flips_summary": {
+    "total_flips": 349,
+    "total_profit": 39373804.0,
+    "avg_profit": 112818.92263610315,
+    "avg_hold_days": 76.20630372492836
+  },
+  "investors_summary": {
+    "total_investors": 18,
+    "top_5_investors": [
+      {
+        "investor_name": "Metro Atlanta Investments",
+        "total_flips": 23,
+        "total_profit": 2667003.0,
+        "avg_profit_per_flip": 115956.65217391304,
+        "avg_hold_days": 82.0,
+        "avg_roi": 100.0
+      },
+      {
+        "investor_name": "Georgia Home Solutions",
+        "total_flips": 22,
+        "total_profit": 2326389.0,
+        "avg_profit_per_flip": 105744.95454545454,
+        "avg_hold_days": 93.95454545454545,
+        "avg_roi": 100.0
+      },
+      {
+        "investor_name": "Investor Collective",
+        "total_flips": 22,
+        "total_profit": 2457437.0,
+        "avg_profit_per_flip": 111701.68181818182,
+        "avg_hold_days": 88.5909090909091,
+        "avg_roi": 100.0
+      },
+      {
+        "investor_name": "Atlanta Capital Partners",
+        "total_flips": 21,
+        "total_profit": 2392854.0,
+        "avg_profit_per_flip": 113945.42857142857,
+        "avg_hold_days": 78.52380952380952,
+        "avg_roi": 100.0
+      },
+      {
+        "investor_name": "Metro Flip Team",
+        "total_flips": 21,
+        "total_profit": 2274651.0,
+        "avg_profit_per_flip": 108316.71428571429,
+        "avg_hold_days": 78.61904761904762,
+        "avg_roi": 100.0
+      }
+    ]
+  }
+}
