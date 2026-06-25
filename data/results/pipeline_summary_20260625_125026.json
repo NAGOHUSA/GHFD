@@ -1,0 +1,63 @@
+{
+  "timestamp": "2026-06-25T12:50:26.686915",
+  "pipeline_version": "1.0.0",
+  "data_summary": {
+    "total_transactions": 8470,
+    "unique_counties": 159,
+    "date_range": {
+      "min_date": "2025-12-27",
+      "max_date": "2026-06-25"
+    }
+  },
+  "flips_summary": {
+    "total_flips": 404,
+    "total_profit": 46624291.0,
+    "avg_profit": 115406.66089108911,
+    "avg_hold_days": 82.50742574257426
+  },
+  "investors_summary": {
+    "total_investors": 18,
+    "top_5_investors": [
+      {
+        "investor_name": "Atlanta Capital Partners",
+        "total_flips": 32,
+        "total_profit": 3830266.0,
+        "avg_profit_per_flip": 119695.8125,
+        "avg_hold_days": 78.1875,
+        "avg_roi": 100.0
+      },
+      {
+        "investor_name": "Investor Collective",
+        "total_flips": 32,
+        "total_profit": 3711381.0,
+        "avg_profit_per_flip": 115980.65625,
+        "avg_hold_days": 77.25,
+        "avg_roi": 100.0
+      },
+      {
+        "investor_name": "Peachtree RE Group",
+        "total_flips": 27,
+        "total_profit": 3000693.0,
+        "avg_profit_per_flip": 111136.77777777778,
+        "avg_hold_days": 87.22222222222223,
+        "avg_roi": 100.0
+      },
+      {
+        "investor_name": "Fix & Flip GA",
+        "total_flips": 27,
+        "total_profit": 3230831.0,
+        "avg_profit_per_flip": 119660.4074074074,
+        "avg_hold_days": 88.66666666666667,
+        "avg_roi": 100.0
+      },
+      {
+        "investor_name": "Southern Holdings Inc",
+        "total_flips": 26,
+        "total_profit": 3033344.0,
+        "avg_profit_per_flip": 116667.07692307692,
+        "avg_hold_days": 73.6923076923077,
+        "avg_roi": 100.0
+      }
+    ]
+  }
+}
