@@ -1,0 +1,63 @@
+{
+  "timestamp": "2026-07-03T12:40:01.611632",
+  "pipeline_version": "1.0.0",
+  "data_summary": {
+    "total_transactions": 8442,
+    "unique_counties": 159,
+    "date_range": {
+      "min_date": "2026-01-04",
+      "max_date": "2026-07-03"
+    }
+  },
+  "flips_summary": {
+    "total_flips": 372,
+    "total_profit": 42661144.0,
+    "avg_profit": 114680.49462365592,
+    "avg_hold_days": 79.29838709677419
+  },
+  "investors_summary": {
+    "total_investors": 18,
+    "top_5_investors": [
+      {
+        "investor_name": "Southern Holdings Inc",
+        "total_flips": 34,
+        "total_profit": 3881539.0,
+        "avg_profit_per_flip": 114162.91176470589,
+        "avg_hold_days": 73.52941176470588,
+        "avg_roi": 100.0
+      },
+      {
+        "investor_name": "Metro Atlanta Investments",
+        "total_flips": 26,
+        "total_profit": 3079587.0,
+        "avg_profit_per_flip": 118445.65384615384,
+        "avg_hold_days": 78.5,
+        "avg_roi": 100.0
+      },
+      {
+        "investor_name": "Fix & Flip GA",
+        "total_flips": 25,
+        "total_profit": 2650004.0,
+        "avg_profit_per_flip": 106000.16,
+        "avg_hold_days": 88.4,
+        "avg_roi": 100.0
+      },
+      {
+        "investor_name": "Quick Turn Properties",
+        "total_flips": 24,
+        "total_profit": 2798954.0,
+        "avg_profit_per_flip": 116623.08333333333,
+        "avg_hold_days": 74.5,
+        "avg_roi": 100.0
+      },
+      {
+        "investor_name": "Urban Development LLC",
+        "total_flips": 23,
+        "total_profit": 2712789.0,
+        "avg_profit_per_flip": 117947.34782608696,
+        "avg_hold_days": 77.69565217391305,
+        "avg_roi": 100.0
+      }
+    ]
+  }
+}
