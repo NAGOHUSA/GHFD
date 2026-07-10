@@ -1,0 +1,63 @@
+{
+  "timestamp": "2026-07-10T12:46:53.610546",
+  "pipeline_version": "1.0.0",
+  "data_summary": {
+    "total_transactions": 8466,
+    "unique_counties": 159,
+    "date_range": {
+      "min_date": "2026-01-11",
+      "max_date": "2026-07-10"
+    }
+  },
+  "flips_summary": {
+    "total_flips": 413,
+    "total_profit": 47789125.0,
+    "avg_profit": 115712.16707021791,
+    "avg_hold_days": 82.1138014527845
+  },
+  "investors_summary": {
+    "total_investors": 18,
+    "top_5_investors": [
+      {
+        "investor_name": "Metro Flip Team",
+        "total_flips": 36,
+        "total_profit": 4301496.0,
+        "avg_profit_per_flip": 119486.0,
+        "avg_hold_days": 88.16666666666667,
+        "avg_roi": 100.0
+      },
+      {
+        "investor_name": "Georgia Renovation Group",
+        "total_flips": 34,
+        "total_profit": 3843600.0,
+        "avg_profit_per_flip": 113047.05882352941,
+        "avg_hold_days": 85.79411764705883,
+        "avg_roi": 100.0
+      },
+      {
+        "investor_name": "Investor Collective",
+        "total_flips": 28,
+        "total_profit": 3121455.0,
+        "avg_profit_per_flip": 111480.53571428571,
+        "avg_hold_days": 93.60714285714286,
+        "avg_roi": 100.0
+      },
+      {
+        "investor_name": "Urban Development LLC",
+        "total_flips": 28,
+        "total_profit": 3121834.0,
+        "avg_profit_per_flip": 111494.07142857143,
+        "avg_hold_days": 76.60714285714286,
+        "avg_roi": 100.0
+      },
+      {
+        "investor_name": "Atlanta Flip Masters LLC",
+        "total_flips": 26,
+        "total_profit": 2985872.0,
+        "avg_profit_per_flip": 114841.23076923077,
+        "avg_hold_days": 80.03846153846153,
+        "avg_roi": 100.0
+      }
+    ]
+  }
+}
