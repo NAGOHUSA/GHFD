@@ -1,0 +1,63 @@
+{
+  "timestamp": "2026-07-24T12:32:29.230851",
+  "pipeline_version": "1.0.0",
+  "data_summary": {
+    "total_transactions": 8445,
+    "unique_counties": 159,
+    "date_range": {
+      "min_date": "2026-01-25",
+      "max_date": "2026-07-24"
+    }
+  },
+  "flips_summary": {
+    "total_flips": 400,
+    "total_profit": 45593849.0,
+    "avg_profit": 113984.6225,
+    "avg_hold_days": 80.465
+  },
+  "investors_summary": {
+    "total_investors": 18,
+    "top_5_investors": [
+      {
+        "investor_name": "Quick Turn Properties",
+        "total_flips": 30,
+        "total_profit": 3515938.0,
+        "avg_profit_per_flip": 117197.93333333333,
+        "avg_hold_days": 86.1,
+        "avg_roi": 100.0
+      },
+      {
+        "investor_name": "Atlanta Flip Masters LLC",
+        "total_flips": 28,
+        "total_profit": 3199786.0,
+        "avg_profit_per_flip": 114278.07142857143,
+        "avg_hold_days": 80.67857142857143,
+        "avg_roi": 100.0
+      },
+      {
+        "investor_name": "Peach State Investments",
+        "total_flips": 27,
+        "total_profit": 2963798.0,
+        "avg_profit_per_flip": 109770.29629629629,
+        "avg_hold_days": 86.33333333333333,
+        "avg_roi": 100.0
+      },
+      {
+        "investor_name": "Metro Atlanta Investments",
+        "total_flips": 27,
+        "total_profit": 3031062.0,
+        "avg_profit_per_flip": 112261.55555555556,
+        "avg_hold_days": 83.81481481481481,
+        "avg_roi": 100.0
+      },
+      {
+        "investor_name": "Property Solutions GA",
+        "total_flips": 27,
+        "total_profit": 3243035.0,
+        "avg_profit_per_flip": 120112.4074074074,
+        "avg_hold_days": 82.55555555555556,
+        "avg_roi": 100.0
+      }
+    ]
+  }
+}
