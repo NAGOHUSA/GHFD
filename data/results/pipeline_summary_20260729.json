@@ -1,0 +1,63 @@
+{
+  "timestamp": "2026-07-29T12:42:21.283682",
+  "pipeline_version": "1.0.0",
+  "data_summary": {
+    "total_transactions": 8429,
+    "unique_counties": 159,
+    "date_range": {
+      "min_date": "2026-01-30",
+      "max_date": "2026-07-29"
+    }
+  },
+  "flips_summary": {
+    "total_flips": 386,
+    "total_profit": 44010491.0,
+    "avg_profit": 114016.81606217616,
+    "avg_hold_days": 81.48445595854922
+  },
+  "investors_summary": {
+    "total_investors": 18,
+    "top_5_investors": [
+      {
+        "investor_name": "Urban Development LLC",
+        "total_flips": 29,
+        "total_profit": 3274298.0,
+        "avg_profit_per_flip": 112906.8275862069,
+        "avg_hold_days": 83.93103448275862,
+        "avg_roi": 100.0
+      },
+      {
+        "investor_name": "Metro Flip Team",
+        "total_flips": 27,
+        "total_profit": 3145817.0,
+        "avg_profit_per_flip": 116511.74074074074,
+        "avg_hold_days": 71.74074074074075,
+        "avg_roi": 100.0
+      },
+      {
+        "investor_name": "Peach State Investments",
+        "total_flips": 27,
+        "total_profit": 3110746.0,
+        "avg_profit_per_flip": 115212.81481481482,
+        "avg_hold_days": 89.62962962962963,
+        "avg_roi": 100.0
+      },
+      {
+        "investor_name": "Renovation Experts",
+        "total_flips": 25,
+        "total_profit": 2915905.0,
+        "avg_profit_per_flip": 116636.2,
+        "avg_hold_days": 84.8,
+        "avg_roi": 100.0
+      },
+      {
+        "investor_name": "Metro Atlanta Investments",
+        "total_flips": 25,
+        "total_profit": 2716971.0,
+        "avg_profit_per_flip": 108678.84,
+        "avg_hold_days": 74.44,
+        "avg_roi": 100.0
+      }
+    ]
+  }
+}
