@@ -1,0 +1,63 @@
+{
+  "timestamp": "2026-08-06T13:59:05.876461",
+  "pipeline_version": "1.0.0",
+  "data_summary": {
+    "total_transactions": 8459,
+    "unique_counties": 159,
+    "date_range": {
+      "min_date": "2026-02-07",
+      "max_date": "2026-08-06"
+    }
+  },
+  "flips_summary": {
+    "total_flips": 395,
+    "total_profit": 45014908.0,
+    "avg_profit": 113961.79240506329,
+    "avg_hold_days": 77.26582278481013
+  },
+  "investors_summary": {
+    "total_investors": 18,
+    "top_5_investors": [
+      {
+        "investor_name": "Peach State Investments",
+        "total_flips": 29,
+        "total_profit": 3340330.0,
+        "avg_profit_per_flip": 115183.79310344828,
+        "avg_hold_days": 76.20689655172414,
+        "avg_roi": 100.0
+      },
+      {
+        "investor_name": "Southern Holdings Inc",
+        "total_flips": 29,
+        "total_profit": 3443345.0,
+        "avg_profit_per_flip": 118736.03448275862,
+        "avg_hold_days": 64.41379310344827,
+        "avg_roi": 100.0
+      },
+      {
+        "investor_name": "Investor Collective",
+        "total_flips": 28,
+        "total_profit": 3267533.0,
+        "avg_profit_per_flip": 116697.60714285714,
+        "avg_hold_days": 83.35714285714286,
+        "avg_roi": 100.0
+      },
+      {
+        "investor_name": "Atlanta Flip Masters LLC",
+        "total_flips": 27,
+        "total_profit": 3117430.0,
+        "avg_profit_per_flip": 115460.37037037036,
+        "avg_hold_days": 83.37037037037037,
+        "avg_roi": 100.0
+      },
+      {
+        "investor_name": "Metro Atlanta Investments",
+        "total_flips": 25,
+        "total_profit": 2865743.0,
+        "avg_profit_per_flip": 114629.72,
+        "avg_hold_days": 67.64,
+        "avg_roi": 100.0
+      }
+    ]
+  }
+}
