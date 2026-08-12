@@ -1,0 +1,63 @@
+{
+  "timestamp": "2026-08-12T13:01:16.834774",
+  "pipeline_version": "1.0.0",
+  "data_summary": {
+    "total_transactions": 8424,
+    "unique_counties": 159,
+    "date_range": {
+      "min_date": "2026-02-13",
+      "max_date": "2026-08-12"
+    }
+  },
+  "flips_summary": {
+    "total_flips": 373,
+    "total_profit": 42245146.0,
+    "avg_profit": 113257.76407506703,
+    "avg_hold_days": 79.89008042895442
+  },
+  "investors_summary": {
+    "total_investors": 18,
+    "top_5_investors": [
+      {
+        "investor_name": "Georgia Property Investors",
+        "total_flips": 29,
+        "total_profit": 3083270.0,
+        "avg_profit_per_flip": 106319.6551724138,
+        "avg_hold_days": 82.58620689655173,
+        "avg_roi": 100.0
+      },
+      {
+        "investor_name": "Metro Atlanta Investments",
+        "total_flips": 27,
+        "total_profit": 3109696.0,
+        "avg_profit_per_flip": 115173.92592592593,
+        "avg_hold_days": 85.74074074074075,
+        "avg_roi": 100.0
+      },
+      {
+        "investor_name": "Southern Holdings Inc",
+        "total_flips": 27,
+        "total_profit": 3065495.0,
+        "avg_profit_per_flip": 113536.85185185185,
+        "avg_hold_days": 85.29629629629629,
+        "avg_roi": 100.0
+      },
+      {
+        "investor_name": "Renovation Experts",
+        "total_flips": 24,
+        "total_profit": 2758450.0,
+        "avg_profit_per_flip": 114935.41666666667,
+        "avg_hold_days": 66.83333333333333,
+        "avg_roi": 100.0
+      },
+      {
+        "investor_name": "Georgia Home Solutions",
+        "total_flips": 23,
+        "total_profit": 2663943.0,
+        "avg_profit_per_flip": 115823.60869565218,
+        "avg_hold_days": 75.65217391304348,
+        "avg_roi": 100.0
+      }
+    ]
+  }
+}
