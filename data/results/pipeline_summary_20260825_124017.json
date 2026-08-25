@@ -1,0 +1,63 @@
+{
+  "timestamp": "2026-08-25T12:40:17.625735",
+  "pipeline_version": "1.0.0",
+  "data_summary": {
+    "total_transactions": 8465,
+    "unique_counties": 159,
+    "date_range": {
+      "min_date": "2026-02-26",
+      "max_date": "2026-08-25"
+    }
+  },
+  "flips_summary": {
+    "total_flips": 408,
+    "total_profit": 46878302.0,
+    "avg_profit": 114897.79901960785,
+    "avg_hold_days": 78.70098039215686
+  },
+  "investors_summary": {
+    "total_investors": 18,
+    "top_5_investors": [
+      {
+        "investor_name": "Peachtree RE Group",
+        "total_flips": 33,
+        "total_profit": 3796835.0,
+        "avg_profit_per_flip": 115055.60606060606,
+        "avg_hold_days": 66.84848484848484,
+        "avg_roi": 100.0
+      },
+      {
+        "investor_name": "Peach State Investments",
+        "total_flips": 28,
+        "total_profit": 3287937.0,
+        "avg_profit_per_flip": 117426.32142857143,
+        "avg_hold_days": 80.71428571428571,
+        "avg_roi": 100.0
+      },
+      {
+        "investor_name": "Renovation Experts",
+        "total_flips": 28,
+        "total_profit": 3282031.0,
+        "avg_profit_per_flip": 117215.39285714286,
+        "avg_hold_days": 86.10714285714286,
+        "avg_roi": 100.0
+      },
+      {
+        "investor_name": "Investor Collective",
+        "total_flips": 27,
+        "total_profit": 3122999.0,
+        "avg_profit_per_flip": 115666.62962962964,
+        "avg_hold_days": 80.5925925925926,
+        "avg_roi": 100.0
+      },
+      {
+        "investor_name": "Property Solutions GA",
+        "total_flips": 24,
+        "total_profit": 2823506.0,
+        "avg_profit_per_flip": 117646.08333333333,
+        "avg_hold_days": 91.29166666666667,
+        "avg_roi": 100.0
+      }
+    ]
+  }
+}
