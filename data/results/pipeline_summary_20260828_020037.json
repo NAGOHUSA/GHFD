@@ -1,0 +1,63 @@
+{
+  "timestamp": "2026-08-28T02:00:37.603374",
+  "pipeline_version": "1.0.0",
+  "data_summary": {
+    "total_transactions": 8423,
+    "unique_counties": 159,
+    "date_range": {
+      "min_date": "2026-03-01",
+      "max_date": "2026-08-28"
+    }
+  },
+  "flips_summary": {
+    "total_flips": 367,
+    "total_profit": 41737079.0,
+    "avg_profit": 113725.01089918255,
+    "avg_hold_days": 79.55858310626704
+  },
+  "investors_summary": {
+    "total_investors": 18,
+    "top_5_investors": [
+      {
+        "investor_name": "Georgia Home Solutions",
+        "total_flips": 26,
+        "total_profit": 2878651.0,
+        "avg_profit_per_flip": 110717.34615384616,
+        "avg_hold_days": 82.92307692307692,
+        "avg_roi": 100.0
+      },
+      {
+        "investor_name": "Fix & Flip GA",
+        "total_flips": 26,
+        "total_profit": 3003954.0,
+        "avg_profit_per_flip": 115536.69230769231,
+        "avg_hold_days": 75.92307692307692,
+        "avg_roi": 100.0
+      },
+      {
+        "investor_name": "Georgia Property Investors",
+        "total_flips": 25,
+        "total_profit": 2810154.0,
+        "avg_profit_per_flip": 112406.16,
+        "avg_hold_days": 80.24,
+        "avg_roi": 100.0
+      },
+      {
+        "investor_name": "Capital Flip Group",
+        "total_flips": 24,
+        "total_profit": 2710862.0,
+        "avg_profit_per_flip": 112952.58333333333,
+        "avg_hold_days": 88.375,
+        "avg_roi": 100.0
+      },
+      {
+        "investor_name": "Peach State Investments",
+        "total_flips": 24,
+        "total_profit": 2797522.0,
+        "avg_profit_per_flip": 116563.41666666667,
+        "avg_hold_days": 80.83333333333333,
+        "avg_roi": 100.0
+      }
+    ]
+  }
+}
