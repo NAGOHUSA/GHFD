@@ -1,0 +1,63 @@
+{
+  "timestamp": "2026-09-02T15:55:28.495491",
+  "pipeline_version": "1.0.0",
+  "data_summary": {
+    "total_transactions": 8449,
+    "unique_counties": 159,
+    "date_range": {
+      "min_date": "2026-03-06",
+      "max_date": "2026-09-02"
+    }
+  },
+  "flips_summary": {
+    "total_flips": 394,
+    "total_profit": 44981036.0,
+    "avg_profit": 114165.06598984772,
+    "avg_hold_days": 77.22081218274111
+  },
+  "investors_summary": {
+    "total_investors": 18,
+    "top_5_investors": [
+      {
+        "investor_name": "Residential Ventures",
+        "total_flips": 28,
+        "total_profit": 3202146.0,
+        "avg_profit_per_flip": 114362.35714285714,
+        "avg_hold_days": 81.92857142857143,
+        "avg_roi": 100.0
+      },
+      {
+        "investor_name": "Metro Atlanta Investments",
+        "total_flips": 28,
+        "total_profit": 3136880.0,
+        "avg_profit_per_flip": 112031.42857142857,
+        "avg_hold_days": 75.75,
+        "avg_roi": 100.0
+      },
+      {
+        "investor_name": "Peach State Investments",
+        "total_flips": 24,
+        "total_profit": 2762117.0,
+        "avg_profit_per_flip": 115088.20833333333,
+        "avg_hold_days": 80.20833333333333,
+        "avg_roi": 100.0
+      },
+      {
+        "investor_name": "Renovation Experts",
+        "total_flips": 24,
+        "total_profit": 2789350.0,
+        "avg_profit_per_flip": 116222.91666666667,
+        "avg_hold_days": 74.0,
+        "avg_roi": 100.0
+      },
+      {
+        "investor_name": "Peachtree RE Group",
+        "total_flips": 23,
+        "total_profit": 2578784.0,
+        "avg_profit_per_flip": 112121.04347826086,
+        "avg_hold_days": 78.1304347826087,
+        "avg_roi": 100.0
+      }
+    ]
+  }
+}
