@@ -1,0 +1,63 @@
+{
+  "timestamp": "2026-09-09T15:52:37.398886",
+  "pipeline_version": "1.0.0",
+  "data_summary": {
+    "total_transactions": 8450,
+    "unique_counties": 159,
+    "date_range": {
+      "min_date": "2026-03-13",
+      "max_date": "2026-09-09"
+    }
+  },
+  "flips_summary": {
+    "total_flips": 402,
+    "total_profit": 46013917.0,
+    "avg_profit": 114462.48009950249,
+    "avg_hold_days": 79.06218905472637
+  },
+  "investors_summary": {
+    "total_investors": 18,
+    "top_5_investors": [
+      {
+        "investor_name": "Urban Development LLC",
+        "total_flips": 30,
+        "total_profit": 3314773.0,
+        "avg_profit_per_flip": 110492.43333333333,
+        "avg_hold_days": 83.86666666666666,
+        "avg_roi": 100.0
+      },
+      {
+        "investor_name": "Georgia Renovation Group",
+        "total_flips": 29,
+        "total_profit": 3423576.0,
+        "avg_profit_per_flip": 118054.3448275862,
+        "avg_hold_days": 88.96551724137932,
+        "avg_roi": 100.0
+      },
+      {
+        "investor_name": "Renovation Experts",
+        "total_flips": 28,
+        "total_profit": 3317004.0,
+        "avg_profit_per_flip": 118464.42857142857,
+        "avg_hold_days": 76.71428571428571,
+        "avg_roi": 100.0
+      },
+      {
+        "investor_name": "Southern Holdings Inc",
+        "total_flips": 28,
+        "total_profit": 3164122.0,
+        "avg_profit_per_flip": 113004.35714285714,
+        "avg_hold_days": 74.75,
+        "avg_roi": 100.0
+      },
+      {
+        "investor_name": "Quick Turn Properties",
+        "total_flips": 24,
+        "total_profit": 2760730.0,
+        "avg_profit_per_flip": 115030.41666666667,
+        "avg_hold_days": 74.04166666666667,
+        "avg_roi": 100.0
+      }
+    ]
+  }
+}
