@@ -1,0 +1,63 @@
+{
+  "timestamp": "2026-09-14T17:37:47.259527",
+  "pipeline_version": "1.0.0",
+  "data_summary": {
+    "total_transactions": 8423,
+    "unique_counties": 159,
+    "date_range": {
+      "min_date": "2026-03-18",
+      "max_date": "2026-09-14"
+    }
+  },
+  "flips_summary": {
+    "total_flips": 378,
+    "total_profit": 43058080.0,
+    "avg_profit": 113910.26455026455,
+    "avg_hold_days": 79.62169312169313
+  },
+  "investors_summary": {
+    "total_investors": 18,
+    "top_5_investors": [
+      {
+        "investor_name": "Peach State Investments",
+        "total_flips": 30,
+        "total_profit": 3522675.0,
+        "avg_profit_per_flip": 117422.5,
+        "avg_hold_days": 74.0,
+        "avg_roi": 100.0
+      },
+      {
+        "investor_name": "Urban Development LLC",
+        "total_flips": 30,
+        "total_profit": 3425003.0,
+        "avg_profit_per_flip": 114166.76666666666,
+        "avg_hold_days": 83.36666666666666,
+        "avg_roi": 100.0
+      },
+      {
+        "investor_name": "Atlanta Capital Partners",
+        "total_flips": 27,
+        "total_profit": 3004991.0,
+        "avg_profit_per_flip": 111295.96296296296,
+        "avg_hold_days": 73.74074074074075,
+        "avg_roi": 100.0
+      },
+      {
+        "investor_name": "Peachtree RE Group",
+        "total_flips": 24,
+        "total_profit": 2808155.0,
+        "avg_profit_per_flip": 117006.45833333333,
+        "avg_hold_days": 77.5,
+        "avg_roi": 100.0
+      },
+      {
+        "investor_name": "Property Solutions GA",
+        "total_flips": 24,
+        "total_profit": 2849628.0,
+        "avg_profit_per_flip": 118734.5,
+        "avg_hold_days": 73.83333333333333,
+        "avg_roi": 100.0
+      }
+    ]
+  }
+}
