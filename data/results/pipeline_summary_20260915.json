@@ -1,0 +1,63 @@
+{
+  "timestamp": "2026-09-15T16:11:16.190746",
+  "pipeline_version": "1.0.0",
+  "data_summary": {
+    "total_transactions": 8455,
+    "unique_counties": 159,
+    "date_range": {
+      "min_date": "2026-03-19",
+      "max_date": "2026-09-15"
+    }
+  },
+  "flips_summary": {
+    "total_flips": 388,
+    "total_profit": 44064262.0,
+    "avg_profit": 113567.68556701031,
+    "avg_hold_days": 83.34536082474227
+  },
+  "investors_summary": {
+    "total_investors": 18,
+    "top_5_investors": [
+      {
+        "investor_name": "Atlanta Capital Partners",
+        "total_flips": 30,
+        "total_profit": 3344239.0,
+        "avg_profit_per_flip": 111474.63333333333,
+        "avg_hold_days": 88.13333333333334,
+        "avg_roi": 100.0
+      },
+      {
+        "investor_name": "Atlanta Flip Masters LLC",
+        "total_flips": 30,
+        "total_profit": 3323882.0,
+        "avg_profit_per_flip": 110796.06666666667,
+        "avg_hold_days": 88.23333333333333,
+        "avg_roi": 100.0
+      },
+      {
+        "investor_name": "Investor Collective",
+        "total_flips": 28,
+        "total_profit": 3297838.0,
+        "avg_profit_per_flip": 117779.92857142857,
+        "avg_hold_days": 89.53571428571429,
+        "avg_roi": 100.0
+      },
+      {
+        "investor_name": "Georgia Home Solutions",
+        "total_flips": 26,
+        "total_profit": 2903206.0,
+        "avg_profit_per_flip": 111661.76923076923,
+        "avg_hold_days": 83.42307692307692,
+        "avg_roi": 100.0
+      },
+      {
+        "investor_name": "Urban Development LLC",
+        "total_flips": 26,
+        "total_profit": 3132631.0,
+        "avg_profit_per_flip": 120485.80769230769,
+        "avg_hold_days": 76.34615384615384,
+        "avg_roi": 100.0
+      }
+    ]
+  }
+}
