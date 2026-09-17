@@ -1,0 +1,63 @@
+{
+  "timestamp": "2026-09-17T16:11:10.425305",
+  "pipeline_version": "1.0.0",
+  "data_summary": {
+    "total_transactions": 8417,
+    "unique_counties": 159,
+    "date_range": {
+      "min_date": "2026-03-21",
+      "max_date": "2026-09-17"
+    }
+  },
+  "flips_summary": {
+    "total_flips": 363,
+    "total_profit": 41607571.0,
+    "avg_profit": 114621.40771349863,
+    "avg_hold_days": 83.80440771349862
+  },
+  "investors_summary": {
+    "total_investors": 18,
+    "top_5_investors": [
+      {
+        "investor_name": "Fix & Flip GA",
+        "total_flips": 29,
+        "total_profit": 3331602.0,
+        "avg_profit_per_flip": 114882.8275862069,
+        "avg_hold_days": 87.82758620689656,
+        "avg_roi": 100.0
+      },
+      {
+        "investor_name": "Georgia Renovation Group",
+        "total_flips": 27,
+        "total_profit": 2990785.0,
+        "avg_profit_per_flip": 110769.81481481482,
+        "avg_hold_days": 73.0,
+        "avg_roi": 100.0
+      },
+      {
+        "investor_name": "Residential Ventures",
+        "total_flips": 24,
+        "total_profit": 2714453.0,
+        "avg_profit_per_flip": 113102.20833333333,
+        "avg_hold_days": 78.66666666666667,
+        "avg_roi": 100.0
+      },
+      {
+        "investor_name": "Metro Flip Team",
+        "total_flips": 23,
+        "total_profit": 2725992.0,
+        "avg_profit_per_flip": 118521.39130434782,
+        "avg_hold_days": 84.30434782608695,
+        "avg_roi": 100.0
+      },
+      {
+        "investor_name": "Capital Flip Group",
+        "total_flips": 23,
+        "total_profit": 2716601.0,
+        "avg_profit_per_flip": 118113.08695652174,
+        "avg_hold_days": 97.82608695652173,
+        "avg_roi": 100.0
+      }
+    ]
+  }
+}
