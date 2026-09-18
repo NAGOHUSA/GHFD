@@ -1,0 +1,63 @@
+{
+  "timestamp": "2026-09-18T15:46:41.695589",
+  "pipeline_version": "1.0.0",
+  "data_summary": {
+    "total_transactions": 8398,
+    "unique_counties": 159,
+    "date_range": {
+      "min_date": "2026-03-22",
+      "max_date": "2026-09-18"
+    }
+  },
+  "flips_summary": {
+    "total_flips": 354,
+    "total_profit": 39924202.0,
+    "avg_profit": 112780.23163841807,
+    "avg_hold_days": 80.6045197740113
+  },
+  "investors_summary": {
+    "total_investors": 18,
+    "top_5_investors": [
+      {
+        "investor_name": "Investor Collective",
+        "total_flips": 29,
+        "total_profit": 3143335.0,
+        "avg_profit_per_flip": 108390.86206896552,
+        "avg_hold_days": 94.72413793103448,
+        "avg_roi": 100.0
+      },
+      {
+        "investor_name": "Peach State Investments",
+        "total_flips": 26,
+        "total_profit": 2956174.0,
+        "avg_profit_per_flip": 113699.0,
+        "avg_hold_days": 77.65384615384616,
+        "avg_roi": 100.0
+      },
+      {
+        "investor_name": "Quick Turn Properties",
+        "total_flips": 26,
+        "total_profit": 3043294.0,
+        "avg_profit_per_flip": 117049.76923076923,
+        "avg_hold_days": 77.84615384615384,
+        "avg_roi": 100.0
+      },
+      {
+        "investor_name": "Georgia Home Solutions",
+        "total_flips": 24,
+        "total_profit": 2932461.0,
+        "avg_profit_per_flip": 122185.875,
+        "avg_hold_days": 86.33333333333333,
+        "avg_roi": 100.0
+      },
+      {
+        "investor_name": "Metro Flip Team",
+        "total_flips": 24,
+        "total_profit": 2558778.0,
+        "avg_profit_per_flip": 106615.75,
+        "avg_hold_days": 75.66666666666667,
+        "avg_roi": 100.0
+      }
+    ]
+  }
+}
