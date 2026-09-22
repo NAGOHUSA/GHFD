@@ -1,0 +1,63 @@
+{
+  "timestamp": "2026-09-22T16:13:36.224650",
+  "pipeline_version": "1.0.0",
+  "data_summary": {
+    "total_transactions": 8476,
+    "unique_counties": 159,
+    "date_range": {
+      "min_date": "2026-03-26",
+      "max_date": "2026-09-22"
+    }
+  },
+  "flips_summary": {
+    "total_flips": 400,
+    "total_profit": 44723929.0,
+    "avg_profit": 111809.8225,
+    "avg_hold_days": 80.2025
+  },
+  "investors_summary": {
+    "total_investors": 18,
+    "top_5_investors": [
+      {
+        "investor_name": "Property Solutions GA",
+        "total_flips": 29,
+        "total_profit": 3049801.0,
+        "avg_profit_per_flip": 105165.55172413793,
+        "avg_hold_days": 73.86206896551724,
+        "avg_roi": 100.0
+      },
+      {
+        "investor_name": "Metro Flip Team",
+        "total_flips": 29,
+        "total_profit": 3429070.0,
+        "avg_profit_per_flip": 118243.79310344828,
+        "avg_hold_days": 75.55172413793103,
+        "avg_roi": 100.0
+      },
+      {
+        "investor_name": "Peach State Investments",
+        "total_flips": 28,
+        "total_profit": 3160318.0,
+        "avg_profit_per_flip": 112868.5,
+        "avg_hold_days": 95.78571428571429,
+        "avg_roi": 100.0
+      },
+      {
+        "investor_name": "Atlanta Flip Masters LLC",
+        "total_flips": 28,
+        "total_profit": 3047104.0,
+        "avg_profit_per_flip": 108825.14285714286,
+        "avg_hold_days": 89.10714285714286,
+        "avg_roi": 100.0
+      },
+      {
+        "investor_name": "Peachtree RE Group",
+        "total_flips": 27,
+        "total_profit": 2747427.0,
+        "avg_profit_per_flip": 101756.55555555556,
+        "avg_hold_days": 80.48148148148148,
+        "avg_roi": 100.0
+      }
+    ]
+  }
+}
