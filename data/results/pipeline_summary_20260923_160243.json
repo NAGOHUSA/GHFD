@@ -1,0 +1,63 @@
+{
+  "timestamp": "2026-09-23T16:02:43.038690",
+  "pipeline_version": "1.0.0",
+  "data_summary": {
+    "total_transactions": 8424,
+    "unique_counties": 159,
+    "date_range": {
+      "min_date": "2026-03-27",
+      "max_date": "2026-09-23"
+    }
+  },
+  "flips_summary": {
+    "total_flips": 364,
+    "total_profit": 41190987.0,
+    "avg_profit": 113162.0521978022,
+    "avg_hold_days": 79.24725274725274
+  },
+  "investors_summary": {
+    "total_investors": 18,
+    "top_5_investors": [
+      {
+        "investor_name": "Georgia Property Investors",
+        "total_flips": 29,
+        "total_profit": 3386507.0,
+        "avg_profit_per_flip": 116776.10344827586,
+        "avg_hold_days": 79.93103448275862,
+        "avg_roi": 100.0
+      },
+      {
+        "investor_name": "Capital Flip Group",
+        "total_flips": 29,
+        "total_profit": 3482006.0,
+        "avg_profit_per_flip": 120069.1724137931,
+        "avg_hold_days": 79.58620689655173,
+        "avg_roi": 100.0
+      },
+      {
+        "investor_name": "Atlanta Flip Masters LLC",
+        "total_flips": 26,
+        "total_profit": 2970440.0,
+        "avg_profit_per_flip": 114247.69230769231,
+        "avg_hold_days": 76.84615384615384,
+        "avg_roi": 100.0
+      },
+      {
+        "investor_name": "Metro Flip Team",
+        "total_flips": 25,
+        "total_profit": 2964833.0,
+        "avg_profit_per_flip": 118593.32,
+        "avg_hold_days": 81.84,
+        "avg_roi": 100.0
+      },
+      {
+        "investor_name": "Metro Atlanta Investments",
+        "total_flips": 24,
+        "total_profit": 2744606.0,
+        "avg_profit_per_flip": 114358.58333333333,
+        "avg_hold_days": 60.583333333333336,
+        "avg_roi": 100.0
+      }
+    ]
+  }
+}
