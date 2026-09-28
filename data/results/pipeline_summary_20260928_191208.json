@@ -1,0 +1,63 @@
+{
+  "timestamp": "2026-09-28T19:12:08.571886",
+  "pipeline_version": "1.0.0",
+  "data_summary": {
+    "total_transactions": 8456,
+    "unique_counties": 159,
+    "date_range": {
+      "min_date": "2026-04-01",
+      "max_date": "2026-09-28"
+    }
+  },
+  "flips_summary": {
+    "total_flips": 401,
+    "total_profit": 45885565.0,
+    "avg_profit": 114427.84289276808,
+    "avg_hold_days": 79.77057356608479
+  },
+  "investors_summary": {
+    "total_investors": 18,
+    "top_5_investors": [
+      {
+        "investor_name": "Georgia Home Solutions",
+        "total_flips": 33,
+        "total_profit": 3665582.0,
+        "avg_profit_per_flip": 111078.24242424243,
+        "avg_hold_days": 90.3030303030303,
+        "avg_roi": 100.0
+      },
+      {
+        "investor_name": "Quick Turn Properties",
+        "total_flips": 30,
+        "total_profit": 3284549.0,
+        "avg_profit_per_flip": 109484.96666666666,
+        "avg_hold_days": 66.5,
+        "avg_roi": 100.0
+      },
+      {
+        "investor_name": "Renovation Experts",
+        "total_flips": 30,
+        "total_profit": 3569228.0,
+        "avg_profit_per_flip": 118974.26666666666,
+        "avg_hold_days": 84.93333333333334,
+        "avg_roi": 100.0
+      },
+      {
+        "investor_name": "Georgia Renovation Group",
+        "total_flips": 28,
+        "total_profit": 3228306.0,
+        "avg_profit_per_flip": 115296.64285714286,
+        "avg_hold_days": 75.89285714285714,
+        "avg_roi": 100.0
+      },
+      {
+        "investor_name": "Urban Development LLC",
+        "total_flips": 27,
+        "total_profit": 2997712.0,
+        "avg_profit_per_flip": 111026.37037037036,
+        "avg_hold_days": 84.55555555555556,
+        "avg_roi": 100.0
+      }
+    ]
+  }
+}
