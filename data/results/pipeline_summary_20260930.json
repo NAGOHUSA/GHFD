@@ -1,0 +1,63 @@
+{
+  "timestamp": "2026-09-30T17:34:08.805452",
+  "pipeline_version": "1.0.0",
+  "data_summary": {
+    "total_transactions": 8452,
+    "unique_counties": 159,
+    "date_range": {
+      "min_date": "2026-04-03",
+      "max_date": "2026-09-30"
+    }
+  },
+  "flips_summary": {
+    "total_flips": 384,
+    "total_profit": 44138571.0,
+    "avg_profit": 114944.1953125,
+    "avg_hold_days": 78.83072916666667
+  },
+  "investors_summary": {
+    "total_investors": 18,
+    "top_5_investors": [
+      {
+        "investor_name": "Residential Ventures",
+        "total_flips": 28,
+        "total_profit": 3231281.0,
+        "avg_profit_per_flip": 115402.89285714286,
+        "avg_hold_days": 70.96428571428571,
+        "avg_roi": 100.0
+      },
+      {
+        "investor_name": "Atlanta Flip Masters LLC",
+        "total_flips": 27,
+        "total_profit": 3127782.0,
+        "avg_profit_per_flip": 115843.77777777778,
+        "avg_hold_days": 80.29629629629629,
+        "avg_roi": 100.0
+      },
+      {
+        "investor_name": "Quick Turn Properties",
+        "total_flips": 26,
+        "total_profit": 2975220.0,
+        "avg_profit_per_flip": 114431.53846153847,
+        "avg_hold_days": 75.34615384615384,
+        "avg_roi": 100.0
+      },
+      {
+        "investor_name": "Metro Flip Team",
+        "total_flips": 26,
+        "total_profit": 2945075.0,
+        "avg_profit_per_flip": 113272.11538461539,
+        "avg_hold_days": 74.92307692307692,
+        "avg_roi": 100.0
+      },
+      {
+        "investor_name": "Renovation Experts",
+        "total_flips": 25,
+        "total_profit": 2930765.0,
+        "avg_profit_per_flip": 117230.6,
+        "avg_hold_days": 71.32,
+        "avg_roi": 100.0
+      }
+    ]
+  }
+}
