@@ -1,0 +1,63 @@
+{
+  "timestamp": "2026-10-01T17:58:15.346687",
+  "pipeline_version": "1.0.0",
+  "data_summary": {
+    "total_transactions": 8465,
+    "unique_counties": 159,
+    "date_range": {
+      "min_date": "2026-04-04",
+      "max_date": "2026-10-01"
+    }
+  },
+  "flips_summary": {
+    "total_flips": 399,
+    "total_profit": 44950938.0,
+    "avg_profit": 112658.99248120301,
+    "avg_hold_days": 79.79448621553885
+  },
+  "investors_summary": {
+    "total_investors": 18,
+    "top_5_investors": [
+      {
+        "investor_name": "Southern Holdings Inc",
+        "total_flips": 31,
+        "total_profit": 3355596.0,
+        "avg_profit_per_flip": 108245.03225806452,
+        "avg_hold_days": 82.87096774193549,
+        "avg_roi": 100.0
+      },
+      {
+        "investor_name": "Investor Collective",
+        "total_flips": 29,
+        "total_profit": 3264616.0,
+        "avg_profit_per_flip": 112572.96551724138,
+        "avg_hold_days": 82.17241379310344,
+        "avg_roi": 100.0
+      },
+      {
+        "investor_name": "Property Solutions GA",
+        "total_flips": 28,
+        "total_profit": 3097770.0,
+        "avg_profit_per_flip": 110634.64285714286,
+        "avg_hold_days": 75.60714285714286,
+        "avg_roi": 100.0
+      },
+      {
+        "investor_name": "Fix & Flip GA",
+        "total_flips": 28,
+        "total_profit": 2984828.0,
+        "avg_profit_per_flip": 106601.0,
+        "avg_hold_days": 83.0,
+        "avg_roi": 100.0
+      },
+      {
+        "investor_name": "Residential Ventures",
+        "total_flips": 27,
+        "total_profit": 3114603.0,
+        "avg_profit_per_flip": 115355.66666666667,
+        "avg_hold_days": 79.92592592592592,
+        "avg_roi": 100.0
+      }
+    ]
+  }
+}
