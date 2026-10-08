@@ -1,0 +1,63 @@
+{
+  "timestamp": "2026-10-08T18:23:09.259543",
+  "pipeline_version": "1.0.0",
+  "data_summary": {
+    "total_transactions": 8451,
+    "unique_counties": 159,
+    "date_range": {
+      "min_date": "2026-04-11",
+      "max_date": "2026-10-08"
+    }
+  },
+  "flips_summary": {
+    "total_flips": 379,
+    "total_profit": 44074215.0,
+    "avg_profit": 116290.80474934037,
+    "avg_hold_days": 82.00791556728232
+  },
+  "investors_summary": {
+    "total_investors": 18,
+    "top_5_investors": [
+      {
+        "investor_name": "Peach State Investments",
+        "total_flips": 31,
+        "total_profit": 3395959.0,
+        "avg_profit_per_flip": 109547.06451612903,
+        "avg_hold_days": 90.58064516129032,
+        "avg_roi": 100.0
+      },
+      {
+        "investor_name": "Capital Flip Group",
+        "total_flips": 30,
+        "total_profit": 3402631.0,
+        "avg_profit_per_flip": 113421.03333333334,
+        "avg_hold_days": 77.66666666666667,
+        "avg_roi": 100.0
+      },
+      {
+        "investor_name": "Fix & Flip GA",
+        "total_flips": 26,
+        "total_profit": 3200268.0,
+        "avg_profit_per_flip": 123087.23076923077,
+        "avg_hold_days": 73.76923076923077,
+        "avg_roi": 100.0
+      },
+      {
+        "investor_name": "Quick Turn Properties",
+        "total_flips": 25,
+        "total_profit": 2920305.0,
+        "avg_profit_per_flip": 116812.2,
+        "avg_hold_days": 78.6,
+        "avg_roi": 100.0
+      },
+      {
+        "investor_name": "Urban Development LLC",
+        "total_flips": 24,
+        "total_profit": 2671965.0,
+        "avg_profit_per_flip": 111331.875,
+        "avg_hold_days": 87.0,
+        "avg_roi": 100.0
+      }
+    ]
+  }
+}
