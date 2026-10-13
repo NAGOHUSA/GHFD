@@ -1,0 +1,63 @@
+{
+  "timestamp": "2026-10-13T00:04:41.419051",
+  "pipeline_version": "1.0.0",
+  "data_summary": {
+    "total_transactions": 8435,
+    "unique_counties": 159,
+    "date_range": {
+      "min_date": "2026-04-16",
+      "max_date": "2026-10-13"
+    }
+  },
+  "flips_summary": {
+    "total_flips": 388,
+    "total_profit": 44547524.0,
+    "avg_profit": 114813.206185567,
+    "avg_hold_days": 78.91494845360825
+  },
+  "investors_summary": {
+    "total_investors": 18,
+    "top_5_investors": [
+      {
+        "investor_name": "Residential Ventures",
+        "total_flips": 29,
+        "total_profit": 3341725.0,
+        "avg_profit_per_flip": 115231.89655172414,
+        "avg_hold_days": 79.0,
+        "avg_roi": 100.0
+      },
+      {
+        "investor_name": "Atlanta Capital Partners",
+        "total_flips": 28,
+        "total_profit": 3254699.0,
+        "avg_profit_per_flip": 116239.25,
+        "avg_hold_days": 98.60714285714286,
+        "avg_roi": 100.0
+      },
+      {
+        "investor_name": "Southern Holdings Inc",
+        "total_flips": 28,
+        "total_profit": 3090556.0,
+        "avg_profit_per_flip": 110377.0,
+        "avg_hold_days": 75.64285714285714,
+        "avg_roi": 100.0
+      },
+      {
+        "investor_name": "Urban Development LLC",
+        "total_flips": 26,
+        "total_profit": 2898306.0,
+        "avg_profit_per_flip": 111473.30769230769,
+        "avg_hold_days": 77.42307692307692,
+        "avg_roi": 100.0
+      },
+      {
+        "investor_name": "Peach State Investments",
+        "total_flips": 26,
+        "total_profit": 2929950.0,
+        "avg_profit_per_flip": 112690.38461538461,
+        "avg_hold_days": 70.38461538461539,
+        "avg_roi": 100.0
+      }
+    ]
+  }
+}
