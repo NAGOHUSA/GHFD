@@ -1,0 +1,63 @@
+{
+  "timestamp": "2026-10-15T16:15:44.300100",
+  "pipeline_version": "1.0.0",
+  "data_summary": {
+    "total_transactions": 8412,
+    "unique_counties": 159,
+    "date_range": {
+      "min_date": "2026-04-18",
+      "max_date": "2026-10-15"
+    }
+  },
+  "flips_summary": {
+    "total_flips": 367,
+    "total_profit": 41941478.0,
+    "avg_profit": 114281.95640326975,
+    "avg_hold_days": 78.44959128065395
+  },
+  "investors_summary": {
+    "total_investors": 18,
+    "top_5_investors": [
+      {
+        "investor_name": "Urban Development LLC",
+        "total_flips": 28,
+        "total_profit": 3242496.0,
+        "avg_profit_per_flip": 115803.42857142857,
+        "avg_hold_days": 89.14285714285714,
+        "avg_roi": 100.0
+      },
+      {
+        "investor_name": "Georgia Renovation Group",
+        "total_flips": 26,
+        "total_profit": 2712432.0,
+        "avg_profit_per_flip": 104324.30769230769,
+        "avg_hold_days": 79.57692307692308,
+        "avg_roi": 100.0
+      },
+      {
+        "investor_name": "Southern Holdings Inc",
+        "total_flips": 25,
+        "total_profit": 2850173.0,
+        "avg_profit_per_flip": 114006.92,
+        "avg_hold_days": 80.72,
+        "avg_roi": 100.0
+      },
+      {
+        "investor_name": "Peach State Investments",
+        "total_flips": 24,
+        "total_profit": 2818989.0,
+        "avg_profit_per_flip": 117457.875,
+        "avg_hold_days": 86.625,
+        "avg_roi": 100.0
+      },
+      {
+        "investor_name": "Metro Atlanta Investments",
+        "total_flips": 23,
+        "total_profit": 2615059.0,
+        "avg_profit_per_flip": 113698.21739130435,
+        "avg_hold_days": 87.17391304347827,
+        "avg_roi": 100.0
+      }
+    ]
+  }
+}
