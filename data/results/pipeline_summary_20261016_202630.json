@@ -1,0 +1,63 @@
+{
+  "timestamp": "2026-10-16T20:26:30.639413",
+  "pipeline_version": "1.0.0",
+  "data_summary": {
+    "total_transactions": 8445,
+    "unique_counties": 159,
+    "date_range": {
+      "min_date": "2026-04-19",
+      "max_date": "2026-10-16"
+    }
+  },
+  "flips_summary": {
+    "total_flips": 379,
+    "total_profit": 43470687.0,
+    "avg_profit": 114698.38258575198,
+    "avg_hold_days": 79.83641160949868
+  },
+  "investors_summary": {
+    "total_investors": 18,
+    "top_5_investors": [
+      {
+        "investor_name": "Atlanta Flip Masters LLC",
+        "total_flips": 30,
+        "total_profit": 3536687.0,
+        "avg_profit_per_flip": 117889.56666666667,
+        "avg_hold_days": 85.03333333333333,
+        "avg_roi": 100.0
+      },
+      {
+        "investor_name": "Peachtree RE Group",
+        "total_flips": 28,
+        "total_profit": 3183271.0,
+        "avg_profit_per_flip": 113688.25,
+        "avg_hold_days": 79.57142857142857,
+        "avg_roi": 100.0
+      },
+      {
+        "investor_name": "Urban Development LLC",
+        "total_flips": 26,
+        "total_profit": 3096061.0,
+        "avg_profit_per_flip": 119079.26923076923,
+        "avg_hold_days": 85.84615384615384,
+        "avg_roi": 100.0
+      },
+      {
+        "investor_name": "Fix & Flip GA",
+        "total_flips": 26,
+        "total_profit": 3007911.0,
+        "avg_profit_per_flip": 115688.88461538461,
+        "avg_hold_days": 88.65384615384616,
+        "avg_roi": 100.0
+      },
+      {
+        "investor_name": "Residential Ventures",
+        "total_flips": 25,
+        "total_profit": 2945248.0,
+        "avg_profit_per_flip": 117809.92,
+        "avg_hold_days": 76.88,
+        "avg_roi": 100.0
+      }
+    ]
+  }
+}
