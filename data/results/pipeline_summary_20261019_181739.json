@@ -1,0 +1,63 @@
+{
+  "timestamp": "2026-10-19T18:17:39.708463",
+  "pipeline_version": "1.0.0",
+  "data_summary": {
+    "total_transactions": 8428,
+    "unique_counties": 159,
+    "date_range": {
+      "min_date": "2026-04-22",
+      "max_date": "2026-10-19"
+    }
+  },
+  "flips_summary": {
+    "total_flips": 376,
+    "total_profit": 42943251.0,
+    "avg_profit": 114210.77393617021,
+    "avg_hold_days": 80.12765957446808
+  },
+  "investors_summary": {
+    "total_investors": 18,
+    "top_5_investors": [
+      {
+        "investor_name": "Georgia Home Solutions",
+        "total_flips": 32,
+        "total_profit": 3750396.0,
+        "avg_profit_per_flip": 117199.875,
+        "avg_hold_days": 92.96875,
+        "avg_roi": 100.0
+      },
+      {
+        "investor_name": "Atlanta Flip Masters LLC",
+        "total_flips": 27,
+        "total_profit": 2869674.0,
+        "avg_profit_per_flip": 106284.22222222222,
+        "avg_hold_days": 80.07407407407408,
+        "avg_roi": 100.0
+      },
+      {
+        "investor_name": "Renovation Experts",
+        "total_flips": 27,
+        "total_profit": 2984569.0,
+        "avg_profit_per_flip": 110539.5925925926,
+        "avg_hold_days": 83.33333333333333,
+        "avg_roi": 100.0
+      },
+      {
+        "investor_name": "Fix & Flip GA",
+        "total_flips": 27,
+        "total_profit": 3100319.0,
+        "avg_profit_per_flip": 114826.62962962964,
+        "avg_hold_days": 79.22222222222223,
+        "avg_roi": 100.0
+      },
+      {
+        "investor_name": "Southern Holdings Inc",
+        "total_flips": 27,
+        "total_profit": 2995443.0,
+        "avg_profit_per_flip": 110942.33333333333,
+        "avg_hold_days": 73.4074074074074,
+        "avg_roi": 100.0
+      }
+    ]
+  }
+}
