@@ -1,8 +1,8 @@
 {
-  "timestamp": "2026-10-23T16:24:57.273268",
+  "timestamp": "2026-10-23T20:55:12.982290",
   "pipeline_version": "1.0.0",
   "data_summary": {
-    "total_transactions": 8435,
+    "total_transactions": 8455,
     "unique_counties": 159,
     "date_range": {
       "min_date": "2026-04-26",
@@ -10,52 +10,52 @@
     }
   },
   "flips_summary": {
-    "total_flips": 379,
-    "total_profit": 42748001.0,
-    "avg_profit": 112791.55936675462,
-    "avg_hold_days": 80.37203166226912
+    "total_flips": 392,
+    "total_profit": 44704906.0,
+    "avg_profit": 114043.12755102041,
+    "avg_hold_days": 79.04081632653062
   },
   "investors_summary": {
     "total_investors": 18,
     "top_5_investors": [
       {
-        "investor_name": "Peach State Investments",
-        "total_flips": 36,
-        "total_profit": 4296196.0,
-        "avg_profit_per_flip": 119338.77777777778,
-        "avg_hold_days": 72.5,
-        "avg_roi": 100.0
-      },
-      {
         "investor_name": "Atlanta Capital Partners",
+        "total_flips": 33,
+        "total_profit": 3746141.0,
+        "avg_profit_per_flip": 113519.42424242424,
+        "avg_hold_days": 72.57575757575758,
+        "avg_roi": 100.0
+      },
+      {
+        "investor_name": "Capital Flip Group",
+        "total_flips": 30,
+        "total_profit": 3552311.0,
+        "avg_profit_per_flip": 118410.36666666667,
+        "avg_hold_days": 77.53333333333333,
+        "avg_roi": 100.0
+      },
+      {
+        "investor_name": "Peachtree RE Group",
         "total_flips": 27,
-        "total_profit": 3011144.0,
-        "avg_profit_per_flip": 111523.85185185185,
-        "avg_hold_days": 78.88888888888889,
+        "total_profit": 2898916.0,
+        "avg_profit_per_flip": 107367.25925925926,
+        "avg_hold_days": 79.25925925925925,
         "avg_roi": 100.0
       },
       {
-        "investor_name": "Southern Holdings Inc",
+        "investor_name": "Georgia Property Investors",
+        "total_flips": 27,
+        "total_profit": 2984017.0,
+        "avg_profit_per_flip": 110519.14814814815,
+        "avg_hold_days": 77.4074074074074,
+        "avg_roi": 100.0
+      },
+      {
+        "investor_name": "Urban Development LLC",
         "total_flips": 25,
-        "total_profit": 2856509.0,
-        "avg_profit_per_flip": 114260.36,
-        "avg_hold_days": 93.6,
-        "avg_roi": 100.0
-      },
-      {
-        "investor_name": "Fix & Flip GA",
-        "total_flips": 23,
-        "total_profit": 2489901.0,
-        "avg_profit_per_flip": 108256.56521739131,
-        "avg_hold_days": 82.6086956521739,
-        "avg_roi": 100.0
-      },
-      {
-        "investor_name": "Metro Flip Team",
-        "total_flips": 23,
-        "total_profit": 2493917.0,
-        "avg_profit_per_flip": 108431.17391304347,
-        "avg_hold_days": 80.95652173913044,
+        "total_profit": 2896944.0,
+        "avg_profit_per_flip": 115877.76,
+        "avg_hold_days": 77.24,
         "avg_roi": 100.0
       }
     ]
