@@ -1,0 +1,63 @@
+{
+  "timestamp": "2026-10-27T21:45:50.587453",
+  "pipeline_version": "1.0.0",
+  "data_summary": {
+    "total_transactions": 8443,
+    "unique_counties": 159,
+    "date_range": {
+      "min_date": "2026-04-30",
+      "max_date": "2026-10-27"
+    }
+  },
+  "flips_summary": {
+    "total_flips": 382,
+    "total_profit": 43904885.0,
+    "avg_profit": 114934.25392670157,
+    "avg_hold_days": 80.3717277486911
+  },
+  "investors_summary": {
+    "total_investors": 18,
+    "top_5_investors": [
+      {
+        "investor_name": "Capital Flip Group",
+        "total_flips": 38,
+        "total_profit": 4454524.0,
+        "avg_profit_per_flip": 117224.31578947368,
+        "avg_hold_days": 79.86842105263158,
+        "avg_roi": 100.0
+      },
+      {
+        "investor_name": "Fix & Flip GA",
+        "total_flips": 27,
+        "total_profit": 2992683.0,
+        "avg_profit_per_flip": 110840.11111111111,
+        "avg_hold_days": 88.88888888888889,
+        "avg_roi": 100.0
+      },
+      {
+        "investor_name": "Renovation Experts",
+        "total_flips": 27,
+        "total_profit": 3035025.0,
+        "avg_profit_per_flip": 112408.33333333333,
+        "avg_hold_days": 78.11111111111111,
+        "avg_roi": 100.0
+      },
+      {
+        "investor_name": "Investor Collective",
+        "total_flips": 26,
+        "total_profit": 3014663.0,
+        "avg_profit_per_flip": 115948.57692307692,
+        "avg_hold_days": 70.92307692307692,
+        "avg_roi": 100.0
+      },
+      {
+        "investor_name": "Georgia Renovation Group",
+        "total_flips": 26,
+        "total_profit": 3187243.0,
+        "avg_profit_per_flip": 122586.26923076923,
+        "avg_hold_days": 94.61538461538461,
+        "avg_roi": 100.0
+      }
+    ]
+  }
+}

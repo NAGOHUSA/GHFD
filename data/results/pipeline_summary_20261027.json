@@ -1,8 +1,8 @@
 {
-  "timestamp": "2026-10-27T17:25:18.459303",
+  "timestamp": "2026-10-27T21:45:50.587453",
   "pipeline_version": "1.0.0",
   "data_summary": {
-    "total_transactions": 8431,
+    "total_transactions": 8443,
     "unique_counties": 159,
     "date_range": {
       "min_date": "2026-04-30",
@@ -10,52 +10,52 @@
     }
   },
   "flips_summary": {
-    "total_flips": 359,
-    "total_profit": 40989760.0,
-    "avg_profit": 114177.60445682451,
-    "avg_hold_days": 78.00278551532034
+    "total_flips": 382,
+    "total_profit": 43904885.0,
+    "avg_profit": 114934.25392670157,
+    "avg_hold_days": 80.3717277486911
   },
   "investors_summary": {
     "total_investors": 18,
     "top_5_investors": [
       {
-        "investor_name": "Atlanta Capital Partners",
-        "total_flips": 29,
-        "total_profit": 3287965.0,
-        "avg_profit_per_flip": 113378.10344827586,
-        "avg_hold_days": 80.24137931034483,
+        "investor_name": "Capital Flip Group",
+        "total_flips": 38,
+        "total_profit": 4454524.0,
+        "avg_profit_per_flip": 117224.31578947368,
+        "avg_hold_days": 79.86842105263158,
         "avg_roi": 100.0
       },
       {
-        "investor_name": "Metro Flip Team",
-        "total_flips": 28,
-        "total_profit": 3221728.0,
-        "avg_profit_per_flip": 115061.71428571429,
-        "avg_hold_days": 63.57142857142857,
+        "investor_name": "Fix & Flip GA",
+        "total_flips": 27,
+        "total_profit": 2992683.0,
+        "avg_profit_per_flip": 110840.11111111111,
+        "avg_hold_days": 88.88888888888889,
         "avg_roi": 100.0
       },
       {
-        "investor_name": "Quick Turn Properties",
+        "investor_name": "Renovation Experts",
+        "total_flips": 27,
+        "total_profit": 3035025.0,
+        "avg_profit_per_flip": 112408.33333333333,
+        "avg_hold_days": 78.11111111111111,
+        "avg_roi": 100.0
+      },
+      {
+        "investor_name": "Investor Collective",
         "total_flips": 26,
-        "total_profit": 2814270.0,
-        "avg_profit_per_flip": 108241.15384615384,
-        "avg_hold_days": 75.73076923076923,
+        "total_profit": 3014663.0,
+        "avg_profit_per_flip": 115948.57692307692,
+        "avg_hold_days": 70.92307692307692,
         "avg_roi": 100.0
       },
       {
-        "investor_name": "Residential Ventures",
-        "total_flips": 23,
-        "total_profit": 2802452.0,
-        "avg_profit_per_flip": 121845.73913043478,
-        "avg_hold_days": 76.6086956521739,
-        "avg_roi": 100.0
-      },
-      {
-        "investor_name": "Peach State Investments",
-        "total_flips": 22,
-        "total_profit": 2621675.0,
-        "avg_profit_per_flip": 119167.04545454546,
-        "avg_hold_days": 81.5909090909091,
+        "investor_name": "Georgia Renovation Group",
+        "total_flips": 26,
+        "total_profit": 3187243.0,
+        "avg_profit_per_flip": 122586.26923076923,
+        "avg_hold_days": 94.61538461538461,
         "avg_roi": 100.0
       }
     ]
