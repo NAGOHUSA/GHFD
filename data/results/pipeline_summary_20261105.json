@@ -1,8 +1,8 @@
 {
-  "timestamp": "2026-11-05T19:27:37.184448",
+  "timestamp": "2026-11-05T23:12:04.080815",
   "pipeline_version": "1.0.0",
   "data_summary": {
-    "total_transactions": 8453,
+    "total_transactions": 8442,
     "unique_counties": 159,
     "date_range": {
       "min_date": "2026-05-09",
@@ -10,52 +10,52 @@
     }
   },
   "flips_summary": {
-    "total_flips": 390,
-    "total_profit": 44027620.0,
-    "avg_profit": 112891.33333333333,
-    "avg_hold_days": 83.24871794871795
+    "total_flips": 386,
+    "total_profit": 43712015.0,
+    "avg_profit": 113243.5621761658,
+    "avg_hold_days": 82.38860103626943
   },
   "investors_summary": {
     "total_investors": 18,
     "top_5_investors": [
       {
-        "investor_name": "Metro Atlanta Investments",
-        "total_flips": 25,
-        "total_profit": 2839054.0,
-        "avg_profit_per_flip": 113562.16,
-        "avg_hold_days": 78.96,
+        "investor_name": "Quick Turn Properties",
+        "total_flips": 29,
+        "total_profit": 3206117.0,
+        "avg_profit_per_flip": 110555.75862068965,
+        "avg_hold_days": 83.48275862068965,
         "avg_roi": 100.0
       },
       {
-        "investor_name": "Fix & Flip GA",
-        "total_flips": 25,
-        "total_profit": 2718933.0,
-        "avg_profit_per_flip": 108757.32,
-        "avg_hold_days": 73.64,
+        "investor_name": "Capital Flip Group",
+        "total_flips": 27,
+        "total_profit": 3134705.0,
+        "avg_profit_per_flip": 116100.18518518518,
+        "avg_hold_days": 90.88888888888889,
+        "avg_roi": 100.0
+      },
+      {
+        "investor_name": "Georgia Renovation Group",
+        "total_flips": 27,
+        "total_profit": 3029494.0,
+        "avg_profit_per_flip": 112203.48148148147,
+        "avg_hold_days": 66.07407407407408,
         "avg_roi": 100.0
       },
       {
         "investor_name": "Peachtree RE Group",
+        "total_flips": 25,
+        "total_profit": 2710611.0,
+        "avg_profit_per_flip": 108424.44,
+        "avg_hold_days": 77.92,
+        "avg_roi": 100.0
+      },
+      {
+        "investor_name": "Urban Development LLC",
         "total_flips": 24,
-        "total_profit": 2678899.0,
-        "avg_profit_per_flip": 111620.79166666667,
-        "avg_hold_days": 80.58333333333333,
-        "avg_roi": 100.0
-      },
-      {
-        "investor_name": "Property Solutions GA",
-        "total_flips": 23,
-        "total_profit": 2770950.0,
-        "avg_profit_per_flip": 120476.08695652174,
-        "avg_hold_days": 99.43478260869566,
-        "avg_roi": 100.0
-      },
-      {
-        "investor_name": "Renovation Experts",
-        "total_flips": 23,
-        "total_profit": 2657485.0,
-        "avg_profit_per_flip": 115542.82608695653,
-        "avg_hold_days": 75.73913043478261,
+        "total_profit": 2653329.0,
+        "avg_profit_per_flip": 110555.375,
+        "avg_hold_days": 84.04166666666667,
         "avg_roi": 100.0
       }
     ]
