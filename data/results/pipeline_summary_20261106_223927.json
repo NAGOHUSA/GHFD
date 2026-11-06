@@ -1,0 +1,63 @@
+{
+  "timestamp": "2026-11-06T22:39:27.807220",
+  "pipeline_version": "1.0.0",
+  "data_summary": {
+    "total_transactions": 8425,
+    "unique_counties": 159,
+    "date_range": {
+      "min_date": "2026-05-10",
+      "max_date": "2026-11-06"
+    }
+  },
+  "flips_summary": {
+    "total_flips": 378,
+    "total_profit": 42580825.0,
+    "avg_profit": 112647.68518518518,
+    "avg_hold_days": 83.48412698412699
+  },
+  "investors_summary": {
+    "total_investors": 18,
+    "top_5_investors": [
+      {
+        "investor_name": "Capital Flip Group",
+        "total_flips": 33,
+        "total_profit": 3701355.0,
+        "avg_profit_per_flip": 112162.27272727272,
+        "avg_hold_days": 75.15151515151516,
+        "avg_roi": 100.0
+      },
+      {
+        "investor_name": "Southern Holdings Inc",
+        "total_flips": 31,
+        "total_profit": 3490890.0,
+        "avg_profit_per_flip": 112609.35483870968,
+        "avg_hold_days": 85.0,
+        "avg_roi": 100.0
+      },
+      {
+        "investor_name": "Metro Flip Team",
+        "total_flips": 30,
+        "total_profit": 3453957.0,
+        "avg_profit_per_flip": 115131.9,
+        "avg_hold_days": 88.2,
+        "avg_roi": 100.0
+      },
+      {
+        "investor_name": "Peach State Investments",
+        "total_flips": 27,
+        "total_profit": 3013651.0,
+        "avg_profit_per_flip": 111616.70370370371,
+        "avg_hold_days": 83.85185185185185,
+        "avg_roi": 100.0
+      },
+      {
+        "investor_name": "Quick Turn Properties",
+        "total_flips": 27,
+        "total_profit": 3175915.0,
+        "avg_profit_per_flip": 117626.48148148147,
+        "avg_hold_days": 89.88888888888889,
+        "avg_roi": 100.0
+      }
+    ]
+  }
+}
