@@ -1,0 +1,63 @@
+{
+  "timestamp": "2026-11-11T19:13:25.281565",
+  "pipeline_version": "1.0.0",
+  "data_summary": {
+    "total_transactions": 8442,
+    "unique_counties": 159,
+    "date_range": {
+      "min_date": "2026-05-15",
+      "max_date": "2026-11-11"
+    }
+  },
+  "flips_summary": {
+    "total_flips": 391,
+    "total_profit": 44831645.0,
+    "avg_profit": 114658.93861892584,
+    "avg_hold_days": 77.67519181585678
+  },
+  "investors_summary": {
+    "total_investors": 18,
+    "top_5_investors": [
+      {
+        "investor_name": "Metro Atlanta Investments",
+        "total_flips": 32,
+        "total_profit": 3710093.0,
+        "avg_profit_per_flip": 115940.40625,
+        "avg_hold_days": 83.53125,
+        "avg_roi": 100.0
+      },
+      {
+        "investor_name": "Quick Turn Properties",
+        "total_flips": 30,
+        "total_profit": 3472147.0,
+        "avg_profit_per_flip": 115738.23333333334,
+        "avg_hold_days": 72.53333333333333,
+        "avg_roi": 100.0
+      },
+      {
+        "investor_name": "Urban Development LLC",
+        "total_flips": 29,
+        "total_profit": 3457700.0,
+        "avg_profit_per_flip": 119231.03448275862,
+        "avg_hold_days": 80.34482758620689,
+        "avg_roi": 100.0
+      },
+      {
+        "investor_name": "Georgia Renovation Group",
+        "total_flips": 26,
+        "total_profit": 3067680.0,
+        "avg_profit_per_flip": 117987.69230769231,
+        "avg_hold_days": 82.84615384615384,
+        "avg_roi": 100.0
+      },
+      {
+        "investor_name": "Peachtree RE Group",
+        "total_flips": 26,
+        "total_profit": 3032819.0,
+        "avg_profit_per_flip": 116646.88461538461,
+        "avg_hold_days": 79.46153846153847,
+        "avg_roi": 100.0
+      }
+    ]
+  }
+}
