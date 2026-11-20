@@ -1,0 +1,63 @@
+{
+  "timestamp": "2026-11-20T23:37:23.440050",
+  "pipeline_version": "1.0.0",
+  "data_summary": {
+    "total_transactions": 8424,
+    "unique_counties": 159,
+    "date_range": {
+      "min_date": "2026-05-24",
+      "max_date": "2026-11-20"
+    }
+  },
+  "flips_summary": {
+    "total_flips": 373,
+    "total_profit": 42872004.0,
+    "avg_profit": 114938.34852546916,
+    "avg_hold_days": 78.91420911528151
+  },
+  "investors_summary": {
+    "total_investors": 18,
+    "top_5_investors": [
+      {
+        "investor_name": "Peach State Investments",
+        "total_flips": 29,
+        "total_profit": 3314239.0,
+        "avg_profit_per_flip": 114284.10344827586,
+        "avg_hold_days": 78.75862068965517,
+        "avg_roi": 100.0
+      },
+      {
+        "investor_name": "Peachtree RE Group",
+        "total_flips": 27,
+        "total_profit": 3066690.0,
+        "avg_profit_per_flip": 113581.11111111111,
+        "avg_hold_days": 70.74074074074075,
+        "avg_roi": 100.0
+      },
+      {
+        "investor_name": "Metro Flip Team",
+        "total_flips": 26,
+        "total_profit": 3026807.0,
+        "avg_profit_per_flip": 116415.65384615384,
+        "avg_hold_days": 75.07692307692308,
+        "avg_roi": 100.0
+      },
+      {
+        "investor_name": "Fix & Flip GA",
+        "total_flips": 24,
+        "total_profit": 2932067.0,
+        "avg_profit_per_flip": 122169.45833333333,
+        "avg_hold_days": 78.625,
+        "avg_roi": 100.0
+      },
+      {
+        "investor_name": "Quick Turn Properties",
+        "total_flips": 23,
+        "total_profit": 2491987.0,
+        "avg_profit_per_flip": 108347.26086956522,
+        "avg_hold_days": 74.56521739130434,
+        "avg_roi": 100.0
+      }
+    ]
+  }
+}
