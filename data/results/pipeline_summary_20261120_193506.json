@@ -1,0 +1,63 @@
+{
+  "timestamp": "2026-11-20T19:35:06.049273",
+  "pipeline_version": "1.0.0",
+  "data_summary": {
+    "total_transactions": 8444,
+    "unique_counties": 159,
+    "date_range": {
+      "min_date": "2026-05-24",
+      "max_date": "2026-11-20"
+    }
+  },
+  "flips_summary": {
+    "total_flips": 374,
+    "total_profit": 42473120.0,
+    "avg_profit": 113564.49197860963,
+    "avg_hold_days": 80.00802139037434
+  },
+  "investors_summary": {
+    "total_investors": 18,
+    "top_5_investors": [
+      {
+        "investor_name": "Atlanta Capital Partners",
+        "total_flips": 32,
+        "total_profit": 3595592.0,
+        "avg_profit_per_flip": 112362.25,
+        "avg_hold_days": 89.5625,
+        "avg_roi": 100.0
+      },
+      {
+        "investor_name": "Metro Atlanta Investments",
+        "total_flips": 30,
+        "total_profit": 3414481.0,
+        "avg_profit_per_flip": 113816.03333333334,
+        "avg_hold_days": 84.66666666666667,
+        "avg_roi": 100.0
+      },
+      {
+        "investor_name": "Peach State Investments",
+        "total_flips": 24,
+        "total_profit": 2567178.0,
+        "avg_profit_per_flip": 106965.75,
+        "avg_hold_days": 85.0,
+        "avg_roi": 100.0
+      },
+      {
+        "investor_name": "Capital Flip Group",
+        "total_flips": 24,
+        "total_profit": 2550959.0,
+        "avg_profit_per_flip": 106289.95833333333,
+        "avg_hold_days": 84.625,
+        "avg_roi": 100.0
+      },
+      {
+        "investor_name": "Georgia Renovation Group",
+        "total_flips": 23,
+        "total_profit": 2694967.0,
+        "avg_profit_per_flip": 117172.47826086957,
+        "avg_hold_days": 87.56521739130434,
+        "avg_roi": 100.0
+      }
+    ]
+  }
+}
